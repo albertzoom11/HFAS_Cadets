@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "675702080203",
+    "firebase_url": "https://hfas-cadets.firebaseio.com",
+    "project_id": "hfas-cadets",
+    "storage_bucket": "hfas-cadets.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675702080203:android:7f966816b1ca2ad0f0914e",
+        "android_client_info": {
+          "package_name": "com.albertzoom11.hfascadets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675702080203-rnequplevt2p0pc01ahghso3m22ac025.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBALAsAS03DdSgaNkVSg_3bIipRNgHiZUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675702080203-rnequplevt2p0pc01ahghso3m22ac025.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
