@@ -163,19 +163,31 @@ class _SignInState extends State<SignIn> {
                       ),
                       FadeAnimation(
                           1.6,
-                          Container(
-                            height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 50),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Colors.indigo[900],
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Log in',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                          GestureDetector(
+                            onTap: () async {
+                              if (_formKey.currentState.validate()) {
+                                dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                                if (result == null) {
+                                  setState(() {
+                                    error = 'Your email or password was incorrect.\nPlease try again.';
+                                  });
+                                }
+                              }
+                            },
+                            child: Container(
+                              height: 50,
+                              margin: EdgeInsets.symmetric(horizontal: 50),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.indigo[900],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Log in',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -234,18 +246,23 @@ class _SignInState extends State<SignIn> {
                           Expanded(
                             child: FadeAnimation(
                                 1.9,
-                                Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.blue[900],
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                                GestureDetector(
+                                  onTap: () {
+                                    widget.toggleView();
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Colors.blue[900],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Sign Up',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 )),
