@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
 class SignIn extends StatefulWidget {
+  final Function toggleView;
+  SignIn({this.toggleView});
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -21,7 +24,15 @@ class _SignInState extends State<SignIn> {
         backgroundColor: Colors.blue[900],
         elevation: 0.0,
         title: Text('Sign in'),
-        centerTitle: true,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('Sign up'),
+            onPressed: () {
+              widget.toggleView();
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
@@ -34,7 +45,6 @@ class _SignInState extends State<SignIn> {
                   icon: Icon(Icons.email),
                   hintText: 'Email',
                 ),
-                autofocus: true,
                 onChanged: (val) {
                   setState(() {
                     email = val;
