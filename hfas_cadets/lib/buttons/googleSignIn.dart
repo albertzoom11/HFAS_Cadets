@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
-import 'package:hfascadets/screens/home/home.dart';
 
 final AuthService _auth = AuthService();
 

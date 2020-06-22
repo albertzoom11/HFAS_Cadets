@@ -21,6 +21,13 @@ class Home extends StatelessWidget {
             },
             label: Text('log out'),
           ),
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            onPressed: () async {
+              await _auth.signOutGoogle();
+            },
+            label: Text('google sign out'),
+          ),
         ],
       ),
     );
