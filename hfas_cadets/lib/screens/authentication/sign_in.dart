@@ -3,6 +3,7 @@ import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
+import 'package:hfascadets/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -15,6 +16,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -23,7 +25,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -128,7 +130,7 @@ class _SignInState extends State<SignIn> {
                                   hintText: 'Password',
                                 ),
                                 obscureText: true,
-                                validator: (val) => val.length < 6 ? 'Please enter a password with at least 6 characters.' : null,
+                                validator: (val) => val.isEmpty ? 'Please enter a password.' : null,
                                 onChanged: (val) {
                                   setState(() {
                                     password = val;
@@ -172,10 +174,14 @@ class _SignInState extends State<SignIn> {
                           GestureDetector(
                             onTap: () async {
                               if (_formKey.currentState.validate()) {
+                                setState(() {
+                                  loading = true;
+                                });
                                 dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                                 if (result == null) {
                                   setState(() {
                                     error = 'Your email or password was incorrect.\nPlease try again.';
+                                    loading = false;
                                   });
                                 }
                               }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
-import 'package:hfascadets/screens/authentication/forgot_password.dart';
+import 'package:hfascadets/shared/loading.dart';
 
 class SignUp extends StatefulWidget {
   final Function toggleView;
@@ -15,6 +15,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
   String name = '';
@@ -24,7 +25,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -168,10 +169,14 @@ class _SignUpState extends State<SignUp> {
                           GestureDetector(
                             onTap: () async {
                               if (_formKey.currentState.validate()) {
+                                setState(() {
+                                  loading = true;
+                                });
                                 dynamic result = await _auth.signUpWithEmailAndPassword(email, password);
                                 if (result == null) {
                                   setState(() {
                                     error = 'Please enter a valid email';
+                                    loading = false;
                                   });
                                 }
                               }
