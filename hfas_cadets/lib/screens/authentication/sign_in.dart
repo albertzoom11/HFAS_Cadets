@@ -91,11 +91,11 @@ class _SignInState extends State<SignIn> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60)),
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50)),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -103,54 +103,51 @@ class _SignInState extends State<SignIn> {
                       ),
                       FadeAnimation(
                           1.4,
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.indigo[200],
-                                    blurRadius: 20,
-                                    offset: Offset(0, 10),
-                                  )
-                                ]),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey[200])),
-                                  ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Email',
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(height: 20.0),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  icon: Icon(Icons.email),
+                                  hintText: 'Email',
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey[200])),
-                                  ),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Password',
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
+                                validator: (val) => val.isEmpty ? 'Please enter an email or sign in with Google.' : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    email = val;
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 20.0),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  icon: Icon(Icons.lock),
+                                  hintText: 'Password',
                                 ),
-                              ],
-                            ),
-                          )),
+                                obscureText: true,
+                                validator: (val) => val.length < 6 ? 'Please enter a password with at least 6 characters.' : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    password = val;
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 8,),
+                              Text(
+                                error,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 14.0,
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
                       SizedBox(
-                        height: 40,
+                        height: 18,
                       ),
                       FadeAnimation(
                           1.5,
