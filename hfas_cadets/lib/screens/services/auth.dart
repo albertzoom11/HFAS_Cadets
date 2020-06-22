@@ -29,9 +29,8 @@ class AuthService {
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
       FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
       return null;
@@ -43,8 +42,14 @@ class AuthService {
   // register with email and password
   Future signUpWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
       FirebaseUser user = result.user;
+      try {
+        await user.sendEmailVerification();
+      } catch(e) {
+        print('An error occured while trying to send email verification');
+        print(e.toString());
+      }
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
