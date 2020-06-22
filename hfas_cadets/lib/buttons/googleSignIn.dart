@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/services/auth.dart';
+import 'package:hfascadets/screens/home/home.dart';
+
+final AuthService _auth = AuthService();
 
 Widget googleSignInButton() {
   return OutlineButton(
     splashColor: Colors.grey,
-    onPressed: () {},
+    onPressed: () {
+      _auth.signInWithGoogle();
+    },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
     highlightElevation: 0,
     borderSide: BorderSide(color: Colors.grey),

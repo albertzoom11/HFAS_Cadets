@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/authentication/authenticate.dart';
 import 'package:hfascadets/screens/home/home.dart';
-import 'package:hfascadets/screens/models/user.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hfascadets/screens/authentication/verification.dart';
 
@@ -14,7 +12,6 @@ class Wrapper extends StatelessWidget {
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
-          // when google sign in is applied, make sure the following if statement doesn't mix it up
           if (snapshot.data.providerData.length == 2) { // logged in using email and password
             return snapshot.data.isEmailVerified
                 ? Home()
