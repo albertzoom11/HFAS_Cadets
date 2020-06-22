@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
+import 'package:hfascadets/screens/authentication/forgot_password.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -151,9 +152,17 @@ class _SignInState extends State<SignIn> {
                       ),
                       FadeAnimation(
                           1.5,
-                          Text(
-                            'Forgot Password?',
-                            style: TextStyle(color: Colors.grey),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ForgotPassword())
+                              );
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           )),
                       SizedBox(
                         height: 40,

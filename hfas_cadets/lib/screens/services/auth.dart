@@ -66,4 +66,15 @@ class AuthService {
       return null;
     }
   }
+
+  // reset password
+  Future resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return 'success';
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
