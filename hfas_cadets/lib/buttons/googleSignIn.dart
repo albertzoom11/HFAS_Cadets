@@ -24,7 +24,7 @@ Widget googleSignInButton() {
             child: Text(
               'Sign in with Google',
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.grey,
               ),
             ),
