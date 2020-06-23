@@ -71,7 +71,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   color: Colors.red,
                   fontSize: 14.0,
                 ),
-              )
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue[900],
+                child: Text(
+                  'Back to Login',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),

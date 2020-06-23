@@ -17,16 +17,14 @@ class Home extends StatelessWidget {
           FlatButton.icon(
             icon: Icon(Icons.person),
             onPressed: () async {
-              await _auth.signOut();
+              dynamic result = await _auth.signOutGoogle();
+              if (result == null) {
+                print('sign out failed');
+              } else {
+                Navigator.pushNamedAndRemoveUntil(context, '/mainMenu', (route) => false);
+              }
             },
-            label: Text('log out'),
-          ),
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            onPressed: () async {
-              await _auth.signOutGoogle();
-            },
-            label: Text('google sign out'),
+            label: Text('Sign out'),
           ),
         ],
       ),

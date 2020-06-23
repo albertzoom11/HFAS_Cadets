@@ -24,6 +24,7 @@ class _VerificationState extends State<Verification> {
             label: Text('Back to sign in'),
             onPressed: () async {
               await _auth.signOut();
+              Navigator.pop(context);
             },
           ),
         ],

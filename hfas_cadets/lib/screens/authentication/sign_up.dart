@@ -178,6 +178,8 @@ class _SignUpState extends State<SignUp> {
                                     error = 'Please enter a valid email';
                                     loading = false;
                                   });
+                                } else {
+                                  Navigator.pushReplacementNamed(context, '/verification');
                                 }
                               }
                             },
@@ -245,7 +247,7 @@ class _SignUpState extends State<SignUp> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: FadeAnimation(1.8, googleSignInButton()),
+                            child: FadeAnimation(1.8, googleSignInButton(context)),
                           ),
                           SizedBox(
                             width: 20,
@@ -255,7 +257,7 @@ class _SignUpState extends State<SignUp> {
                                 1.9,
                                 GestureDetector(
                                   onTap: () {
-                                    widget.toggleView();
+                                    Navigator.pushReplacementNamed(context, '/signIn');
                                   },
                                   child: Container(
                                     height: 50,

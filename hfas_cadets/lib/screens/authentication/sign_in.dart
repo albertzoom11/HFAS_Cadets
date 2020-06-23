@@ -6,9 +6,6 @@ import 'package:hfascadets/screens/authentication/forgot_password.dart';
 import 'package:hfascadets/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
-  final Function toggleView;
-  SignIn({this.toggleView});
-
   @override
   _SignInState createState() => _SignInState();
 }
@@ -183,6 +180,14 @@ class _SignInState extends State<SignIn> {
                                     error = 'Your email or password was incorrect.\nPlease try again.';
                                     loading = false;
                                   });
+                                } else if (result.isEmailVerified) {
+                                  print('hi');
+                                  Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                                } else {
+                                  setState(() {
+                                    error = 'Your email is not verified.';
+                                    loading = false;
+                                  });
                                 }
                               }
                             },
@@ -250,7 +255,7 @@ class _SignInState extends State<SignIn> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: FadeAnimation(1.8, googleSignInButton()),
+                            child: FadeAnimation(1.8, googleSignInButton(context)),
                           ),
                           SizedBox(
                             width: 20,
@@ -260,7 +265,7 @@ class _SignInState extends State<SignIn> {
                                 1.9,
                                 GestureDetector(
                                   onTap: () {
-                                    widget.toggleView();
+                                    Navigator.pushReplacementNamed(context, '/signUp');
                                   },
                                   child: Container(
                                     height: 50,

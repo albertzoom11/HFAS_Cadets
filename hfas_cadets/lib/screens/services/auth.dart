@@ -33,7 +33,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
       FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
+      return user;
     } catch(e) {
       print(e.toString());
       return null;
@@ -67,7 +67,8 @@ class AuthService {
   Future signOutGoogle() async {
     try {
       await googleSignIn.signOut();
-      return await _auth.signOut();
+      await _auth.signOut();
+      return 'success';
     } catch(e) {
       print(e.toString());
       return null;

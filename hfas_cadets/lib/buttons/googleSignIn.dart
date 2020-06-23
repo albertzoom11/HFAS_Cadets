@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
+
 final AuthService _auth = AuthService();
 
-Widget googleSignInButton() {
+Widget googleSignInButton(BuildContext context) {
   return OutlineButton(
     splashColor: Colors.grey,
-    onPressed: () {
-      _auth.signInWithGoogle();
+    onPressed: () async {
+      dynamic result = await _auth.signInWithGoogle();
+      if (result == null) {
+        print('google sign in failed');
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      }
     },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
     highlightElevation: 0,
