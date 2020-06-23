@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hfascadets/screens/models/user.dart';
+import 'package:hfascadets/screens/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,10 +20,10 @@ class AuthService {
   // sign in anonymously
   Future signInAnon() async {
     try {
-     AuthResult result = await _auth.signInAnonymously();
-     FirebaseUser user = result.user;
-     return _userFromFirebaseUser(user);
-    } catch(e) {
+      AuthResult result = await _auth.signInAnonymously();
+      FirebaseUser user = result.user;
+      return _userFromFirebaseUser(user);
+    } catch (e) {
       print(e.toString());
       return null;
     }
@@ -31,10 +32,11 @@ class AuthService {
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email.trim(), password: password);
       FirebaseUser user = result.user;
       return user;
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
@@ -44,7 +46,7 @@ class AuthService {
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -60,6 +62,13 @@ class AuthService {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
+    //create a new document for the user using the uid
+    bool isEmpty = await DatabaseService(uid: currentUser.uid).isRoleEmpty();
+    if (isEmpty) {
+      await DatabaseService(uid: currentUser.uid)
+          .updateUserData(user.displayName, 'Cadet');
+    }
+
     return 'signInWithGoogle succeeded: $user';
   }
 
@@ -69,25 +78,31 @@ class AuthService {
       await googleSignIn.signOut();
       await _auth.signOut();
       return 'success';
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
   // register with email and password
-  Future signUpWithEmailAndPassword(String email, String password) async {
+  Future signUpWithEmailAndPassword(
+      String name, String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email.trim(), password: password);
       FirebaseUser user = result.user;
+
+      //create a new document for the user using the uid
+      await DatabaseService(uid: user.uid).updateUserData(name, 'Cadet');
+
       try {
         await user.sendEmailVerification();
-      } catch(e) {
+      } catch (e) {
         print('An error occured while trying to send email verification');
         print(e.toString());
       }
       return _userFromFirebaseUser(user);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
@@ -97,7 +112,7 @@ class AuthService {
   Future signOut() async {
     try {
       return await _auth.signOut();
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }

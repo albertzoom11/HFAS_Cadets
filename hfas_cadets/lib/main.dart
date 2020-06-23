@@ -4,7 +4,7 @@ import 'package:hfascadets/screens/authentication/main_menu.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/authentication/verification.dart';
-import 'package:hfascadets/screens/home/home.dart';
+import 'package:hfascadets/screens/home/home.dart';  
 
 void main() {
   runApp(MyApp());
