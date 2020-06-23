@@ -5,9 +5,6 @@ import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/authentication/verification.dart';
 import 'package:hfascadets/screens/home/home.dart';
-import 'package:hfascadets/screens/models/user.dart';
-import 'package:hfascadets/screens/services/auth.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,9 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
-      child: MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.blue[900],
@@ -34,7 +29,6 @@ class MyApp extends StatelessWidget {
 
         },
         home: MainMenu(),
-      ),
     );
   }
 }
