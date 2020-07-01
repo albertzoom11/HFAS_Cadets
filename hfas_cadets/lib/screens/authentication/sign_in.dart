@@ -181,7 +181,6 @@ class _SignInState extends State<SignIn> {
                                     loading = false;
                                   });
                                 } else if (result.isEmailVerified) {
-                                  print('hi');
                                   Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
                                 } else {
                                   setState(() {
