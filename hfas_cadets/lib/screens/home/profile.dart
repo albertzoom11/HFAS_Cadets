@@ -57,12 +57,14 @@ class _ProfileState extends State<Profile> {
 class DrawerPainter extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
+    double startWidth = size.width * 0.35 / 0.65;
+
     Paint paint = Paint()..color = Colors.white..style = PaintingStyle.fill;
     Path path = Path();
-    path.moveTo(-size.width, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(-size.width, size.height);
+    path.moveTo(startWidth, 0);
+    path.lineTo(startWidth + 2 * size.width, 0);
+    path.lineTo(startWidth + 2 * size.width, size.height);
+    path.lineTo(startWidth, size.height);
     path.close();
     
     canvas.drawPath(path, paint);
