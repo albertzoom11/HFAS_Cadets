@@ -15,65 +15,27 @@ class _ProfileState extends State<Profile> {
     double sidebarSize = mediaQuery.width * 0.65;
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Colors.indigo[900],
-            Colors.indigo[800],
-            Colors.blue[900],
-          ]),
-        ),
-        width: mediaQuery.width,
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: MaterialButton(
-                onPressed: () {},
-                color: Colors.white,
-                child: Text(
-                  'Hello World',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: sidebarSize,
-              child: Stack(
-                children: <Widget>[
-                  CustomPaint(
-                    size: Size(sidebarSize, mediaQuery.height),
-                    painter: DrawerPainter(),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+      backgroundColor: Colors.blue[50],
+      appBar: AppBar(
+        title: Text('Profile'),
+        centerTitle: true,
+        backgroundColor: Colors.blue[900],
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            onPressed: () async {
+              dynamic result = await _auth.signOutGoogle();
+              if (result == null) {
+                print('sign out failed');
+              } else {
+                Navigator.pushNamedAndRemoveUntil(context, '/mainMenu', (route) => false);
+              }
+            },
+            label: Text('Sign out'),
+          ),
+        ],
       ),
     );
   }
-}
-
-class DrawerPainter extends CustomPainter{
-  @override
-  void paint(Canvas canvas, Size size) {
-    double startWidth = size.width * 0.35 / 0.65;
-
-    Paint paint = Paint()..color = Colors.white..style = PaintingStyle.fill;
-    Path path = Path();
-    path.moveTo(startWidth, 0);
-    path.lineTo(startWidth + 2 * size.width, 0);
-    path.lineTo(startWidth + 2 * size.width, size.height);
-    path.lineTo(startWidth, size.height);
-    path.close();
-    
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
-    return true;
-  }
-
 }
