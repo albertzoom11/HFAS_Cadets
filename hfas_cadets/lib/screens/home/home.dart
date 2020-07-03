@@ -45,6 +45,64 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
+      endDrawer: currentTab == 3 ? Drawer(
+        elevation: 16.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  accountName: Text("xyz"),
+                  accountEmail: Text("xyz@gmail.com"),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Text("xyz"),
+                  ),
+                  otherAccountsPictures: <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Text("abc"),
+                    )
+                  ],
+                ),
+                ListTile(
+                  title: new Text("All Inboxes"),
+                  leading: new Icon(Icons.mail),
+                ),
+                Divider(
+                  height: 0.1,
+                ),
+                ListTile(
+                  title: new Text("Primary"),
+                  leading: new Icon(Icons.inbox),
+                ),
+                ListTile(
+                  title: new Text("Social"),
+                  leading: new Icon(Icons.people),
+                ),
+                ListTile(
+                  title: new Text("Promotions"),
+                  leading: new Icon(Icons.local_offer),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Divider(
+                  height: 0.1,
+                ),
+                ListTile(
+                  title: new Text("Settings"),
+                  leading: new Icon(Icons.settings),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ) : null,
+
       // Bottom Nav Bar
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),

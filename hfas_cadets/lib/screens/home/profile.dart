@@ -11,29 +11,67 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    Size mediaQuery = MediaQuery.of(context).size;
+    double sidebarSize = mediaQuery.width * 0.65;
+
     return Scaffold(
-        backgroundColor: Colors.blue[50],
-        appBar: AppBar(
-          title: Text('Profile'),
-          centerTitle: true,
-          backgroundColor: Colors.blue[900],
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.person),
-              onPressed: () async {
-                dynamic result = await _auth.signOutGoogle();
-                if (result == null) {
-                  print('sign out failed');
-                } else {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/mainMenu', (route) => false);
-                }
-              },
-              label: Text('Sign out'),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.indigo[900],
+            Colors.indigo[800],
+            Colors.blue[900],
+          ]),
+        ),
+        width: mediaQuery.width,
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: MaterialButton(
+                onPressed: () {},
+                color: Colors.white,
+                child: Text(
+                  'Hello World',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
             ),
+            SizedBox(
+              width: sidebarSize,
+              child: Stack(
+                children: <Widget>[
+                  CustomPaint(
+                    size: Size(sidebarSize, mediaQuery.height),
+                    painter: DrawerPainter(),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
+      ),
     );
   }
+}
+
+class DrawerPainter extends CustomPainter{
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = Colors.white..style = PaintingStyle.fill;
+    Path path = Path();
+    path.moveTo(-size.width, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(-size.width, size.height);
+    path.close();
+    
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    // TODO: implement shouldRepaint
+    return true;
+  }
+
 }
