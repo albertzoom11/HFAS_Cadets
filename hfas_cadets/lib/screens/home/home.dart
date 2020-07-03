@@ -53,18 +53,19 @@ class _HomeState extends State<Home> {
             Column(
               children: <Widget>[
                 UserAccountsDrawerHeader(
-                  accountName: Text("xyz"),
-                  accountEmail: Text("xyz@gmail.com"),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                     Colors.indigo[900],
+                     Colors.indigo[800],
+                     Colors.blue[900],
+                    ]),
+                  ),
+                  accountName: Text("Dom Cobb"),
+                  accountEmail: Text("dream@gmail.com"),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Text("xyz"),
+                    backgroundImage: AssetImage('assets/images/hfasLogo.png'),
                   ),
-                  otherAccountsPictures: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Text("abc"),
-                    )
-                  ],
                 ),
                 ListTile(
                   title: new Text("All Inboxes"),
