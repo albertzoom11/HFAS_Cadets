@@ -3,6 +3,7 @@ import 'package:hfascadets/screens/home/calendar.dart';
 import 'package:hfascadets/screens/home/dashboard.dart';
 import 'package:hfascadets/screens/home/journal.dart';
 import 'package:hfascadets/screens/home/profile.dart';
+import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -29,6 +30,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: PageStorage(
         child: currentScreen,

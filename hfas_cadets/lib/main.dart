@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
 import 'package:hfascadets/screens/authentication/main_menu.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
@@ -18,6 +19,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
