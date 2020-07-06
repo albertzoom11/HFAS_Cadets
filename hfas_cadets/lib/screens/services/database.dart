@@ -21,4 +21,16 @@ class DatabaseService {
     });
     return isEmpty;
   }
+
+  // NOT IN USE YET
+  Future addShift(String date, String timeIn, String timeOut, String totalHours, String numOfCalls, String numOfTasks) async {
+    return await userCollection.document(uid).collection('shifts').add({
+      'date' : date,
+      'timeIn' : timeIn,
+      'timeOut' : timeOut,
+      'totalHours' : totalHours,
+      'numOfCalls' : numOfCalls,
+      'numOfTasks' : numOfTasks,
+    });
+  }
 }
