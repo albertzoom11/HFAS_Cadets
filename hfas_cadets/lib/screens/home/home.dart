@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
       // FAB
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.indigo[900],
         onPressed: () {
           Navigator.pushNamed(context, '/add');
         },
@@ -132,13 +132,13 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.home,
                           color:
-                              currentTab == 0 ? Colors.blue[900] : Colors.grey,
+                              currentTab == 0 ? Colors.indigo[900] : Colors.grey,
                         ),
                         Text(
                           'Home',
                           style: TextStyle(
                             color: currentTab == 0
-                                ? Colors.blue[900]
+                                ? Colors.indigo[900]
                                 : Colors.grey,
                           ),
                         ),
@@ -161,13 +161,13 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.calendar_today,
                           color:
-                              currentTab == 1 ? Colors.blue[900] : Colors.grey,
+                              currentTab == 1 ? Colors.indigo[900] : Colors.grey,
                         ),
                         Text(
                           'Calendar',
                           style: TextStyle(
                             color: currentTab == 1
-                                ? Colors.blue[900]
+                                ? Colors.indigo[900]
                                 : Colors.grey,
                           ),
                         ),
@@ -195,13 +195,13 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.view_list,
                           color:
-                          currentTab == 2 ? Colors.blue[900] : Colors.grey,
+                          currentTab == 2 ? Colors.indigo[900] : Colors.grey,
                         ),
                         Text(
                           'Journal',
                           style: TextStyle(
                             color: currentTab == 2
-                                ? Colors.blue[900]
+                                ? Colors.indigo[900]
                                 : Colors.grey,
                           ),
                         ),
@@ -224,13 +224,13 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.person,
                           color:
-                          currentTab == 3 ? Colors.blue[900] : Colors.grey,
+                          currentTab == 3 ? Colors.indigo[900] : Colors.grey,
                         ),
                         Text(
                           'Profile',
                           style: TextStyle(
                             color: currentTab == 3
-                                ? Colors.blue[900]
+                                ? Colors.indigo[900]
                                 : Colors.grey,
                           ),
                         ),

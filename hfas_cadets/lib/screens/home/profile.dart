@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/shared/month_stat.dart';
@@ -13,7 +14,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.blue[50],
       body: SingleChildScrollView(
@@ -30,7 +30,10 @@ class _ProfileState extends State<Profile> {
               ),
               height: 45 * SizeConfig.blockSizeVertical,
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 7 * SizeConfig.blockSizeVertical),
+                padding: EdgeInsets.only(
+                    left: 30.0,
+                    right: 30.0,
+                    top: 7 * SizeConfig.blockSizeVertical),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -38,96 +41,150 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Container(
-                              height: 11 * SizeConfig.blockSizeVertical,
-                              width: 22 * SizeConfig.blockSizeHorizontal,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage('assets/images/hfasLogo.png'),
+                            FadeAnimation(
+                              .2,
+                              Container(
+                                height: 11 * SizeConfig.blockSizeVertical,
+                                width: 22 * SizeConfig.blockSizeHorizontal,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/images/hfasLogo.png'),
+                                  ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 5 * SizeConfig.blockSizeHorizontal,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text('Dom Cobb', style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 3 * SizeConfig.blockSizeVertical,
-                                  fontWeight: FontWeight.bold,
-                                ),),
-                                SizedBox(height: 1 * SizeConfig.blockSizeVertical,),
-                                Text('Cadet', style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 2 * SizeConfig.blockSizeVertical,
-                                ),),
-                              ],
+                            SizedBox(
+                              width: 5 * SizeConfig.blockSizeHorizontal,
                             ),
+                            FadeAnimation(
+                                .25,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Dom Cobb',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            3 * SizeConfig.blockSizeVertical,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 1 * SizeConfig.blockSizeVertical,
+                                    ),
+                                    Text(
+                                      'Cadet',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize:
+                                            2 * SizeConfig.blockSizeVertical,
+                                      ),
+                                    ),
+                                  ],
+                                )),
                           ],
                         ),
-                        FloatingActionButton(
-                          onPressed: () {
-                            print('hi');
-                            Scaffold.of(context).openEndDrawer();
-                          },
-                          child: Icon(Icons.menu, size: 30,),
-                          foregroundColor: Colors.indigo[900],
-                          backgroundColor: Colors.white,
-                        ),
+                        FadeAnimation(
+                            .3,
+                            FloatingActionButton(
+                              onPressed: () {
+                                print('hi');
+                                Scaffold.of(context).openEndDrawer();
+                              },
+                              child: Icon(
+                                Icons.menu,
+                                size: 30,
+                              ),
+                              foregroundColor: Colors.indigo[900],
+                              backgroundColor: Colors.white,
+                            )),
                       ],
                     ),
-                    SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5 * SizeConfig.blockSizeHorizontal),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Text('420', style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.blockSizeVertical,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                              Text('Hours', style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 1.9 * SizeConfig.blockSizeVertical,
-                              ),),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Text('321', style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.blockSizeVertical,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                              Text('Calls', style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 1.9 * SizeConfig.blockSizeVertical,
-                              ),),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Text('111', style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.blockSizeVertical,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                              Text('Tasks', style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 1.9 * SizeConfig.blockSizeVertical,
-                              ),),
-                            ],
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                      height: 3 * SizeConfig.blockSizeVertical,
                     ),
-                    SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
-                    Container(
+                    FadeAnimation(
+                        .4,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 5 * SizeConfig.blockSizeHorizontal),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    '420',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          3 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Hours',
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize:
+                                          1.9 * SizeConfig.blockSizeVertical,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    '321',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          3 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Calls',
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize:
+                                          1.9 * SizeConfig.blockSizeVertical,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    '111',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          3 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Tasks',
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize:
+                                          1.9 * SizeConfig.blockSizeVertical,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )),
+                    SizedBox(
+                      height: 3 * SizeConfig.blockSizeVertical,
+                    ),
+                    FadeAnimation(.5, Container(
                       width: 90 * SizeConfig.blockSizeHorizontal,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
@@ -138,14 +195,17 @@ class _ProfileState extends State<Profile> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('EDIT PROFILE', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 1.8 * SizeConfig.blockSizeVertical,
-                            ),),
+                            child: Text(
+                              'EDIT PROFILE',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 1.8 * SizeConfig.blockSizeVertical,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    )),
                   ],
                 ),
               ),
@@ -162,8 +222,11 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 6 * SizeConfig.blockSizeHorizontal, right: 6 * SizeConfig.blockSizeHorizontal, top: 3 * SizeConfig.blockSizeVertical),
-                  child: Column(
+                  padding: EdgeInsets.only(
+                      left: 6 * SizeConfig.blockSizeHorizontal,
+                      right: 6 * SizeConfig.blockSizeHorizontal,
+                      top: 3 * SizeConfig.blockSizeVertical),
+                  child: FadeAnimation(.6, Column(
                     children: <Widget>[
                       MonthStat(month: 'December'),
                       SizedBox(height: 4 * SizeConfig.blockSizeVertical),
@@ -190,7 +253,7 @@ class _ProfileState extends State<Profile> {
                       MonthStat(month: 'January'),
                       SizedBox(height: 6 * SizeConfig.blockSizeVertical),
                     ],
-                  ),
+                  )),
                 ),
               ),
             ),
@@ -199,5 +262,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
 }

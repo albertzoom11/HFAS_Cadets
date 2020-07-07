@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 
 class MonthStat extends StatefulWidget {
@@ -60,13 +61,13 @@ class _MonthStatState extends State<MonthStat> {
         padding: EdgeInsets.symmetric(horizontal: 10 * SizeConfig.blockSizeHorizontal, vertical: 1.5 * SizeConfig.blockSizeVertical),
         child: Column(
           children: <Widget>[
-            Text(widget.month, style: TextStyle(
+            FadeAnimation(.1, Text(widget.month, style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 2.2 * SizeConfig.blockSizeVertical,
-            ),),
+            ),),),
             SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
-            Row(
+            FadeAnimation(.3, Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -143,7 +144,7 @@ class _MonthStatState extends State<MonthStat> {
                   ],
                 ),
               ],
-            ),
+            ),)
           ],
         ),
       ),
