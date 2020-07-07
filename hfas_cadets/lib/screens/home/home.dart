@@ -49,60 +49,58 @@ class _HomeState extends State<Home> {
 
       endDrawer: currentTab == 3 ? Drawer(
         elevation: 16.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
+        child: Container(
+          decoration: BoxDecoration(
+//            gradient: LinearGradient(colors: [
+//              Color.fromRGBO(22, 44, 136, 1),
+//              Colors.blue[900],
+//            ]),
+            color: Colors.white
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                     Colors.indigo[900],
-                     Colors.indigo[800],
-                     Colors.blue[900],
-                    ]),
-                  ),
-                  accountName: Text("Dom Cobb"),
-                  accountEmail: Text("dream@gmail.com"),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage('assets/images/hfasLogo.png'),
-                  ),
+                Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: new Text("All Inboxes", style: TextStyle(color: Colors.indigo[900]),),
+                      leading: new Icon(Icons.mail, color: Colors.indigo[900],),
+                    ),
+                    Divider(
+                      height: 0.1,
+                      color: Colors.indigo[900],
+                    ),
+                    ListTile(
+                      title: new Text("Primary", style: TextStyle(color: Colors.indigo[900]),),
+                      leading: new Icon(Icons.inbox, color: Colors.indigo[900],),
+                    ),
+                    ListTile(
+                      title: new Text("Social", style: TextStyle(color: Colors.indigo[900]),),
+                      leading: new Icon(Icons.people, color: Colors.indigo[900],),
+                    ),
+                    ListTile(
+                      title: new Text("Promotions", style: TextStyle(color: Colors.indigo[900]),),
+                      leading: new Icon(Icons.local_offer, color: Colors.indigo[900],),
+                    ),
+                  ],
                 ),
-                ListTile(
-                  title: new Text("All Inboxes"),
-                  leading: new Icon(Icons.mail),
-                ),
-                Divider(
-                  height: 0.1,
-                ),
-                ListTile(
-                  title: new Text("Primary"),
-                  leading: new Icon(Icons.inbox),
-                ),
-                ListTile(
-                  title: new Text("Social"),
-                  leading: new Icon(Icons.people),
-                ),
-                ListTile(
-                  title: new Text("Promotions"),
-                  leading: new Icon(Icons.local_offer),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Divider(
+                      height: 0.1,
+                      color: Colors.indigo[900],
+                    ),
+                    ListTile(
+                      title: new Text("Settings", style: TextStyle(color: Colors.indigo[900]),),
+                      leading: new Icon(Icons.settings, color: Colors.indigo[900],),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Divider(
-                  height: 0.1,
-                ),
-                ListTile(
-                  title: new Text("Settings"),
-                  leading: new Icon(Icons.settings),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ) : null,
 

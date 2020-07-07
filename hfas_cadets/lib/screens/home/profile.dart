@@ -34,33 +34,47 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Container(
-                          height: 11 * SizeConfig.blockSizeVertical,
-                          width: 22 * SizeConfig.blockSizeHorizontal,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/hfasLogo.png'),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 5 * SizeConfig.blockSizeHorizontal,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: <Widget>[
-                            Text('Dom Cobb', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 3 * SizeConfig.blockSizeVertical,
-                              fontWeight: FontWeight.bold,
-                            ),),
-                            SizedBox(height: 1 * SizeConfig.blockSizeVertical,),
-                            Text('Cadet', style: TextStyle(
-                              color: Colors.white60,
-                              fontSize: 2 * SizeConfig.blockSizeVertical,
-                            ),),
+                            Container(
+                              height: 11 * SizeConfig.blockSizeVertical,
+                              width: 22 * SizeConfig.blockSizeHorizontal,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('assets/images/hfasLogo.png'),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5 * SizeConfig.blockSizeHorizontal,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Dom Cobb', style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 3 * SizeConfig.blockSizeVertical,
+                                  fontWeight: FontWeight.bold,
+                                ),),
+                                SizedBox(height: 1 * SizeConfig.blockSizeVertical,),
+                                Text('Cadet', style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 2 * SizeConfig.blockSizeVertical,
+                                ),),
+                              ],
+                            ),
                           ],
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {
+                            print('hi');
+                            Scaffold.of(context).openEndDrawer();
+                          },
+                          child: Icon(Icons.menu, size: 30,),
+                          foregroundColor: Colors.indigo[900],
+                          backgroundColor: Colors.white,
                         ),
                       ],
                     ),
