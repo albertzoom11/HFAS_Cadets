@@ -11,8 +11,6 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-  final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +28,11 @@ class _MainMenuState extends State<MainMenu> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 220,),
-              FadeAnimation(1.1, Image(
+              FadeAnimation(.5, Image(
                 image: AssetImage('assets/images/hfasLogo.png'), height: 150,
               )),
               SizedBox(height: 30,),
-              FadeAnimation(1.3, Text(
+              FadeAnimation(.7, Text(
                 'HFAS Cadets',
                 style: TextStyle(
                   color: Colors.white,
@@ -42,7 +40,7 @@ class _MainMenuState extends State<MainMenu> {
                 ),
               )),
               SizedBox(height: 30,),
-              FadeAnimation(1.5, GestureDetector(
+              FadeAnimation(.9, GestureDetector(
                 onTap: () async {
                   Navigator.push(
                     context,
@@ -68,7 +66,7 @@ class _MainMenuState extends State<MainMenu> {
                 ),
               )),
               SizedBox(height: 30,),
-              FadeAnimation(1.6, GestureDetector(
+              FadeAnimation(1.1, GestureDetector(
                 onTap: () async {
                   Navigator.push(
                     context,

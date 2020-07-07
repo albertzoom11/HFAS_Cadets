@@ -49,7 +49,7 @@ class _SignInState extends State<SignIn> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           FadeAnimation(
-                              1.1,
+                              .5,
                               Text(
                                 'Login',
                                 style: TextStyle(
@@ -61,7 +61,7 @@ class _SignInState extends State<SignIn> {
                             height: 10,
                           ),
                           FadeAnimation(
-                              1.2,
+                              .6,
                               Text(
                                 'Welcome Back',
                                 style: TextStyle(
@@ -77,7 +77,7 @@ class _SignInState extends State<SignIn> {
                 SizedBox(width: 120,),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 20.0, 0),
-                  child: FadeAnimation(1.3, Image(
+                  child: FadeAnimation(.7, Image(
                     image: AssetImage('assets/images/hfasLogo.png'), height: 150,
                   )),
                 ),
@@ -102,7 +102,7 @@ class _SignInState extends State<SignIn> {
                         height: 60,
                       ),
                       FadeAnimation(
-                          1.4,
+                          .8,
                         Form(
                           key: _formKey,
                           child: Column(
@@ -150,7 +150,7 @@ class _SignInState extends State<SignIn> {
                         height: 18,
                       ),
                       FadeAnimation(
-                          1.5,
+                          .8,
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -167,7 +167,7 @@ class _SignInState extends State<SignIn> {
                         height: 40,
                       ),
                       FadeAnimation(
-                          1.6,
+                          .9,
                           GestureDetector(
                             onTap: () async {
                               if (_formKey.currentState.validate()) {
@@ -212,7 +212,7 @@ class _SignInState extends State<SignIn> {
                         height: 50,
                       ),
                       FadeAnimation(
-                          1.7,
+                          1.1,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
@@ -254,14 +254,14 @@ class _SignInState extends State<SignIn> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: FadeAnimation(1.8, googleSignInButton(context)),
+                            child: FadeAnimation(1.3, googleSignInButton(context)),
                           ),
                           SizedBox(
                             width: 20,
                           ),
                           Expanded(
                             child: FadeAnimation(
-                                1.9,
+                                1.4,
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.pushReplacementNamed(context, '/signUp');
