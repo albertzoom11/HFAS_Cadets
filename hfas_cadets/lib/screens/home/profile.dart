@@ -92,7 +92,6 @@ class _ProfileState extends State<Profile> {
                             .3,
                             FloatingActionButton(
                               onPressed: () {
-                                print('hi');
                                 Scaffold.of(context).openEndDrawer();
                               },
                               child: Icon(
