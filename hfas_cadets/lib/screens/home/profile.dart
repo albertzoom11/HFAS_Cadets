@@ -90,19 +90,23 @@ class _ProfileState extends State<Profile> {
                                 )),
                           ],
                         ),
-                        FadeAnimation(
-                            .3,
-                            FloatingActionButton(
-                              onPressed: () {
-                                Scaffold.of(context).openEndDrawer();
-                              },
-                              child: Icon(
-                                Icons.menu,
-                                size: 30,
-                              ),
-                              foregroundColor: Colors.indigo[900],
-                              backgroundColor: Colors.white,
-                            )),
+                        Column(
+                          children: <Widget>[
+                            FadeAnimation(
+                                .3,
+                                IconButton(
+                                  onPressed: () {
+                                    Scaffold.of(context).openEndDrawer();
+                                  },
+                                  icon: Icon(
+                                    Icons.menu,
+                                    size: 40,
+                                  ),
+                                  color: Colors.white,
+                                )),
+                            SizedBox(height: 5 * SizeConfig.blockSizeVertical,),
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(
