@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
-import 'package:hfascadets/screens/services/auth.dart';
-import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
-import 'package:hfascadets/screens/authentication/forgot_password.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 
@@ -14,7 +11,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -26,6 +22,8 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     final User user = ModalRoute.of(context).settings.arguments;
+    email = email == '' ? user.email : email;
+    name = name == '' ? user.name : name;
     final DatabaseService _databaseService = DatabaseService(uid: user.uid);
     return loading
         ? Loading()
@@ -136,6 +134,7 @@ class _EditProfileState extends State<EditProfile> {
                                           icon: Icon(Icons.person),
                                           labelText: 'Name',
                                         ),
+                                        initialValue: user.name,
                                         validator: (val) => val.isEmpty
                                             ? 'Please enter a name.'
                                             : null,
@@ -151,10 +150,12 @@ class _EditProfileState extends State<EditProfile> {
                                           icon: Icon(Icons.email),
                                           labelText: 'Email',
                                         ),
+                                        initialValue: user.email,
                                         validator: (val) => val.isEmpty
                                             ? 'Please enter an email.'
                                             : null,
                                         onChanged: (val) {
+                                          print('ahhhhh: $val');
                                           setState(() {
                                             email = val;
                                           });
