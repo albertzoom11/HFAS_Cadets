@@ -10,6 +10,7 @@ import 'package:hfascadets/screens/home/calendar.dart';
 import 'package:hfascadets/screens/home/home.dart';
 import 'package:hfascadets/screens/home/journal.dart';
 import 'package:hfascadets/screens/home/profile.dart';
+import 'package:hfascadets/screens/operations/edit_profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           "/journal": (_) => Journal(),
           "/profile": (_) => Profile(),
           "/add": (_) => Add(),
+          "/edit_profile": (_) => EditProfile(),
         },
         home: MainMenu(),
     );
