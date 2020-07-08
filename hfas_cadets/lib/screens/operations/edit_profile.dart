@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
+import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 
 class EditProfile extends StatefulWidget {
@@ -18,287 +20,260 @@ class _EditProfileState extends State<EditProfile> {
 
   // text field state
   String email = '';
-  String password = '';
+  String name = '';
   String error = '';
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Colors.indigo[900],
-            Colors.indigo[800],
-            Colors.blue[500],
-          ]),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 80,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          FadeAnimation(
-                              .5,
-                              Text(
-                                'Login',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                ),
-                              )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          FadeAnimation(
-                              .6,
-                              Text(
-                                'Welcome Back',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(width: 120,),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 20.0, 0),
-                  child: FadeAnimation(.7, Image(
-                    image: AssetImage('assets/images/hfasLogo.png'), height: 150,
-                  )),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      topRight: Radius.circular(50)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
+    final User user = ModalRoute.of(context).settings.arguments;
+    final DatabaseService _databaseService = DatabaseService(uid: user.uid);
+    return loading
+        ? Loading()
+        : Scaffold(
+            body: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+                  Colors.indigo[900],
+                  Colors.indigo[800],
+                  Colors.blue[500],
+                ]),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 60,
+                        height: 4 * SizeConfig.blockSizeVertical,
                       ),
-                      FadeAnimation(
-                          .8,
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(height: 20.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    icon: Icon(Icons.person),
-                                    helperText: 'Name',
-                                  ),
-                                  obscureText: true,
-                                  validator: (val) => val.isEmpty ? 'Please enter a name.' : null,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      password = val;
-                                    });
-                                  },
-                                ),
-                                SizedBox(height: 20.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    icon: Icon(Icons.email),
-                                    hintText: 'Email',
-                                  ),
-                                  validator: (val) => val.isEmpty ? 'Please enter an email.' : null,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      email = val;
-                                    });
-                                  },
-                                ),
-                                SizedBox(height: 8,),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 6 * SizeConfig.blockSizeHorizontal,
+                            vertical: 3 * SizeConfig.blockSizeVertical),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            FadeAnimation(
+                                .5,
                                 Text(
-                                  error,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 14.0,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )),
-                      SizedBox(
-                        height: 18,
-                      ),
-                      FadeAnimation(
-                          .8,
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ForgotPassword())
-                              );
-                            },
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          )),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      FadeAnimation(
-                          .9,
-                          GestureDetector(
-                            onTap: () async {
-                              if (_formKey.currentState.validate()) {
-                                setState(() {
-                                  loading = true;
-                                });
-                                dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                                if (result == null) {
-                                  setState(() {
-                                    error = 'Your email or password was incorrect.\nPlease try again.';
-                                    loading = false;
-                                  });
-                                } else if (result.isEmailVerified) {
-                                  User user = _auth.currentUser;
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    '/home', (route) => false,
-                                    arguments: user,
-                                  );
-                                } else {
-                                  setState(() {
-                                    error = 'Your email is not verified.';
-                                    loading = false;
-                                  });
-                                }
-                              }
-                            },
-                            child: Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 50),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.indigo[900],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Log in',
+                                  'Edit Profile',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 5 * SizeConfig.blockSizeVertical,
                                   ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 1 * SizeConfig.blockSizeVertical,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          FadeAnimation(
+                            .6,
+                            Container(
+                              height: 13 * SizeConfig.blockSizeVertical,
+                              width: 26 * SizeConfig.blockSizeHorizontal,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image:
+                                      AssetImage('assets/images/hfasLogo.png'),
                                 ),
                               ),
                             ),
-                          )),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      FadeAnimation(
-                          1.1,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Divider(
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Text(
-                                  'OR',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Divider(
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: FadeAnimation(1.3, googleSignInButton(context)),
                           ),
                           SizedBox(
-                            width: 20,
+                            height: 2 * SizeConfig.blockSizeVertical,
                           ),
-                          Expanded(
-                            child: FadeAnimation(
-                                1.4,
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushReplacementNamed(context, '/signUp');
-                                  },
-                                  child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.blue[900],
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Sign Up',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                          ),
+                          FadeAnimation(
+                              .7,
+                              Text(
+                                'Change Profile Photo',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              )),
                         ],
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(
+                    height: 5 * SizeConfig.blockSizeVertical,
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8 * SizeConfig.blockSizeHorizontal),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 2 * SizeConfig.blockSizeVertical,
+                            ),
+                            FadeAnimation(
+                                .8,
+                                Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: <Widget>[
+                                      SizedBox(height: 20.0),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                          icon: Icon(Icons.person),
+                                          labelText: 'Name',
+                                        ),
+                                        validator: (val) => val.isEmpty
+                                            ? 'Please enter a name.'
+                                            : null,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            name = val;
+                                          });
+                                        },
+                                      ),
+                                      SizedBox(height: 2 * SizeConfig.blockSizeVertical),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                          icon: Icon(Icons.email),
+                                          labelText: 'Email',
+                                        ),
+                                        validator: (val) => val.isEmpty
+                                            ? 'Please enter an email.'
+                                            : null,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            email = val;
+                                          });
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 1 * SizeConfig.blockSizeVertical,
+                                      ),
+                                      Text(
+                                        error,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14.0,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                            SizedBox(height: 3 * SizeConfig.blockSizeVertical),
+                            FadeAnimation(.9, Text('Change Role', style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 2 * SizeConfig.blockSizeVertical,
+                            ),),),
+                            SizedBox(height: 5 * SizeConfig.blockSizeVertical),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: FadeAnimation(
+                                      1,
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: OutlineButton(
+                                          splashColor: Colors.black,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                                          highlightElevation: 0,
+                                          disabledBorderColor: Colors.black,
+                                          child: Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(4 * SizeConfig.blockSizeHorizontal),
+                                              child: Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(
+                                  width: 5 * SizeConfig.blockSizeHorizontal,
+                                ),
+                                Expanded(
+                                  child: FadeAnimation(
+                                      1.1,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          if (_formKey.currentState.validate()) {
+                                            setState(() {
+                                              loading = true;
+                                            });
+                                            User newUser = User(
+                                                uid: user.uid,
+                                                name: name,
+                                                email: user.email,
+                                                role: user.role,
+                                                totalHours: user.totalHours,
+                                                totalCalls: user.totalCalls,
+                                                totalTasks: user.totalTasks,
+                                            );
+                                            dynamic result = await _databaseService.updateUserData(newUser);
+                                            if (result == null) {
+                                              setState(() {
+                                                error = 'Please enter a valid email.';
+                                                loading = false;
+                                              });
+                                            } else {
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                '/home', (route) => false,
+                                                arguments: newUser,
+                                              );
+                                            }
+                                          }
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            color: Colors.blue[900],
+                                          ),
+                                          child: Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(4 * SizeConfig.blockSizeHorizontal),
+                                              child: Text(
+                                                'Save Changes',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

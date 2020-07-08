@@ -5,7 +5,6 @@ import 'package:hfascadets/screens/home/journal.dart';
 import 'package:hfascadets/screens/home/profile.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
-import 'package:hfascadets/screens/services/auth.dart';
 
 class Home extends StatefulWidget {
   @override

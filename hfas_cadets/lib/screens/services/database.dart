@@ -20,8 +20,10 @@ class DatabaseService {
   Future updateUserData(User user) async {
     try {
       await userCollection.document(user.uid).setData(user.toJson());
+      return 'success';
     } catch (e) {
-      return e.message;
+      print(e.message);
+      return null;
     }
   }
 

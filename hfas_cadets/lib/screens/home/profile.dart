@@ -6,6 +6,7 @@ import 'package:hfascadets/shared/month_stat.dart';
 
 class Profile extends StatefulWidget {
   final User user;
+
   Profile({this.user});
 
   @override
@@ -13,7 +14,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +104,9 @@ class _ProfileState extends State<Profile> {
                                   ),
                                   color: Colors.white,
                                 )),
-                            SizedBox(height: 5 * SizeConfig.blockSizeVertical,),
+                            SizedBox(
+                              height: 5 * SizeConfig.blockSizeVertical,
+                            ),
                           ],
                         ),
                       ],
@@ -189,33 +191,40 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: 3 * SizeConfig.blockSizeVertical,
                     ),
-                    FadeAnimation(.5, GestureDetector(
-                      child: Container(
-                        width: 90 * SizeConfig.blockSizeHorizontal,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'EDIT PROFILE',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 1.8 * SizeConfig.blockSizeVertical,
-                                ),
-                              ),
+                    FadeAnimation(
+                        .5,
+                        GestureDetector(
+                          child: Container(
+                            width: 90 * SizeConfig.blockSizeHorizontal,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/edit_profile');
-                      },
-                    )),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'EDIT PROFILE',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          1.8 * SizeConfig.blockSizeVertical,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/edit_profile',
+                              arguments: widget.user,
+                            );
+                          },
+                        )),
                   ],
                 ),
               ),
@@ -236,34 +245,36 @@ class _ProfileState extends State<Profile> {
                       left: 6 * SizeConfig.blockSizeHorizontal,
                       right: 6 * SizeConfig.blockSizeHorizontal,
                       top: 3 * SizeConfig.blockSizeVertical),
-                  child: FadeAnimation(.6, Column(
-                    children: <Widget>[
-                      MonthStat(month: 'December'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'November'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'October'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'September'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'August'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'July'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'June'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'May'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'April'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'March'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'February'),
-                      SizedBox(height: 4 * SizeConfig.blockSizeVertical),
-                      MonthStat(month: 'January'),
-                      SizedBox(height: 6 * SizeConfig.blockSizeVertical),
-                    ],
-                  )),
+                  child: FadeAnimation(
+                      .6,
+                      Column(
+                        children: <Widget>[
+                          MonthStat(month: 'December'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'November'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'October'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'September'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'August'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'July'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'June'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'May'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'April'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'March'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'February'),
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical),
+                          MonthStat(month: 'January'),
+                          SizedBox(height: 6 * SizeConfig.blockSizeVertical),
+                        ],
+                      )),
                 ),
               ),
             ),
