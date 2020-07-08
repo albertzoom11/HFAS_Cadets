@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
-import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/shared/month_stat.dart';
 
 class Profile extends StatefulWidget {
@@ -120,7 +119,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    '420',
+                                    widget.user.totalHours,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -141,7 +140,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    '321',
+                                    widget.user.totalCalls,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -162,7 +161,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    '111',
+                                    widget.user.totalTasks,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:

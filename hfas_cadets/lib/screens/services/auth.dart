@@ -11,10 +11,8 @@ class AuthService {
   User get currentUser => _currentUser;
 
   Future _populateCurrentUser(FirebaseUser user) async {
-    print('1');
     if (user != null) {
       _currentUser = await database.getUser(user.uid);
-      print('2');
     }
   }
 
@@ -62,6 +60,9 @@ class AuthService {
         name: user.displayName,
         email: user.email,
         role: 'Cadet',
+        totalHours: '0',
+        totalCalls: '0',
+        totalTasks: '0',
       ));
     }
 
@@ -95,6 +96,9 @@ class AuthService {
         name: name,
         email: email,
         role: 'Cadet',
+        totalHours: '0',
+        totalCalls: '0',
+        totalTasks: '0',
       ));
 
       try {
