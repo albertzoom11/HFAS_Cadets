@@ -6,15 +6,16 @@ import 'package:hfascadets/screens/services/database.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  DatabaseService database = DatabaseService();
+  User _currentUser;
+  User get currentUser => _currentUser;
 
-  // create user object based on FirebaseUser
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
-  }
-
-  // auth change user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  Future _populateCurrentUser(FirebaseUser user) async {
+    print('1');
+    if (user != null) {
+      _currentUser = await database.getUser(user.uid);
+      print('2');
+    }
   }
 
   // sign in with email and password
@@ -23,6 +24,8 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password);
       FirebaseUser user = result.user;
+      await _populateCurrentUser(user);
+      print(user);
       return user;
     } catch (e) {
       print(e.toString());
@@ -54,9 +57,15 @@ class AuthService {
     bool isEmpty = await DatabaseService(uid: currentUser.uid).isRoleEmpty();
     if (isEmpty) {
       await DatabaseService(uid: currentUser.uid)
-          .updateUserData(user.displayName, 'Cadet');
+          .updateUserData(User(
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        role: 'Cadet',
+      ));
     }
 
+    await _populateCurrentUser(user);
     return 'signInWithGoogle succeeded: $user';
   }
 
@@ -81,7 +90,12 @@ class AuthService {
       FirebaseUser user = result.user;
 
       //create a new document for the user using the uid
-      await DatabaseService(uid: user.uid).updateUserData(name, 'Cadet');
+      await DatabaseService(uid: user.uid).updateUserData(User(
+        uid: user.uid,
+        name: name,
+        email: email,
+        role: 'Cadet',
+      ));
 
       try {
         await user.sendEmailVerification();
@@ -89,7 +103,7 @@ class AuthService {
         print('An error occured while trying to send email verification');
         print(e.toString());
       }
-      return _userFromFirebaseUser(user);
+      return user != null;
     } catch (e) {
       print(e.toString());
       return null;
@@ -115,5 +129,11 @@ class AuthService {
       print(e.toString());
       return null;
     }
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    var user = await _auth.currentUser();
+    await _populateCurrentUser(user); // Populate the user information
+    return user != null;
   }
 }

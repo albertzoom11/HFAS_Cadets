@@ -4,6 +4,7 @@ import 'package:hfascadets/screens/home/dashboard.dart';
 import 'package:hfascadets/screens/home/journal.dart';
 import 'package:hfascadets/screens/home/profile.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
 class Home extends StatefulWidget {
@@ -23,7 +24,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = ModalRoute.of(context).settings.arguments;
     SizeConfig().init(context);
+
     return Scaffold(
       body: PageStorage(
         child: currentScreen,
@@ -206,7 +209,7 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(
                             () {
-                          currentScreen = Profile();
+                          currentScreen = Profile(user: user);
                           currentTab = 3;
                         },
                       );

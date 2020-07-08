@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hfascadets/screens/models/user.dart';
 
 class DatabaseService {
   final String uid;
@@ -7,11 +8,21 @@ class DatabaseService {
   // collection reference
   final CollectionReference userCollection = Firestore.instance.collection('users');
 
-  Future updateUserData(String name, String role) async {
-    return await userCollection.document(uid).setData({
-      'name': name,
-      'role': role,
-    });
+  Future getUser(String uid) async {
+    try {
+      var userData = await userCollection.document(uid).get();
+      return User.fromData(userData.data);
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future updateUserData(User user) async {
+    try {
+      await userCollection.document(user.uid).setData(user.toJson());
+    } catch (e) {
+      return e.message;
+    }
   }
 
   Future<bool> isRoleEmpty() async {

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/shared/month_stat.dart';
 
 class Profile extends StatefulWidget {
+  final User user;
+  Profile({this.user});
+
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,7 @@ class _ProfileState extends State<Profile> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'Dom Cobb',
+                                      widget.user.name,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize:
@@ -77,7 +80,7 @@ class _ProfileState extends State<Profile> {
                                       height: 1 * SizeConfig.blockSizeVertical,
                                     ),
                                     Text(
-                                      'Cadet',
+                                      widget.user.role,
                                       style: TextStyle(
                                         color: Colors.white70,
                                         fontSize:

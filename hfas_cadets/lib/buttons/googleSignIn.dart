@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
 
@@ -12,7 +13,8 @@ Widget googleSignInButton(BuildContext context) {
       if (result == null) {
         print('google sign in failed');
       } else {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        User user = _auth.currentUser;
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: user,);
       }
     },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),

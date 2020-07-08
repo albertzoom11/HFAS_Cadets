@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
@@ -181,7 +182,12 @@ class _SignInState extends State<SignIn> {
                                     loading = false;
                                   });
                                 } else if (result.isEmailVerified) {
-                                  Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                                  User user = _auth.currentUser;
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/home', (route) => false,
+                                      arguments: user,
+                                  );
                                 } else {
                                   setState(() {
                                     error = 'Your email is not verified.';
