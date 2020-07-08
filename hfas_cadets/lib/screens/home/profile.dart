@@ -185,32 +185,27 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: 3 * SizeConfig.blockSizeVertical,
                     ),
-                    FadeAnimation(.5, GestureDetector(
-                      child: Container(
-                        width: 90 * SizeConfig.blockSizeHorizontal,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'EDIT PROFILE',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 1.8 * SizeConfig.blockSizeVertical,
-                                ),
+                    FadeAnimation(.5, Container(
+                      width: 90 * SizeConfig.blockSizeHorizontal,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'EDIT PROFILE',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 1.8 * SizeConfig.blockSizeVertical,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/edit_profile');
-                      },
                     )),
                   ],
                 ),

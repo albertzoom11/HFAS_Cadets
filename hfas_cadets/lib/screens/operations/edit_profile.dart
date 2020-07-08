@@ -6,12 +6,12 @@ import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
 import 'package:hfascadets/shared/loading.dart';
 
-class EditProfile extends StatefulWidget {
+class SignIn extends StatefulWidget {
   @override
-  _EditProfileState createState() => _EditProfileState();
+  _SignInState createState() => _SignInState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
@@ -111,27 +111,27 @@ class _EditProfileState extends State<EditProfile> {
                                 SizedBox(height: 20.0),
                                 TextFormField(
                                   decoration: InputDecoration(
-                                    icon: Icon(Icons.person),
-                                    helperText: 'Name',
+                                    icon: Icon(Icons.email),
+                                    hintText: 'Email',
                                   ),
-                                  obscureText: true,
-                                  validator: (val) => val.isEmpty ? 'Please enter a name.' : null,
+                                  validator: (val) => val.isEmpty ? 'Please enter an email or sign in with Google.' : null,
                                   onChanged: (val) {
                                     setState(() {
-                                      password = val;
+                                      email = val;
                                     });
                                   },
                                 ),
                                 SizedBox(height: 20.0),
                                 TextFormField(
                                   decoration: InputDecoration(
-                                    icon: Icon(Icons.email),
-                                    hintText: 'Email',
+                                    icon: Icon(Icons.lock),
+                                    hintText: 'Password',
                                   ),
-                                  validator: (val) => val.isEmpty ? 'Please enter an email.' : null,
+                                  obscureText: true,
+                                  validator: (val) => val.isEmpty ? 'Please enter a password.' : null,
                                   onChanged: (val) {
                                     setState(() {
-                                      email = val;
+                                      password = val;
                                     });
                                   },
                                 ),
