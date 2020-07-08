@@ -16,13 +16,6 @@ class _HomeState extends State<Home> {
 
   // properties
   int currentTab = 0;
-  final List<Widget> screens = [
-    Dashboard(),
-    Calendar(),
-    Journal(),
-    Profile(),
-  ]; // to store tab views
-
   // active page ( Tab )
   Widget currentScreen = Dashboard(); // initial screen in viewport
 
