@@ -155,7 +155,6 @@ class _EditProfileState extends State<EditProfile> {
                                             ? 'Please enter an email.'
                                             : null,
                                         onChanged: (val) {
-                                          print('ahhhhh: $val');
                                           setState(() {
                                             email = val;
                                           });
