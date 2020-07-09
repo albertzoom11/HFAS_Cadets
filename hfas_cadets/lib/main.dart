@@ -5,12 +5,12 @@ import 'package:hfascadets/screens/authentication/main_menu.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/authentication/verification.dart';
-import 'package:hfascadets/screens/home/add.dart';
-import 'package:hfascadets/screens/home/calendar.dart';
+import 'package:hfascadets/screens/home/journal/add.dart';
+import 'package:hfascadets/screens/home/calendar/calendar.dart';
 import 'package:hfascadets/screens/home/home.dart';
-import 'package:hfascadets/screens/home/journal.dart';
-import 'package:hfascadets/screens/home/profile.dart';
-import 'package:hfascadets/screens/operations/edit_profile.dart';
+import 'package:hfascadets/screens/home/journal/journal.dart';
+import 'package:hfascadets/screens/home/profile/profile.dart';
+import 'package:hfascadets/screens/home/profile/edit_profile.dart';
 
 void main() {
   runApp(MyApp());

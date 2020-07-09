@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hfascadets/screens/home/calendar.dart';
-import 'package:hfascadets/screens/home/dashboard.dart';
-import 'package:hfascadets/screens/home/journal.dart';
-import 'package:hfascadets/screens/home/profile.dart';
+import 'package:hfascadets/screens/home/calendar/calendar.dart';
+import 'package:hfascadets/screens/home/dashboard/dashboard.dart';
+import 'package:hfascadets/screens/home/journal/journal.dart';
+import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 
