@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
@@ -186,7 +187,7 @@ class _SignInState extends State<SignIn> {
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       '/home', (route) => false,
-                                      arguments: user,
+                                      arguments: ScreenArguments(user: user, tabNumber: 0),
                                   );
                                 } else {
                                   setState(() {

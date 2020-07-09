@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
@@ -239,7 +240,7 @@ class _EditProfileState extends State<EditProfile> {
                                               Navigator.pushNamedAndRemoveUntil(
                                                 context,
                                                 '/home', (route) => false,
-                                                arguments: newUser,
+                                                arguments: ScreenArguments(user: newUser, tabNumber: 3),
                                               );
                                             }
                                           }
