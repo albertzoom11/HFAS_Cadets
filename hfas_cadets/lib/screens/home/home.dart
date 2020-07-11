@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
                           ),
                           Divider(
                             height: 0.1,
-                            color: Colors.indigo[900],
+                            color: Colors.blue[900],
                           ),
                           ListTile(
                             title: new Text(
@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
                         children: <Widget>[
                           Divider(
                             height: 0.1,
-                            color: Colors.indigo[900],
+                            color: Colors.blue[900],
                           ),
                           ListTile(
                             title: new Text(
