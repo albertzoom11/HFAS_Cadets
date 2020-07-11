@@ -51,9 +51,6 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.add),
         backgroundColor: Colors.indigo[900],
         onPressed: () {
-          setState(() {
-            firstTime = true;
-          });
           Navigator.pushNamed(context, '/add');
         },
       ),

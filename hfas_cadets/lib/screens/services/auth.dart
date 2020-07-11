@@ -12,7 +12,9 @@ class AuthService {
 
   Future _populateCurrentUser(FirebaseUser user) async {
     if (user != null) {
+      await database.updateUserEmail(user);
       _currentUser = await database.getUser(user.uid);
+      return _currentUser;
     }
   }
 
@@ -131,6 +133,25 @@ class AuthService {
       return 'success';
     } catch (e) {
       print(e.toString());
+      return null;
+    }
+  }
+
+  // update user email
+  Future updateEmail(String value) async {
+    // value is the email user inputs in a textfield and is validated
+    FirebaseUser user = await _auth.currentUser();
+    try {
+      await user.updateEmail(value);
+      try {
+        await user.sendEmailVerification();
+      } catch (e) {
+        print('An error occured while trying to send email verification');
+        print(e.toString());
+      }
+      return user;
+    } catch (e) {
+      print(e.message);
       return null;
     }
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/screen_arguments.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
 class Add extends StatefulWidget {
@@ -22,13 +24,20 @@ class _AddState extends State<Add> {
           FlatButton.icon(
             icon: Icon(Icons.person),
             onPressed: () async {
-              dynamic result = await _auth.signOutGoogle();
-              if (result == null) {
-                print('sign out failed');
-              } else {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/mainMenu', (route) => false);
-              }
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/home', (route) => false,
+                  arguments: ScreenArguments(
+                      user: User(
+                        uid: 'aaaa',
+                        name: 'albert',
+                        email: 'albert@albert.com',
+                        role: 'Cadet',
+                        totalHours: '0',
+                        totalCalls: '0',
+                        totalTasks: '0',
+                      ),
+                      tabNumber: 2),
+              );
             },
             label: Text('Sign out'),
           ),

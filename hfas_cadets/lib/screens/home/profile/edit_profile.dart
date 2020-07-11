@@ -3,6 +3,7 @@ import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
+import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 
@@ -13,6 +14,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
   bool loading = false;
 
   // text field state
@@ -67,7 +69,9 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 1 * SizeConfig.blockSizeVertical,),
+                  SizedBox(
+                    height: 1 * SizeConfig.blockSizeVertical,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
@@ -145,7 +149,9 @@ class _EditProfileState extends State<EditProfile> {
                                           });
                                         },
                                       ),
-                                      SizedBox(height: 2 * SizeConfig.blockSizeVertical),
+                                      SizedBox(
+                                          height:
+                                              2 * SizeConfig.blockSizeVertical),
                                       TextFormField(
                                         decoration: InputDecoration(
                                           icon: Icon(Icons.email),
@@ -162,7 +168,8 @@ class _EditProfileState extends State<EditProfile> {
                                         },
                                       ),
                                       SizedBox(
-                                        height: 1 * SizeConfig.blockSizeVertical,
+                                        height:
+                                            1 * SizeConfig.blockSizeVertical,
                                       ),
                                       Text(
                                         error,
@@ -176,10 +183,16 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 )),
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical),
-                            FadeAnimation(.9, Text('Change Role', style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 2 * SizeConfig.blockSizeVertical,
-                            ),),),
+                            FadeAnimation(
+                              .9,
+                              Text(
+                                'Change Role',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 2 * SizeConfig.blockSizeVertical,
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 5 * SizeConfig.blockSizeVertical),
                             Row(
                               children: <Widget>[
@@ -192,17 +205,22 @@ class _EditProfileState extends State<EditProfile> {
                                         },
                                         child: OutlineButton(
                                           splashColor: Colors.black,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40)),
                                           highlightElevation: 0,
                                           disabledBorderColor: Colors.black,
                                           child: Center(
                                             child: Padding(
-                                              padding: EdgeInsets.all(4 * SizeConfig.blockSizeHorizontal),
+                                              padding: EdgeInsets.all(4 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
                                               child: Text(
                                                 'Cancel',
                                                 style: TextStyle(
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
                                           ),
@@ -217,31 +235,49 @@ class _EditProfileState extends State<EditProfile> {
                                       1.1,
                                       GestureDetector(
                                         onTap: () async {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             setState(() {
                                               loading = true;
                                             });
-                                            User newUser = User(
+                                            dynamic updateEmailResult =
+                                                await _auth.updateEmail(email);
+                                            if (updateEmailResult == null) {
+                                              setState(() {
+                                                error =
+                                                    'Please enter a valid email.';
+                                                loading = false;
+                                              });
+                                            } else {
+                                              User newUser = User(
                                                 uid: user.uid,
                                                 name: name,
-                                                email: user.email,
+                                                email: email,
                                                 role: user.role,
                                                 totalHours: user.totalHours,
                                                 totalCalls: user.totalCalls,
                                                 totalTasks: user.totalTasks,
-                                            );
-                                            dynamic result = await _databaseService.updateUserData(newUser);
-                                            if (result == null) {
-                                              setState(() {
-                                                error = 'Please enter a valid email.';
-                                                loading = false;
-                                              });
-                                            } else {
-                                              Navigator.pushNamedAndRemoveUntil(
-                                                context,
-                                                '/home', (route) => false,
-                                                arguments: ScreenArguments(user: newUser, tabNumber: 3),
                                               );
+                                              dynamic result =
+                                                  await _databaseService
+                                                      .updateUserData(newUser);
+                                              if (result == null) {
+                                                setState(() {
+                                                  error =
+                                                      'Something went wrong.';
+                                                  loading = false;
+                                                });
+                                              } else {
+                                                Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                  context,
+                                                  '/home',
+                                                  (route) => false,
+                                                  arguments: ScreenArguments(
+                                                      user: newUser,
+                                                      tabNumber: 3),
+                                                );
+                                              }
                                             }
                                           }
                                         },
@@ -253,12 +289,15 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                           child: Center(
                                             child: Padding(
-                                              padding: EdgeInsets.all(4 * SizeConfig.blockSizeHorizontal),
+                                              padding: EdgeInsets.all(4 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
                                               child: Text(
                                                 'Save Changes',
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
                                           ),

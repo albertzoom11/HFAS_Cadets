@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hfascadets/screens/models/user.dart';
 
 class DatabaseService {
@@ -11,7 +12,8 @@ class DatabaseService {
   Future getUser(String uid) async {
     try {
       var userData = await userCollection.document(uid).get();
-      return User.fromData(userData.data);
+      User user = User.fromData(userData.data);
+      return user;
     } catch (e) {
       return e.message;
     }
@@ -25,6 +27,14 @@ class DatabaseService {
       print(e.message);
       return null;
     }
+  }
+
+  Future updateUserEmail(FirebaseUser user) async {
+    await userCollection.document(user.uid)
+        .updateData({"email": user.email})
+        .whenComplete(() async {
+    print("Completed");
+    }).catchError((e) => print(e));
   }
 
   Future<bool> isRoleEmpty() async {
