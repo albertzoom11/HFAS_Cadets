@@ -30,7 +30,7 @@ class _AddState extends State<Add> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 1.5 * SizeConfig.blockSizeVertical, horizontal: 1 * SizeConfig.blockSizeVertical),
+              padding: EdgeInsets.symmetric(vertical: 1 * SizeConfig.blockSizeVertical, horizontal: 1 * SizeConfig.blockSizeVertical),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,20 +53,15 @@ class _AddState extends State<Add> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 2 * SizeConfig.blockSizeHorizontal),
-                    child: Container(
-                      width: 6 * SizeConfig.blockSizeVertical,
-                      height: 6 * SizeConfig.blockSizeVertical,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(7 * SizeConfig.blockSizeHorizontal),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/hfasLogo.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.check,
+                      color: Colors.white,
                     ),
+                    iconSize: 8 * SizeConfig.blockSizeHorizontal,
+                    onPressed: () {
+                      print('post!!!');
+                    },
                   ),
                 ],
               ),
