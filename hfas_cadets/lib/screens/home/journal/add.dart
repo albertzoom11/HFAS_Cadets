@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
+import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
@@ -14,32 +16,61 @@ class _AddState extends State<Add> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
-      appBar: AppBar(
-        title: Text('Add'),
-        centerTitle: true,
-        backgroundColor: Colors.blue[900],
-        elevation: 0.0,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            onPressed: () async {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/home', (route) => false,
-                  arguments: ScreenArguments(
-                      user: User(
-                        uid: 'aaaa',
-                        name: 'albert',
-                        email: 'albert@albert.com',
-                        role: 'Cadet',
-                        totalHours: '0',
-                        totalCalls: '0',
-                        totalTasks: '0',
+      body: Stack(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+                Colors.indigo[900],
+                Colors.indigo[800],
+                Colors.blue[500],
+              ]),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 1.5 * SizeConfig.blockSizeVertical, horizontal: 1 * SizeConfig.blockSizeVertical),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ),
+                    iconSize: 8 * SizeConfig.blockSizeHorizontal,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Text(
+                    'CREATE ENTRY',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 2.2 * SizeConfig.blockSizeVertical,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 2 * SizeConfig.blockSizeHorizontal),
+                    child: Container(
+                      width: 6 * SizeConfig.blockSizeVertical,
+                      height: 6 * SizeConfig.blockSizeVertical,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(7 * SizeConfig.blockSizeHorizontal),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/hfasLogo.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      tabNumber: 2),
-              );
-            },
-            label: Text('Sign out'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

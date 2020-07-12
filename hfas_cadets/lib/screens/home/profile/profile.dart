@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
                                   },
                                   icon: Icon(
                                     Icons.menu,
-                                    size: 40,
+                                    size: 5 * SizeConfig.blockSizeVertical,
                                   ),
                                   color: Colors.white,
                                 )),
