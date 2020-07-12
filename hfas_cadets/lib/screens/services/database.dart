@@ -29,6 +29,7 @@ class DatabaseService {
     }
   }
 
+  // update just the email field
   Future updateUserEmail(FirebaseUser user) async {
     await userCollection.document(user.uid)
         .updateData({"email": user.email})
