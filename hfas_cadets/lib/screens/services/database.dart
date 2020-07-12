@@ -19,7 +19,7 @@ class DatabaseService {
     }
   }
 
-  Future updateUserData(User user) async {
+  Future updateUserInfo(User user) async {
     try {
       await userCollection.document(user.uid).setData(user.toJson());
       return 'success';

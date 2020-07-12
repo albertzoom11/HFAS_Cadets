@@ -260,7 +260,7 @@ class _EditProfileState extends State<EditProfile> {
                                               );
                                               dynamic result =
                                                   await _databaseService
-                                                      .updateUserData(newUser);
+                                                      .updateUserInfo(newUser);
                                               if (result == null) {
                                                 setState(() {
                                                   error =

@@ -57,7 +57,7 @@ class AuthService {
     bool isEmpty = await DatabaseService(uid: currentUser.uid).isRoleEmpty();
     if (isEmpty) {
       await DatabaseService(uid: currentUser.uid)
-          .updateUserData(User(
+          .updateUserInfo(User(
         uid: user.uid,
         name: user.displayName,
         email: user.email,
@@ -93,7 +93,7 @@ class AuthService {
       FirebaseUser user = result.user;
 
       //create a new document for the user using the uid
-      await DatabaseService(uid: user.uid).updateUserData(User(
+      await DatabaseService(uid: user.uid).updateUserInfo(User(
         uid: user.uid,
         name: name,
         email: email,
