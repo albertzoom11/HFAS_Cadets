@@ -31,37 +31,55 @@ class _AddState extends State<Add> {
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 1 * SizeConfig.blockSizeVertical, horizontal: 1 * SizeConfig.blockSizeVertical),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
-                    ),
-                    iconSize: 8 * SizeConfig.blockSizeHorizontal,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                        iconSize: 8 * SizeConfig.blockSizeHorizontal,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Text(
+                        'CREATE ENTRY',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 2.2 * SizeConfig.blockSizeVertical,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                        iconSize: 8 * SizeConfig.blockSizeHorizontal,
+                        onPressed: () {
+                          print('post!!!');
+                        },
+                      ),
+                    ],
                   ),
-                  Text(
-                    'CREATE ENTRY',
-                    style: TextStyle(
+                  Padding(
+                    padding: EdgeInsets.all(5 * SizeConfig.blockSizeHorizontal),
+                    child: Container(
+                      height: 60 * SizeConfig.blockSizeVertical,
                       color: Colors.white,
-                      fontSize: 2.2 * SizeConfig.blockSizeVertical,
-                      fontWeight: FontWeight.bold,
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            ''
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ),
-                    iconSize: 8 * SizeConfig.blockSizeHorizontal,
-                    onPressed: () {
-                      print('post!!!');
-                    },
                   ),
                 ],
               ),

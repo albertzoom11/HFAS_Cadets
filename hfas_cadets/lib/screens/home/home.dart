@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MaterialButton(
-                    minWidth: 90,
+                    minWidth: 20 * SizeConfig.blockSizeHorizontal,
                     onPressed: () {
                       setState(
                         () {
@@ -187,7 +187,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   MaterialButton(
-                    minWidth: 97,
+                    minWidth: 23 * SizeConfig.blockSizeHorizontal,
                     onPressed: () {
                       setState(
                         () {
@@ -222,7 +222,7 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MaterialButton(
-                    minWidth: 97,
+                    minWidth: 23 * SizeConfig.blockSizeHorizontal,
                     onPressed: () {
                       setState(
                         () {
@@ -252,7 +252,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   MaterialButton(
-                    minWidth: 90,
+                    minWidth: 20 * SizeConfig.blockSizeHorizontal,
                     onPressed: () {
                       setState(
                         () {
