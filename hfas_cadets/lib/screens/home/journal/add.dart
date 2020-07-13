@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 
@@ -13,7 +14,8 @@ class _AddState extends State<Add> {
   final Conversions conversions = Conversions();
   String _dateOutput = '';
   DateTime _dateTime;
-  DateTime _initialDate = DateTime.now();
+  TimeOfDay _startTime;
+  TimeOfDay _endTime;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +106,7 @@ class _AddState extends State<Add> {
                               ),
                             ),
                             Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 FlatButton(
                                   onPressed: () {
@@ -128,10 +131,70 @@ class _AddState extends State<Add> {
                                       ),
                                       SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
                                       Text(
-                                        _dateTime == null ? 'Pick a Date' : _dateOutput,
+                                        _dateTime == null ? 'Date' : _dateOutput,
                                         style: TextStyle(
                                           fontSize: 2 * SizeConfig.blockSizeVertical,
                                           color: _dateTime == null ? Colors.grey : Colors.indigo[900],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 2 * SizeConfig.blockSizeVertical),
+                                FlatButton(
+                                  onPressed: () {
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: _startTime == null ? TimeOfDay.now() : _startTime,
+                                    ).then((time) {
+                                      setState(() {
+                                        _startTime = time;
+                                      });
+                                    });
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 4 * SizeConfig.blockSizeVertical,
+                                        color: _startTime == null ? Colors.grey : Colors.indigo[900],
+                                      ),
+                                      SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
+                                      Text(
+                                        _startTime == null ? 'Start Time' : _startTime.format(context).toString(),
+                                        style: TextStyle(
+                                          fontSize: 2 * SizeConfig.blockSizeVertical,
+                                          color: _startTime == null ? Colors.grey : Colors.indigo[900],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 2 * SizeConfig.blockSizeVertical),
+                                FlatButton(
+                                  onPressed: () {
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: _endTime == null ? TimeOfDay.now() : _endTime,
+                                    ).then((time) {
+                                      setState(() {
+                                        _endTime = time;
+                                      });
+                                    });
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 4 * SizeConfig.blockSizeVertical,
+                                        color: _endTime == null ? Colors.grey : Colors.indigo[900],
+                                      ),
+                                      SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
+                                      Text(
+                                        _endTime == null ? 'End Time' : _endTime.format(context).toString(),
+                                        style: TextStyle(
+                                          fontSize: 2 * SizeConfig.blockSizeVertical,
+                                          color: _endTime == null ? Colors.grey : Colors.indigo[900],
                                         ),
                                       ),
                                     ],
@@ -151,6 +214,7 @@ class _AddState extends State<Add> {
                                   icon: Icon(Icons.call),
                                   hintText: 'Number of Calls',
                                 ),
+                                keyboardType: TextInputType.number,
                                 validator: (val) => val.isEmpty
                                     ? 'Please enter a number.'
                                     : null,
