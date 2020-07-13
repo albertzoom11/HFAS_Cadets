@@ -121,12 +121,13 @@ class _AddState extends State<Add> {
                                       firstDate: DateTime(2000),
                                       lastDate: DateTime(2100),
                                     ).then((date) {
-                                      setState(() {
-                                        _dateTime = date;
-                                        _dateOutput = date == null
-                                            ? ''
-                                            : conversions.toDateString(date);
-                                      });
+                                      if (date != null) {
+                                        setState(() {
+                                          _dateTime = date;
+                                          _dateOutput =
+                                              conversions.toDateString(date);
+                                        });
+                                      }
                                     });
                                   },
                                   child: Container(
@@ -190,9 +191,11 @@ class _AddState extends State<Add> {
                                           ? TimeOfDay.now()
                                           : _startTime,
                                     ).then((time) {
-                                      setState(() {
-                                        _startTime = time;
-                                      });
+                                      if (time != null) {
+                                        setState(() {
+                                          _startTime = time;
+                                        });
+                                      }
                                     });
                                   },
                                   child: Container(
@@ -258,9 +261,11 @@ class _AddState extends State<Add> {
                                           ? TimeOfDay.now()
                                           : _endTime,
                                     ).then((time) {
-                                      setState(() {
-                                        _endTime = time;
-                                      });
+                                      if (time != null) {
+                                        setState(() {
+                                          _endTime = time;
+                                        });
+                                      }
                                     });
                                   },
                                   child: Container(
