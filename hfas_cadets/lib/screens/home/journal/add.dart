@@ -131,6 +131,7 @@ class _AddState extends State<Add> {
                                     });
                                   },
                                   child: Container(
+                                    width: 43 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
                                       border: Border.all(color: Colors.black),
                                       borderRadius: BorderRadius.circular(
@@ -151,6 +152,7 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal),
                                       child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(
                                             Icons.date_range,
@@ -199,6 +201,7 @@ class _AddState extends State<Add> {
                                     });
                                   },
                                   child: Container(
+                                    width: 43 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
                                       border: Border.all(color: Colors.black),
                                       borderRadius: BorderRadius.circular(
@@ -219,6 +222,7 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal),
                                       child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(
                                             Icons.access_time,
@@ -269,6 +273,7 @@ class _AddState extends State<Add> {
                                     });
                                   },
                                   child: Container(
+                                    width: 43 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
                                       border: Border.all(color: Colors.black),
                                       borderRadius: BorderRadius.circular(
@@ -289,6 +294,7 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal),
                                       child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(
                                             Icons.access_time,
