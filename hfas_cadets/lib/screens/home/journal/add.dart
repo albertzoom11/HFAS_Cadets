@@ -79,13 +79,15 @@ class _AddState extends State<Add> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(7 * SizeConfig.blockSizeVertical),
-                        topRight: Radius.circular(7 * SizeConfig.blockSizeVertical)),
+                        topLeft:
+                            Radius.circular(7 * SizeConfig.blockSizeVertical),
+                        topRight:
+                            Radius.circular(7 * SizeConfig.blockSizeVertical)),
                   ),
                   height: 85 * SizeConfig.blockSizeVertical,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 8 * SizeConfig.blockSizeHorizontal),
+                        horizontal: 7 * SizeConfig.blockSizeHorizontal),
                     child: Column(
                       children: <Widget>[
                         SizedBox(
@@ -100,111 +102,227 @@ class _AddState extends State<Add> {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: AssetImage(
-                                      'assets/images/hfasLogo.png'),
+                                  image:
+                                      AssetImage('assets/images/hfasLogo.png'),
                                 ),
                               ),
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 FlatButton(
                                   onPressed: () {
                                     showDatePicker(
                                       context: context,
-                                      initialDate: _dateTime == null ? DateTime.now() : _dateTime,
+                                      initialDate: _dateTime == null
+                                          ? DateTime.now()
+                                          : _dateTime,
                                       firstDate: DateTime(2000),
                                       lastDate: DateTime(2100),
                                     ).then((date) {
                                       setState(() {
                                         _dateTime = date;
-                                        _dateOutput = conversions.toDateString(date);
+                                        _dateOutput = date == null
+                                            ? ''
+                                            : conversions.toDateString(date);
                                       });
                                     });
                                   },
-                                  child: Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.date_range,
-                                        size: 4 * SizeConfig.blockSizeVertical,
-                                        color: _dateTime == null ? Colors.grey : Colors.indigo[900],
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(
+                                          8 * SizeConfig.blockSizeHorizontal),
+                                    ),
+                                    child: Padding(
+                                      padding: _dateTime == null
+                                          ? EdgeInsets.symmetric(
+                                              vertical: 1 *
+                                                  SizeConfig.blockSizeVertical,
+                                              horizontal: 11.2 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal)
+                                          : EdgeInsets.symmetric(
+                                              vertical: 1 *
+                                                  SizeConfig.blockSizeVertical,
+                                              horizontal: 2 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.date_range,
+                                            size: 4 *
+                                                SizeConfig.blockSizeVertical,
+                                            color: _dateTime == null
+                                                ? Colors.grey
+                                                : Colors.indigo[900],
+                                          ),
+                                          SizedBox(
+                                            width: 1 *
+                                                SizeConfig.blockSizeHorizontal,
+                                          ),
+                                          Text(
+                                            _dateTime == null
+                                                ? 'Date'
+                                                : _dateOutput,
+                                            style: TextStyle(
+                                              fontSize: 2 *
+                                                  SizeConfig.blockSizeVertical,
+                                              color: _dateTime == null
+                                                  ? Colors.grey
+                                                  : Colors.indigo[900],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
-                                      Text(
-                                        _dateTime == null ? 'Date' : _dateOutput,
-                                        style: TextStyle(
-                                          fontSize: 2 * SizeConfig.blockSizeVertical,
-                                          color: _dateTime == null ? Colors.grey : Colors.indigo[900],
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                                SizedBox(height: 2 * SizeConfig.blockSizeVertical),
+                                SizedBox(
+                                    height: 2 * SizeConfig.blockSizeVertical),
                                 FlatButton(
                                   onPressed: () {
                                     showTimePicker(
                                       context: context,
-                                      initialTime: _startTime == null ? TimeOfDay.now() : _startTime,
+                                      initialTime: _startTime == null
+                                          ? TimeOfDay.now()
+                                          : _startTime,
                                     ).then((time) {
                                       setState(() {
                                         _startTime = time;
                                       });
                                     });
                                   },
-                                  child: Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        size: 4 * SizeConfig.blockSizeVertical,
-                                        color: _startTime == null ? Colors.grey : Colors.indigo[900],
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(
+                                          8 * SizeConfig.blockSizeHorizontal),
+                                    ),
+                                    child: Padding(
+                                      padding: _startTime == null
+                                          ? EdgeInsets.symmetric(
+                                              vertical: 1 *
+                                                  SizeConfig.blockSizeVertical,
+                                              horizontal: 5.5 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal)
+                                          : EdgeInsets.symmetric(
+                                              vertical: 1 *
+                                                  SizeConfig.blockSizeVertical,
+                                              horizontal: 6.5 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.access_time,
+                                            size: 4 *
+                                                SizeConfig.blockSizeVertical,
+                                            color: _startTime == null
+                                                ? Colors.grey
+                                                : Colors.indigo[900],
+                                          ),
+                                          SizedBox(
+                                            width: 1 *
+                                                SizeConfig.blockSizeHorizontal,
+                                          ),
+                                          Text(
+                                            _startTime == null
+                                                ? 'Start Time'
+                                                : _startTime
+                                                    .format(context)
+                                                    .toString(),
+                                            style: TextStyle(
+                                              fontSize: 2 *
+                                                  SizeConfig.blockSizeVertical,
+                                              color: _startTime == null
+                                                  ? Colors.grey
+                                                  : Colors.indigo[900],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
-                                      Text(
-                                        _startTime == null ? 'Start Time' : _startTime.format(context).toString(),
-                                        style: TextStyle(
-                                          fontSize: 2 * SizeConfig.blockSizeVertical,
-                                          color: _startTime == null ? Colors.grey : Colors.indigo[900],
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                                SizedBox(height: 2 * SizeConfig.blockSizeVertical),
+                                SizedBox(
+                                    height: 2 * SizeConfig.blockSizeVertical),
                                 FlatButton(
                                   onPressed: () {
                                     showTimePicker(
                                       context: context,
-                                      initialTime: _endTime == null ? TimeOfDay.now() : _endTime,
+                                      initialTime: _endTime == null
+                                          ? TimeOfDay.now()
+                                          : _endTime,
                                     ).then((time) {
                                       setState(() {
                                         _endTime = time;
                                       });
                                     });
                                   },
-                                  child: Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        size: 4 * SizeConfig.blockSizeVertical,
-                                        color: _endTime == null ? Colors.grey : Colors.indigo[900],
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(
+                                          8 * SizeConfig.blockSizeHorizontal),
+                                    ),
+                                    child: Padding(
+                                      padding: _endTime == null
+                                          ? EdgeInsets.symmetric(
+                                              vertical: 1 *
+                                                  SizeConfig.blockSizeVertical,
+                                              horizontal: 6.5 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal)
+                                          : EdgeInsets.symmetric(
+                                              vertical: 1 *
+                                                  SizeConfig.blockSizeVertical,
+                                              horizontal: 6.5 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.access_time,
+                                            size: 4 *
+                                                SizeConfig.blockSizeVertical,
+                                            color: _endTime == null
+                                                ? Colors.grey
+                                                : Colors.indigo[900],
+                                          ),
+                                          SizedBox(
+                                            width: 1 *
+                                                SizeConfig.blockSizeHorizontal,
+                                          ),
+                                          Text(
+                                            _endTime == null
+                                                ? 'End Time'
+                                                : _endTime
+                                                    .format(context)
+                                                    .toString(),
+                                            style: TextStyle(
+                                              fontSize: 2 *
+                                                  SizeConfig.blockSizeVertical,
+                                              color: _endTime == null
+                                                  ? Colors.grey
+                                                  : Colors.indigo[900],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
-                                      Text(
-                                        _endTime == null ? 'End Time' : _endTime.format(context).toString(),
-                                        style: TextStyle(
-                                          fontSize: 2 * SizeConfig.blockSizeVertical,
-                                          color: _endTime == null ? Colors.grey : Colors.indigo[900],
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
+                        SizedBox(
+                          height: 3 * SizeConfig.blockSizeVertical,
+                        ),
                         Form(
                           key: _formKey,
                           child: Column(
