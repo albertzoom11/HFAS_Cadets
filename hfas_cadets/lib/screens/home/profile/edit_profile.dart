@@ -116,8 +116,8 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)),
+                            topLeft: Radius.circular(7 * SizeConfig.blockSizeVertical),
+                            topRight: Radius.circular(7 * SizeConfig.blockSizeVertical)),
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -125,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                         child: Column(
                           children: <Widget>[
                             SizedBox(
-                              height: 2 * SizeConfig.blockSizeVertical,
+                              height: 5 * SizeConfig.blockSizeVertical,
                             ),
                             FadeAnimation(
                                 .8,
@@ -133,7 +133,6 @@ class _EditProfileState extends State<EditProfile> {
                                   key: _formKey,
                                   child: Column(
                                     children: <Widget>[
-                                      SizedBox(height: 20.0),
                                       TextFormField(
                                         decoration: InputDecoration(
                                           icon: Icon(Icons.person),

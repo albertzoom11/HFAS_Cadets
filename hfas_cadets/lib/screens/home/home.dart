@@ -147,9 +147,9 @@ class _HomeState extends State<Home> {
       // Bottom Nav Bar
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
-        notchMargin: 10,
+        notchMargin: 2 * SizeConfig.blockSizeHorizontal,
         child: Container(
-          height: 60,
+          height: 7.3 * SizeConfig.blockSizeVertical,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
