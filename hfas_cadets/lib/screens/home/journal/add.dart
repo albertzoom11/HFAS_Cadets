@@ -133,7 +133,7 @@ class _AddState extends State<Add> {
                                   child: Container(
                                     width: 43 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
+                                      border: Border.all(color: _dateTime == null ? Colors.grey : Colors.indigo[900]),
                                       borderRadius: BorderRadius.circular(
                                           8 * SizeConfig.blockSizeHorizontal),
                                     ),
@@ -152,7 +152,8 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(
                                             Icons.date_range,
@@ -203,7 +204,7 @@ class _AddState extends State<Add> {
                                   child: Container(
                                     width: 43 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
+                                      border: Border.all(color: _startTime == null ? Colors.grey : Colors.indigo[900]),
                                       borderRadius: BorderRadius.circular(
                                           8 * SizeConfig.blockSizeHorizontal),
                                     ),
@@ -222,7 +223,8 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(
                                             Icons.access_time,
@@ -275,7 +277,7 @@ class _AddState extends State<Add> {
                                   child: Container(
                                     width: 43 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
+                                      border: Border.all(color: _endTime == null ? Colors.grey : Colors.indigo[900]),
                                       borderRadius: BorderRadius.circular(
                                           8 * SizeConfig.blockSizeHorizontal),
                                     ),
@@ -294,7 +296,8 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(
                                             Icons.access_time,
