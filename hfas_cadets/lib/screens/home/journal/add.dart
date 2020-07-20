@@ -343,11 +343,12 @@ class _AddState extends State<Add> {
                             children: <Widget>[
                               TextFormField(
                                 decoration: InputDecoration(
-                                  icon: Icon(Icons.title),
-                                  hintText: 'Title',
+                                  icon: Icon(Icons.call),
+                                  hintText: 'Number of Calls',
                                 ),
+                                keyboardType: TextInputType.number,
                                 validator: (val) => val.isEmpty
-                                    ? 'Please enter a title.'
+                                    ? 'Please enter a number.'
                                     : null,
                                 onChanged: (val) {},
                               ),
@@ -355,12 +356,11 @@ class _AddState extends State<Add> {
                                   height: 2 * SizeConfig.blockSizeVertical),
                               TextFormField(
                                 decoration: InputDecoration(
-                                  icon: Icon(Icons.call),
-                                  hintText: 'Number of Calls',
+                                  icon: Icon(Icons.email),
+                                  hintText: 'Email',
                                 ),
-                                keyboardType: TextInputType.number,
                                 validator: (val) => val.isEmpty
-                                    ? 'Please enter a number.'
+                                    ? 'Please enter an email.'
                                     : null,
                                 onChanged: (val) {},
                               ),
