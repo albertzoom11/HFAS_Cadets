@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
-import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
@@ -199,7 +198,7 @@ class _SignInState extends State<SignIn> {
                               }
                             },
                             child: Container(
-                              height: 6 * SizeConfig.blockSizeVertical,
+                              height: 50,
                               margin: EdgeInsets.symmetric(horizontal: 50),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
@@ -275,7 +274,7 @@ class _SignInState extends State<SignIn> {
                                     Navigator.pushReplacementNamed(context, '/signUp');
                                   },
                                   child: Container(
-                                    height: 6 * SizeConfig.blockSizeVertical,
+                                    height: 50,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
                                       color: Colors.blue[900],

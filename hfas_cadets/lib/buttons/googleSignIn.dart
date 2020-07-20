@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
-import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
@@ -19,22 +18,22 @@ Widget googleSignInButton(BuildContext context) {
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(user: user, tabNumber: 0),);
       }
     },
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeVertical)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
     highlightElevation: 0,
     borderSide: BorderSide(color: Colors.grey),
     child: Padding(
-      padding: EdgeInsets.fromLTRB(0, 1 * SizeConfig.blockSizeVertical, 0, 1 * SizeConfig.blockSizeVertical),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image(image: AssetImage("assets/images/google_logo.png"), height: 4.15 * SizeConfig.blockSizeVertical),
+          Image(image: AssetImage("assets/images/google_logo.png"), height: 30.0),
           Padding(
-            padding: EdgeInsets.only(left: 2.3 * SizeConfig.blockSizeHorizontal),
+            padding: const EdgeInsets.only(left: 10),
             child: Text(
               'Sign in with Google',
               style: TextStyle(
-                fontSize: 2.2 * SizeConfig.blockSizeHorizontal,
+                fontSize: 10,
                 color: Colors.grey,
               ),
             ),
