@@ -34,7 +34,7 @@ Widget googleSignInButton(BuildContext context) {
             child: Text(
               'Sign in with Google',
               style: TextStyle(
-                fontSize: 2.2 * SizeConfig.blockSizeHorizontal,
+                fontSize: 2.3 * SizeConfig.blockSizeHorizontal,
                 color: Colors.grey,
               ),
             ),
