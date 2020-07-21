@@ -34,7 +34,7 @@ class _AddState extends State<Add> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Add Task'),
+            title: Text('Add Task', style: TextStyle(color: Colors.indigo[900]),),
             content: TextField(
               controller: customController,
               decoration: InputDecoration(
@@ -44,7 +44,7 @@ class _AddState extends State<Add> {
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
-                child: Text('Submit'),
+                child: Text('Submit', style: TextStyle(color: Colors.indigo[900]),),
                 onPressed: () {
                   Navigator.pop(context, customController.text.toString());
                 },
@@ -59,14 +59,14 @@ class _AddState extends State<Add> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text('Error', style: TextStyle(color: Colors.indigo[900]),),
             content: Text(
-              msg,
+              msg, style: TextStyle(color: Colors.indigo[900]),
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.indigo[900]),),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -134,7 +134,7 @@ class _AddState extends State<Add> {
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 if (_dateTime == null || _startTime == null || _endTime == null) {
-                                  createErrorDialog(context, 'You\'re missing the date, start time, or end time.\nPlease try again.');
+                                  createErrorDialog(context, 'You\'re missing the date, start time, or end time.\n\nPlease try again.');
                                 }
                                 else {
                                   setState(() {
