@@ -17,7 +17,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
           overflow: Overflow.visible,
@@ -33,8 +33,8 @@ class _ProfileState extends State<Profile> {
               height: 45 * SizeConfig.blockSizeVertical,
               child: Padding(
                 padding: EdgeInsets.only(
-                    left: 30.0,
-                    right: 30.0,
+                    left: 7 * SizeConfig.blockSizeHorizontal,
+                    right: 7 * SizeConfig.blockSizeHorizontal,
                     top: 7 * SizeConfig.blockSizeVertical),
                 child: Column(
                   children: <Widget>[
@@ -236,8 +236,8 @@ class _ProfileState extends State<Profile> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30.0),
-                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(7 * SizeConfig.blockSizeHorizontal),
+                    topLeft: Radius.circular(7 * SizeConfig.blockSizeHorizontal),
                   ),
                 ),
                 child: Padding(
@@ -250,6 +250,7 @@ class _ProfileState extends State<Profile> {
                       Column(
                         children: <Widget>[
                           MonthStat(month: 'December'),
+//                          SizedBox(height: 26.7 * SizeConfig.blockSizeVertical),
                           SizedBox(height: 4 * SizeConfig.blockSizeVertical),
                           MonthStat(month: 'November'),
                           SizedBox(height: 4 * SizeConfig.blockSizeVertical),
