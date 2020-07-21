@@ -24,6 +24,7 @@ class _AddState extends State<Add> {
   TimeOfDay _endTime;
   int _numTasks = 0;
   String _numCalls = '';
+  String _title = '';
   bool loading = false;
 
   Future<String> createAlertDialog(BuildContext context) {
@@ -46,6 +47,28 @@ class _AddState extends State<Add> {
                 child: Text('Submit'),
                 onPressed: () {
                   Navigator.pop(context, customController.text.toString());
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  createErrorDialog(BuildContext context, String msg) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(
+              msg,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context);
                 },
               ),
             ],
@@ -109,28 +132,38 @@ class _AddState extends State<Add> {
                             ),
                             iconSize: 8 * SizeConfig.blockSizeHorizontal,
                             onPressed: () async {
-                              print('post!!!');
-                              loading = true;
-//                        await _database.addShift(_dateTime.toString(), _startTime.toString(), _endTime.toString(), totalHours, _numCalls, _numTasks.toString());
-                              dynamic result = await _database.addShift(
-                                  _dateTime.toString(),
-                                  _startTime.toString(),
-                                  _endTime.toString(),
-                                  _numCalls,
-                                  _numTasks.toString());
-                              if (result == null) {
-                                print('There was an error.');
-                                setState(() {
-                                  loading = false;
-                                });
-                              } else {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  '/home',
-                                  (route) => false,
-                                  arguments:
-                                      ScreenArguments(user: user, tabNumber: 2),
-                                );
+                              if (_formKey.currentState.validate()) {
+                                if (_dateTime == null || _startTime == null || _endTime == null) {
+                                  createErrorDialog(context, 'You\'re missing the date, start time, or end time.\nPlease try again.');
+                                }
+                                else {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  dynamic result = await _database.addShift(
+                                      _title,
+                                      _dateTime.toString(),
+                                      _startTime.format(context).toString(),
+                                      _endTime.format(context).toString(),
+                                      // totalHours,
+                                      _numCalls,
+                                      _numTasks.toString());
+                                  if (result == null) {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    createErrorDialog(context,
+                                        'Could not create entry.\nPlease try again later.');
+                                  } else {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/home',
+                                      (route) => false,
+                                      arguments: ScreenArguments(
+                                          user: user, tabNumber: 2),
+                                    );
+                                  }
+                                }
                               }
                             },
                           ),
@@ -456,7 +489,11 @@ class _AddState extends State<Add> {
                                       validator: (val) => val.isEmpty
                                           ? 'Please enter a title.'
                                           : null,
-                                      onChanged: (val) {},
+                                      onChanged: (val) {
+                                        setState(() {
+                                          _title = val;
+                                        });
+                                      },
                                     ),
                                     SizedBox(
                                         height:
@@ -531,7 +568,7 @@ class _AddState extends State<Add> {
                                 height: 1.5 * SizeConfig.blockSizeVertical,
                               ),
                               Container(
-                                height: 28 * SizeConfig.blockSizeVertical,
+                                height: 23 * SizeConfig.blockSizeVertical,
                                 decoration: BoxDecoration(
                                   border: Border.symmetric(
                                       vertical: BorderSide(

@@ -49,9 +49,10 @@ class DatabaseService {
   }
 
   // NOT IN USE YET
-  Future addShift(String date, String timeIn, String timeOut, String numOfCalls, String numOfTasks) async {
+  Future addShift(String title, String date, String timeIn, String timeOut, String numOfCalls, String numOfTasks) async {
     try {
       return await userCollection.document(uid).collection('shifts').add({
+        'title': title,
         'date': date,
         'timeIn': timeIn,
         'timeOut': timeOut,
