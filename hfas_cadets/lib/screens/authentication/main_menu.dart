@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
+import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 
@@ -14,6 +15,8 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
+
+    SizeConfig().init(context);
     return Scaffold(
       body: Container(
         width: double.infinity,

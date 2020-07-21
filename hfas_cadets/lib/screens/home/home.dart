@@ -38,8 +38,6 @@ class _HomeState extends State<Home> {
       firstTime = false;
     }
 
-    SizeConfig().init(context);
-
     return Scaffold(
       body: PageStorage(
         child: currentScreen,
