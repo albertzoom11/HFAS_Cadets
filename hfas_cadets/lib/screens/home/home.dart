@@ -49,7 +49,11 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.add),
         backgroundColor: Colors.indigo[900],
         onPressed: () {
-          Navigator.pushNamed(context, '/add');
+          Navigator.pushNamed(
+            context,
+            '/add',
+            arguments: data.user,
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
