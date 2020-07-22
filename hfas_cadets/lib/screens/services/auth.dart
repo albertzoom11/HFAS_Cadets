@@ -62,9 +62,9 @@ class AuthService {
         name: user.displayName,
         email: user.email,
         role: 'Cadet',
-        totalHours: '0',
-        totalCalls: '0',
-        totalTasks: '0',
+        totalHours: 0,
+        totalCalls: 0,
+        totalTasks: 0,
       ));
     }
 
@@ -98,9 +98,9 @@ class AuthService {
         name: name,
         email: email,
         role: 'Cadet',
-        totalHours: '0',
-        totalCalls: '0',
-        totalTasks: '0',
+        totalHours: 0,
+        totalCalls: 0,
+        totalTasks: 0,
       ));
 
       try {

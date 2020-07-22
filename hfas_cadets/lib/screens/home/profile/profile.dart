@@ -125,7 +125,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    widget.user.totalHours,
+                                    widget.user.roundedTotalHours.toString(),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -146,7 +146,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    widget.user.totalCalls,
+                                    widget.user.totalCalls.toString(),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -167,7 +167,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    widget.user.totalTasks,
+                                    widget.user.totalTasks.toString(),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:

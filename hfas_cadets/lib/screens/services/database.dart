@@ -49,7 +49,7 @@ class DatabaseService {
   }
 
   // NOT IN USE YET
-  Future addShift(String title, String date, String timeIn, String timeOut, String hoursPassed, String numOfCalls, String numOfTasks) async {
+  Future addShift(String title, String date, String timeIn, String timeOut, num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
       return await userCollection.document(uid).collection('shifts').add({
         'title': title,
@@ -63,6 +63,19 @@ class DatabaseService {
     } catch (e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  Future addToUserTotals(User user, num hoursPassed, int numOfCalls, int numOfTasks) async {
+    try {
+      await userCollection.document(uid).updateData({
+        'totalHours': FieldValue.increment(hoursPassed),
+        'totalCalls': FieldValue.increment(numOfCalls),
+        'totalTasks': FieldValue.increment(numOfTasks),
+      });
+      user.updateUserTotals(hoursPassed, numOfCalls, numOfTasks);
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

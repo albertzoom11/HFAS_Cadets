@@ -3,9 +3,10 @@ class User {
   String name;
   String email;
   String role;
-  String totalHours;
-  String totalCalls;
-  String totalTasks;
+  int roundedTotalHours;
+  num totalHours;
+  num totalCalls;
+  num totalTasks;
 
   User({this.uid, this.name, this.email, this.role, this.totalHours, this.totalCalls, this.totalTasks});
 
@@ -15,6 +16,7 @@ class User {
         email = data['email'],
         role = data['role'],
         totalHours = data['totalHours'],
+        roundedTotalHours = data['totalHours'].round(),
         totalCalls = data['totalCalls'],
         totalTasks = data['totalTasks'];
 
@@ -28,5 +30,12 @@ class User {
       'totalCalls': totalCalls,
       'totalTasks': totalTasks,
     };
+  }
+
+  updateUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) {
+    totalHours += hoursPassed;
+    roundedTotalHours = totalHours.round();
+    totalCalls += numOfCalls;
+    totalTasks += numOfTasks;
   }
 }

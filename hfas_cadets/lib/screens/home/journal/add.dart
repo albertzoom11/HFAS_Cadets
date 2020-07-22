@@ -24,7 +24,7 @@ class _AddState extends State<Add> {
   TimeOfDay _startTime;
   TimeOfDay _endTime;
   int _numTasks = 0;
-  String _numCalls = '';
+  int _numCalls = 0;
   String _title = '';
   bool loading = false;
 
@@ -169,7 +169,8 @@ class _AddState extends State<Add> {
                                         setState(() {
                                           loading = true;
                                         });
-                                        String _hoursPassed = conversions.calculateTotalHours(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
+                                        num _hoursPassed = conversions.calculateHoursPassed(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
+                                        await _database.addToUserTotals(user, _hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
                                             await _database.addShift(
                                                 _title,
@@ -182,7 +183,7 @@ class _AddState extends State<Add> {
                                                     .toString(),
                                                  _hoursPassed,
                                                 _numCalls,
-                                                _numTasks.toString());
+                                                _numTasks);
                                         if (result == null) {
                                           setState(() {
                                             loading = false;
@@ -566,7 +567,7 @@ class _AddState extends State<Add> {
                                               : null,
                                           onChanged: (val) {
                                             setState(() {
-                                              _numCalls = val;
+                                              _numCalls = int.parse(val);
                                             });
                                           },
                                         )),

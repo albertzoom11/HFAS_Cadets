@@ -83,8 +83,7 @@ class Conversions {
     return 'same';
   }
 
-  String calculateTotalHours(int startHour, int startMin, int endHour, int endMin) {
-
+  num calculateHoursPassed(int startHour, int startMin, int endHour, int endMin) {
     int hours = endHour - startHour;
     int minutes = endMin - startMin;
 
@@ -92,7 +91,6 @@ class Conversions {
       hours -= 1;
       minutes += 60;
     }
-
     if (minutes <= 7) {
       minutes = 0;
     } else if (minutes <= 22) {
@@ -105,10 +103,6 @@ class Conversions {
       hours += 1;
       minutes = 0;
     }
-
-    String output = hours.toString() + '.';
-    output += minutes == 0 ? '00' : ((minutes/3)*5).toString();
-
-    return output;
+    return hours + minutes/60;
   }
 }
