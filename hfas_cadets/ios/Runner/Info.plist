@@ -41,5 +41,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>hfascadets needs access to your camera roll</string>
+	<key>NSCameraUsageDescription</key>
+	<string>hfascadets needs access to your camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>hfascadets needs access to your microphone</string>
 </dict>
 </plist>
