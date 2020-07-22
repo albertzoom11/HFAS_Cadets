@@ -35,7 +35,10 @@ class _AddState extends State<Add> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Add Task', style: TextStyle(color: Colors.indigo[900]),),
+            title: Text(
+              'Add Task',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
             content: TextField(
               controller: customController,
               decoration: InputDecoration(
@@ -45,7 +48,10 @@ class _AddState extends State<Add> {
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
-                child: Text('Submit', style: TextStyle(color: Colors.indigo[900]),),
+                child: Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
                 onPressed: () {
                   Navigator.pop(context, customController.text.toString());
                 },
@@ -60,14 +66,21 @@ class _AddState extends State<Add> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.indigo[900]),),
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
             content: Text(
-              msg, style: TextStyle(color: Colors.indigo[900]),
+              msg,
+              style: TextStyle(color: Colors.indigo[900]),
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
-                child: Text('OK', style: TextStyle(color: Colors.indigo[900]),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -108,66 +121,89 @@ class _AddState extends State<Add> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          FadeAnimation(0.3, IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            iconSize: 8 * SizeConfig.blockSizeHorizontal,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )),
-                          FadeAnimation(0.4, Text(
-                            'CREATE ENTRY',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 2.2 * SizeConfig.blockSizeVertical,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
-                          FadeAnimation(0.5, IconButton(
-                            icon: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                            ),
-                            iconSize: 8 * SizeConfig.blockSizeHorizontal,
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                if (_dateTime == null || _startTime == null || _endTime == null) {
-                                  createErrorDialog(context, 'You\'re missing the date, start time, or end time.\n\nPlease try again.');
-                                }
-                                else {
-                                  setState(() {
-                                    loading = true;
-                                  });
-                                  dynamic result = await _database.addShift(
-                                      _title,
-                                      _dateTime.toString(),
-                                      _startTime.format(context).toString(),
-                                      _endTime.format(context).toString(),
-                                      // totalHours,
-                                      _numCalls,
-                                      _numTasks.toString());
-                                  if (result == null) {
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                    createErrorDialog(context,
-                                        'Could not create entry.\nPlease try again later.');
-                                  } else {
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      '/home',
-                                      (route) => false,
-                                      arguments: ScreenArguments(
-                                          user: user, tabNumber: 2),
-                                    );
+                          FadeAnimation(
+                              0.3,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                                iconSize: 8 * SizeConfig.blockSizeHorizontal,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )),
+                          FadeAnimation(
+                              0.4,
+                              Text(
+                                'CREATE ENTRY',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 2.2 * SizeConfig.blockSizeVertical,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
+                          FadeAnimation(
+                              0.5,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                ),
+                                iconSize: 8 * SizeConfig.blockSizeHorizontal,
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    if (_dateTime == null ||
+                                        _startTime == null ||
+                                        _endTime == null) {
+                                      createErrorDialog(context,
+                                          'You\'re missing the date, start time, or end time.\n\nPlease try again.');
+                                    } else {
+                                      String _isValid =
+                                          conversions.timesAreInvalid(
+                                              _startTime.format(context),
+                                              _endTime.format(context));
+                                      if (_isValid == 'invalid') {
+                                        createErrorDialog(context, 'Make sure your start time is before your end time.');
+                                      } else if (_isValid == 'same') {
+                                        createErrorDialog(context, 'Your start and end time are the same. Please try again.');
+                                      } else {
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        dynamic result =
+                                            await _database.addShift(
+                                                _title,
+                                                _dateTime.toString(),
+                                                _startTime
+                                                    .format(context)
+                                                    .toString(),
+                                                _endTime
+                                                    .format(context)
+                                                    .toString(),
+                                                // totalHours,
+                                                _numCalls,
+                                                _numTasks.toString());
+                                        if (result == null) {
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          createErrorDialog(context,
+                                              'Could not create entry.\nPlease try again later.');
+                                        } else {
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            '/home',
+                                            (route) => false,
+                                            arguments: ScreenArguments(
+                                                user: user, tabNumber: 2),
+                                          );
+                                        }
+                                      }
+                                    }
                                   }
-                                }
-                              }
-                            },
-                          )),
+                                },
+                              )),
                         ],
                       ),
                     ),
@@ -201,276 +237,293 @@ class _AddState extends State<Add> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  FadeAnimation(0.6, Container(
-                                    height: 24 * SizeConfig.blockSizeVertical,
-                                    width: 34 * SizeConfig.blockSizeHorizontal,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            'assets/images/hfasLogo.png'),
-                                      ),
-                                    ),
-                                  )),
+                                  FadeAnimation(
+                                      0.6,
+                                      Container(
+                                        height:
+                                            24 * SizeConfig.blockSizeVertical,
+                                        width:
+                                            34 * SizeConfig.blockSizeHorizontal,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                'assets/images/hfasLogo.png'),
+                                          ),
+                                        ),
+                                      )),
                                   Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
-                                      FadeAnimation(0.7, FlatButton(
-                                        onPressed: () {
-                                          showDatePicker(
-                                            context: context,
-                                            initialDate: _dateTime == null
-                                                ? DateTime.now()
-                                                : _dateTime,
-                                            firstDate: DateTime(2000),
-                                            lastDate: DateTime(2100),
-                                          ).then((date) {
-                                            if (date != null) {
-                                              setState(() {
-                                                _dateTime = date;
-                                                _dateOutput = conversions
-                                                    .toDateString(date);
+                                      FadeAnimation(
+                                          0.7,
+                                          FlatButton(
+                                            onPressed: () {
+                                              showDatePicker(
+                                                context: context,
+                                                initialDate: _dateTime == null
+                                                    ? DateTime.now()
+                                                    : _dateTime,
+                                                firstDate: DateTime(2000),
+                                                lastDate: DateTime(2100),
+                                              ).then((date) {
+                                                if (date != null) {
+                                                  setState(() {
+                                                    _dateTime = date;
+                                                    _dateOutput = conversions
+                                                        .toDateString(date);
+                                                  });
+                                                }
                                               });
-                                            }
-                                          });
-                                        },
-                                        child: Container(
-                                          width: 43 *
-                                              SizeConfig.blockSizeHorizontal,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: _dateTime == null
-                                                    ? Colors.grey
-                                                    : Colors.indigo[900]),
-                                            borderRadius: BorderRadius.circular(
-                                                8 *
-                                                    SizeConfig
-                                                        .blockSizeHorizontal),
-                                          ),
-                                          child: Padding(
-                                            padding: _dateTime == null
-                                                ? EdgeInsets.symmetric(
-                                                    vertical: 1 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    horizontal: 11.2 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal)
-                                                : EdgeInsets.symmetric(
-                                                    vertical: 1 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    horizontal: 2 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.date_range,
-                                                  size: 4 *
-                                                      SizeConfig
-                                                          .blockSizeVertical,
-                                                  color: _dateTime == null
-                                                      ? Colors.grey
-                                                      : Colors.indigo[900],
-                                                ),
-                                                SizedBox(
-                                                  width: 1 *
-                                                      SizeConfig
-                                                          .blockSizeHorizontal,
-                                                ),
-                                                Text(
-                                                  _dateTime == null
-                                                      ? 'Date'
-                                                      : _dateOutput,
-                                                  style: TextStyle(
-                                                    fontSize: 2 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
+                                            },
+                                            child: Container(
+                                              width: 43 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
                                                     color: _dateTime == null
                                                         ? Colors.grey
-                                                        : Colors.indigo[900],
-                                                  ),
+                                                        : Colors.indigo[900]),
+                                                borderRadius:
+                                                    BorderRadius.circular(8 *
+                                                        SizeConfig
+                                                            .blockSizeHorizontal),
+                                              ),
+                                              child: Padding(
+                                                padding: _dateTime == null
+                                                    ? EdgeInsets.symmetric(
+                                                        vertical: 1 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        horizontal: 11.2 *
+                                                            SizeConfig
+                                                                .blockSizeHorizontal)
+                                                    : EdgeInsets.symmetric(
+                                                        vertical: 1 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        horizontal: 2 *
+                                                            SizeConfig
+                                                                .blockSizeHorizontal),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.date_range,
+                                                      size: 4 *
+                                                          SizeConfig
+                                                              .blockSizeVertical,
+                                                      color: _dateTime == null
+                                                          ? Colors.grey
+                                                          : Colors.indigo[900],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 1 *
+                                                          SizeConfig
+                                                              .blockSizeHorizontal,
+                                                    ),
+                                                    Text(
+                                                      _dateTime == null
+                                                          ? 'Date'
+                                                          : _dateOutput,
+                                                      style: TextStyle(
+                                                        fontSize: 2 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        color: _dateTime == null
+                                                            ? Colors.grey
+                                                            : Colors
+                                                                .indigo[900],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      )),
+                                          )),
                                       SizedBox(
                                           height:
                                               2 * SizeConfig.blockSizeVertical),
-                                      FadeAnimation(0.8, FlatButton(
-                                        onPressed: () {
-                                          showTimePicker(
-                                            context: context,
-                                            initialTime: _startTime == null
-                                                ? TimeOfDay.now()
-                                                : _startTime,
-                                          ).then((time) {
-                                            if (time != null) {
-                                              setState(() {
-                                                _startTime = time;
+                                      FadeAnimation(
+                                          0.8,
+                                          FlatButton(
+                                            onPressed: () {
+                                              showTimePicker(
+                                                context: context,
+                                                initialTime: _startTime == null
+                                                    ? TimeOfDay.now()
+                                                    : _startTime,
+                                              ).then((time) {
+                                                if (time != null) {
+                                                  setState(() {
+                                                    _startTime = time;
+                                                  });
+                                                }
                                               });
-                                            }
-                                          });
-                                        },
-                                        child: Container(
-                                          width: 43 *
-                                              SizeConfig.blockSizeHorizontal,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: _startTime == null
-                                                    ? Colors.grey
-                                                    : Colors.indigo[900]),
-                                            borderRadius: BorderRadius.circular(
-                                                8 *
-                                                    SizeConfig
-                                                        .blockSizeHorizontal),
-                                          ),
-                                          child: Padding(
-                                            padding: _startTime == null
-                                                ? EdgeInsets.symmetric(
-                                                    vertical: 1 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    horizontal: 5.5 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal)
-                                                : EdgeInsets.symmetric(
-                                                    vertical: 1 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    horizontal: 6.5 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.access_time,
-                                                  size: 4 *
-                                                      SizeConfig
-                                                          .blockSizeVertical,
-                                                  color: _startTime == null
-                                                      ? Colors.grey
-                                                      : Colors.indigo[900],
-                                                ),
-                                                SizedBox(
-                                                  width: 1 *
-                                                      SizeConfig
-                                                          .blockSizeHorizontal,
-                                                ),
-                                                Text(
-                                                  _startTime == null
-                                                      ? 'Start Time'
-                                                      : _startTime
-                                                          .format(context)
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 2 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
+                                            },
+                                            child: Container(
+                                              width: 43 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
                                                     color: _startTime == null
                                                         ? Colors.grey
-                                                        : Colors.indigo[900],
-                                                  ),
+                                                        : Colors.indigo[900]),
+                                                borderRadius:
+                                                    BorderRadius.circular(8 *
+                                                        SizeConfig
+                                                            .blockSizeHorizontal),
+                                              ),
+                                              child: Padding(
+                                                padding: _startTime == null
+                                                    ? EdgeInsets.symmetric(
+                                                        vertical: 1 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        horizontal: 5.5 *
+                                                            SizeConfig
+                                                                .blockSizeHorizontal)
+                                                    : EdgeInsets.symmetric(
+                                                        vertical: 1 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        horizontal: 6.5 *
+                                                            SizeConfig
+                                                                .blockSizeHorizontal),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.access_time,
+                                                      size: 4 *
+                                                          SizeConfig
+                                                              .blockSizeVertical,
+                                                      color: _startTime == null
+                                                          ? Colors.grey
+                                                          : Colors.indigo[900],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 1 *
+                                                          SizeConfig
+                                                              .blockSizeHorizontal,
+                                                    ),
+                                                    Text(
+                                                      _startTime == null
+                                                          ? 'Start Time'
+                                                          : _startTime
+                                                              .format(context)
+                                                              .toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 2 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        color: _startTime ==
+                                                                null
+                                                            ? Colors.grey
+                                                            : Colors
+                                                                .indigo[900],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      )),
+                                          )),
                                       SizedBox(
                                           height:
                                               2 * SizeConfig.blockSizeVertical),
-                                      FadeAnimation(0.9, FlatButton(
-                                        onPressed: () {
-                                          showTimePicker(
-                                            context: context,
-                                            initialTime: _endTime == null
-                                                ? TimeOfDay.now()
-                                                : _endTime,
-                                          ).then((time) {
-                                            if (time != null) {
-                                              setState(() {
-                                                _endTime = time;
+                                      FadeAnimation(
+                                          0.9,
+                                          FlatButton(
+                                            onPressed: () {
+                                              showTimePicker(
+                                                context: context,
+                                                initialTime: _endTime == null
+                                                    ? TimeOfDay.now()
+                                                    : _endTime,
+                                              ).then((time) {
+                                                if (time != null) {
+                                                  setState(() {
+                                                    _endTime = time;
+                                                  });
+                                                }
                                               });
-                                            }
-                                          });
-                                        },
-                                        child: Container(
-                                          width: 43 *
-                                              SizeConfig.blockSizeHorizontal,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: _endTime == null
-                                                    ? Colors.grey
-                                                    : Colors.indigo[900]),
-                                            borderRadius: BorderRadius.circular(
-                                                8 *
-                                                    SizeConfig
-                                                        .blockSizeHorizontal),
-                                          ),
-                                          child: Padding(
-                                            padding: _endTime == null
-                                                ? EdgeInsets.symmetric(
-                                                    vertical: 1 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    horizontal: 6.5 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal)
-                                                : EdgeInsets.symmetric(
-                                                    vertical: 1 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    horizontal: 6.5 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.access_time,
-                                                  size: 4 *
-                                                      SizeConfig
-                                                          .blockSizeVertical,
-                                                  color: _endTime == null
-                                                      ? Colors.grey
-                                                      : Colors.indigo[900],
-                                                ),
-                                                SizedBox(
-                                                  width: 1 *
-                                                      SizeConfig
-                                                          .blockSizeHorizontal,
-                                                ),
-                                                Text(
-                                                  _endTime == null
-                                                      ? 'End Time'
-                                                      : _endTime
-                                                          .format(context)
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 2 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
+                                            },
+                                            child: Container(
+                                              width: 43 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
                                                     color: _endTime == null
                                                         ? Colors.grey
-                                                        : Colors.indigo[900],
-                                                  ),
+                                                        : Colors.indigo[900]),
+                                                borderRadius:
+                                                    BorderRadius.circular(8 *
+                                                        SizeConfig
+                                                            .blockSizeHorizontal),
+                                              ),
+                                              child: Padding(
+                                                padding: _endTime == null
+                                                    ? EdgeInsets.symmetric(
+                                                        vertical: 1 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        horizontal: 6.5 *
+                                                            SizeConfig
+                                                                .blockSizeHorizontal)
+                                                    : EdgeInsets.symmetric(
+                                                        vertical: 1 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        horizontal: 6.5 *
+                                                            SizeConfig
+                                                                .blockSizeHorizontal),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.access_time,
+                                                      size: 4 *
+                                                          SizeConfig
+                                                              .blockSizeVertical,
+                                                      color: _endTime == null
+                                                          ? Colors.grey
+                                                          : Colors.indigo[900],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 1 *
+                                                          SizeConfig
+                                                              .blockSizeHorizontal,
+                                                    ),
+                                                    Text(
+                                                      _endTime == null
+                                                          ? 'End Time'
+                                                          : _endTime
+                                                              .format(context)
+                                                              .toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 2 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        color: _endTime == null
+                                                            ? Colors.grey
+                                                            : Colors
+                                                                .indigo[900],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      )),
+                                          )),
                                     ],
                                   ),
                                 ],
@@ -482,38 +535,42 @@ class _AddState extends State<Add> {
                                 key: _formKey,
                                 child: Column(
                                   children: <Widget>[
-                                    FadeAnimation(1, TextFormField(
-                                      decoration: InputDecoration(
-                                        icon: Icon(Icons.title),
-                                        hintText: 'Title',
-                                      ),
-                                      validator: (val) => val.isEmpty
-                                          ? 'Please enter a title.'
-                                          : null,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          _title = val;
-                                        });
-                                      },
-                                    )),
+                                    FadeAnimation(
+                                        1,
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            icon: Icon(Icons.title),
+                                            hintText: 'Title',
+                                          ),
+                                          validator: (val) => val.isEmpty
+                                              ? 'Please enter a title.'
+                                              : null,
+                                          onChanged: (val) {
+                                            setState(() {
+                                              _title = val;
+                                            });
+                                          },
+                                        )),
                                     SizedBox(
                                         height:
                                             2 * SizeConfig.blockSizeVertical),
-                                    FadeAnimation(1.1, TextFormField(
-                                      decoration: InputDecoration(
-                                        icon: Icon(Icons.call),
-                                        hintText: 'Number of Calls',
-                                      ),
-                                      keyboardType: TextInputType.number,
-                                      validator: (val) => val.isEmpty
-                                          ? 'Please enter a number.'
-                                          : null,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          _numCalls = val;
-                                        });
-                                      },
-                                    )),
+                                    FadeAnimation(
+                                        1.1,
+                                        TextFormField(
+                                          decoration: InputDecoration(
+                                            icon: Icon(Icons.call),
+                                            hintText: 'Number of Calls',
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          validator: (val) => val.isEmpty
+                                              ? 'Please enter a number.'
+                                              : null,
+                                          onChanged: (val) {
+                                            setState(() {
+                                              _numCalls = val;
+                                            });
+                                          },
+                                        )),
                                     SizedBox(
                                       height: 1 * SizeConfig.blockSizeVertical,
                                     ),
@@ -528,64 +585,73 @@ class _AddState extends State<Add> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  FadeAnimation(1.2, Text(
-                                    'Tasks: $_numTasks',
-                                    style: TextStyle(
-                                      color: _numTasks == 0
-                                          ? Colors.grey
-                                          : Colors.indigo[900],
-                                      fontSize:
-                                          2.4 * SizeConfig.blockSizeVertical,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )),
-                                  FadeAnimation(1.3, GestureDetector(
-                                    onTap: () {
-                                      createAlertDialog(context).then((value) {
-                                        if (value != null) {
-                                          _addTask(value);
-                                          setState(() {
-                                            _numTasks += 1;
+                                  FadeAnimation(
+                                      1.2,
+                                      Text(
+                                        'Tasks: $_numTasks',
+                                        style: TextStyle(
+                                          color: _numTasks == 0
+                                              ? Colors.grey
+                                              : Colors.indigo[900],
+                                          fontSize: 2.4 *
+                                              SizeConfig.blockSizeVertical,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )),
+                                  FadeAnimation(
+                                      1.3,
+                                      GestureDetector(
+                                        onTap: () {
+                                          createAlertDialog(context)
+                                              .then((value) {
+                                            if (value != null) {
+                                              _addTask(value);
+                                              setState(() {
+                                                _numTasks += 1;
+                                              });
+                                            }
                                           });
-                                        }
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 1 *
-                                              SizeConfig.blockSizeHorizontal),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: _numTasks == 0
-                                            ? Colors.grey
-                                            : Colors.indigo[900],
-                                        size: 4 * SizeConfig.blockSizeVertical,
-                                      ),
-                                    ),
-                                  )),
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              right: 1 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
+                                          child: Icon(
+                                            Icons.add,
+                                            color: _numTasks == 0
+                                                ? Colors.grey
+                                                : Colors.indigo[900],
+                                            size: 4 *
+                                                SizeConfig.blockSizeVertical,
+                                          ),
+                                        ),
+                                      )),
                                 ],
                               ),
                               SizedBox(
                                 height: 1.5 * SizeConfig.blockSizeVertical,
                               ),
-                              FadeAnimation(1.3, Container(
-                                height: 23 * SizeConfig.blockSizeVertical,
-                                decoration: BoxDecoration(
-                                  border: Border.symmetric(
-                                      vertical: BorderSide(
-                                          color: _numTasks == 0
-                                              ? Colors.grey
-                                              : Colors.indigo[900])),
-                                ),
-                                child: AnimatedList(
-                                  key: _taskListKey,
-                                  initialItemCount: _tasks.length,
-                                  itemBuilder: (context, index, animation) {
-                                    return _buildTask(
-                                        _tasks[index], animation, index);
-                                  },
-                                ),
-                              )),
+                              FadeAnimation(
+                                  1.3,
+                                  Container(
+                                    height: 23 * SizeConfig.blockSizeVertical,
+                                    decoration: BoxDecoration(
+                                      border: Border.symmetric(
+                                          vertical: BorderSide(
+                                              color: _numTasks == 0
+                                                  ? Colors.grey
+                                                  : Colors.indigo[900])),
+                                    ),
+                                    child: AnimatedList(
+                                      key: _taskListKey,
+                                      initialItemCount: _tasks.length,
+                                      itemBuilder: (context, index, animation) {
+                                        return _buildTask(
+                                            _tasks[index], animation, index);
+                                      },
+                                    ),
+                                  )),
                             ],
                           ),
                         ),
