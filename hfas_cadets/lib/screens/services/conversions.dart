@@ -94,7 +94,10 @@ class Conversions {
     } else if (int.parse(startMin) < int.parse(endMin)) {
       return 'valid';
     }
-
     return 'same';
+  }
+
+  String calculateTotalHours() {
+
   }
 }
