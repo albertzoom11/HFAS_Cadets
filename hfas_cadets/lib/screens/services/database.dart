@@ -49,9 +49,23 @@ class DatabaseService {
   }
 
   // NOT IN USE YET
-  Future addShift(String title, String date, String timeIn, String timeOut, num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addShift(String title, DateTime date, String timeIn, String timeOut, num hoursPassed, int numOfCalls, int numOfTasks) async {
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
     try {
-      return await userCollection.document(uid).collection('shifts').add({
+      return await userCollection.document(uid).collection(date.year.toString()).document(months[date.month-1]).collection(months[date.month-1]).add({
         'title': title,
         'date': date,
         'timeIn': timeIn,

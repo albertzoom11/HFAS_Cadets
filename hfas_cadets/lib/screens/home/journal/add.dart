@@ -174,7 +174,7 @@ class _AddState extends State<Add> {
                                         dynamic result =
                                             await _database.addShift(
                                                 _title,
-                                                _dateTime.toString(),
+                                                _dateTime,
                                                 _startTime
                                                     .format(context)
                                                     .toString(),
