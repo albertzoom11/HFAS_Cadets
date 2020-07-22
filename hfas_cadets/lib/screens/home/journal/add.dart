@@ -18,7 +18,7 @@ class _AddState extends State<Add> {
   final _formKey = GlobalKey<FormState>();
   final _taskListKey = GlobalKey<AnimatedListState>();
   List<String> _tasks = [];
-  final Conversions conversions = Conversions();
+  final Conversions _conversions = Conversions();
   String _dateOutput = '';
   DateTime _dateTime;
   TimeOfDay _startTime;
@@ -160,7 +160,7 @@ class _AddState extends State<Add> {
                                           'You\'re missing the date, start time, or end time.\n\nPlease try again.');
                                     } else {
                                       String _isValid =
-                                          conversions.timesAreInvalid(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
+                                          _conversions.timesAreInvalid(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
                                       if (_isValid == 'invalid') {
                                         createErrorDialog(context, 'Make sure your start time is before your end time.');
                                       } else if (_isValid == 'same') {
@@ -169,7 +169,7 @@ class _AddState extends State<Add> {
                                         setState(() {
                                           loading = true;
                                         });
-                                        num _hoursPassed = conversions.calculateHoursPassed(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
+                                        num _hoursPassed = _conversions.calculateHoursPassed(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
                                         await _database.addToUserTotals(user, _hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
                                             await _database.addShift(
@@ -272,7 +272,7 @@ class _AddState extends State<Add> {
                                                 if (date != null) {
                                                   setState(() {
                                                     _dateTime = date;
-                                                    _dateOutput = conversions
+                                                    _dateOutput = _conversions
                                                         .toDateString(date);
                                                   });
                                                 }

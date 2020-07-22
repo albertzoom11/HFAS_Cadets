@@ -105,4 +105,13 @@ class Conversions {
     }
     return hours + minutes/60;
   }
+
+  String bigToSmall(num inputNum) {
+    if (inputNum >= 1000000) {
+      return (inputNum/1000000).toStringAsFixed(1) + 'M';
+    } else if (inputNum >= 10000) {
+      return (inputNum/1000).toStringAsFixed(1) + 'K';
+    }
+    return inputNum.toStringAsFixed(0);
+  }
 }

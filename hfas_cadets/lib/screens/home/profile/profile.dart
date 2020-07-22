@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
+import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/shared/month_stat.dart';
 
 class Profile extends StatefulWidget {
@@ -14,8 +15,14 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final Conversions _conversions = Conversions();
+
   @override
   Widget build(BuildContext context) {
+    String _hours = _conversions.bigToSmall(widget.user.totalHours);
+    String _calls = _conversions.bigToSmall(widget.user.totalCalls);
+    String _tasks = _conversions.bigToSmall(widget.user.totalTasks);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -125,7 +132,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    widget.user.roundedTotalHours.toString(),
+                                    _hours,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -146,7 +153,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    widget.user.totalCalls.toString(),
+                                    _calls,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -167,7 +174,7 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 children: <Widget>[
                                   Text(
-                                    widget.user.totalTasks.toString(),
+                                    _tasks,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
