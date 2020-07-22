@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
@@ -107,7 +108,7 @@ class _AddState extends State<Add> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          IconButton(
+                          FadeAnimation(0.3, IconButton(
                             icon: Icon(
                               Icons.close,
                               color: Colors.white,
@@ -116,16 +117,16 @@ class _AddState extends State<Add> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                          ),
-                          Text(
+                          )),
+                          FadeAnimation(0.4, Text(
                             'CREATE ENTRY',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 2.2 * SizeConfig.blockSizeVertical,
                               fontWeight: FontWeight.bold,
                             ),
-                          ),
-                          IconButton(
+                          )),
+                          FadeAnimation(0.5, IconButton(
                             icon: Icon(
                               Icons.check,
                               color: Colors.white,
@@ -166,7 +167,7 @@ class _AddState extends State<Add> {
                                 }
                               }
                             },
-                          ),
+                          )),
                         ],
                       ),
                     ),
@@ -200,7 +201,7 @@ class _AddState extends State<Add> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Container(
+                                  FadeAnimation(0.6, Container(
                                     height: 24 * SizeConfig.blockSizeVertical,
                                     width: 34 * SizeConfig.blockSizeHorizontal,
                                     decoration: BoxDecoration(
@@ -210,13 +211,13 @@ class _AddState extends State<Add> {
                                             'assets/images/hfasLogo.png'),
                                       ),
                                     ),
-                                  ),
+                                  )),
                                   Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
-                                      FlatButton(
+                                      FadeAnimation(0.7, FlatButton(
                                         onPressed: () {
                                           showDatePicker(
                                             context: context,
@@ -299,11 +300,11 @@ class _AddState extends State<Add> {
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      )),
                                       SizedBox(
                                           height:
                                               2 * SizeConfig.blockSizeVertical),
-                                      FlatButton(
+                                      FadeAnimation(0.8, FlatButton(
                                         onPressed: () {
                                           showTimePicker(
                                             context: context,
@@ -384,11 +385,11 @@ class _AddState extends State<Add> {
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      )),
                                       SizedBox(
                                           height:
                                               2 * SizeConfig.blockSizeVertical),
-                                      FlatButton(
+                                      FadeAnimation(0.9, FlatButton(
                                         onPressed: () {
                                           showTimePicker(
                                             context: context,
@@ -469,7 +470,7 @@ class _AddState extends State<Add> {
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      )),
                                     ],
                                   ),
                                 ],
@@ -481,7 +482,7 @@ class _AddState extends State<Add> {
                                 key: _formKey,
                                 child: Column(
                                   children: <Widget>[
-                                    TextFormField(
+                                    FadeAnimation(1, TextFormField(
                                       decoration: InputDecoration(
                                         icon: Icon(Icons.title),
                                         hintText: 'Title',
@@ -494,11 +495,11 @@ class _AddState extends State<Add> {
                                           _title = val;
                                         });
                                       },
-                                    ),
+                                    )),
                                     SizedBox(
                                         height:
                                             2 * SizeConfig.blockSizeVertical),
-                                    TextFormField(
+                                    FadeAnimation(1.1, TextFormField(
                                       decoration: InputDecoration(
                                         icon: Icon(Icons.call),
                                         hintText: 'Number of Calls',
@@ -512,7 +513,7 @@ class _AddState extends State<Add> {
                                           _numCalls = val;
                                         });
                                       },
-                                    ),
+                                    )),
                                     SizedBox(
                                       height: 1 * SizeConfig.blockSizeVertical,
                                     ),
@@ -527,7 +528,7 @@ class _AddState extends State<Add> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
+                                  FadeAnimation(1.2, Text(
                                     'Tasks: $_numTasks',
                                     style: TextStyle(
                                       color: _numTasks == 0
@@ -537,8 +538,8 @@ class _AddState extends State<Add> {
                                           2.4 * SizeConfig.blockSizeVertical,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                  GestureDetector(
+                                  )),
+                                  FadeAnimation(1.3, GestureDetector(
                                     onTap: () {
                                       createAlertDialog(context).then((value) {
                                         if (value != null) {
@@ -561,13 +562,13 @@ class _AddState extends State<Add> {
                                         size: 4 * SizeConfig.blockSizeVertical,
                                       ),
                                     ),
-                                  ),
+                                  )),
                                 ],
                               ),
                               SizedBox(
                                 height: 1.5 * SizeConfig.blockSizeVertical,
                               ),
-                              Container(
+                              FadeAnimation(1.3, Container(
                                 height: 23 * SizeConfig.blockSizeVertical,
                                 decoration: BoxDecoration(
                                   border: Border.symmetric(
@@ -584,7 +585,7 @@ class _AddState extends State<Add> {
                                         _tasks[index], animation, index);
                                   },
                                 ),
-                              ),
+                              )),
                             ],
                           ),
                         ),
