@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
-                                        'assets/images/hfasLogo.png'),
+                                        'assets/images/blankProfile.jpg'),
                                   ),
                                 ),
                               ),
