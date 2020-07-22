@@ -70,28 +70,14 @@ class Conversions {
   }
 
   // returns true if time are INVALID
-  String timesAreInvalid(String start, String end) {
-    int startLen = start.length;
-    int endLen = end.length;
-    String startHour = startLen == 8 ? start.substring(0, 2) : start.substring(0, 1);
-    String endHour = endLen == 8 ? end.substring(0, 2) : end.substring(0, 1);
-    String startMin = startLen == 8 ? start.substring(3, 5) : start.substring(2, 4);
-    String endMin = endLen == 8 ? end.substring(3, 5) : end.substring(2, 4);
-
-    if (start.substring(startLen - 2) != end.substring(endLen - 2)) {
-      print('1');
-      if (end.substring(endLen - 2) == 'PM') {
-        return 'valid';
-      } else {
-        return 'invalid';
-      }
-    } else if (int.parse(startHour) > int.parse(endHour)) {
+  String timesAreInvalid(int startHour, int startMin, int endHour, int endMin) {
+    if (startHour > endHour) {
       return 'invalid';
-    } else if (int.parse(startHour) < int.parse(endHour)) {
+    } else if (startHour < endHour) {
       return 'valid';
-    } else if (int.parse(startMin) > int.parse(endMin)) {
+    } else if (startMin > endMin) {
       return 'invalid';
-    } else if (int.parse(startMin) < int.parse(endMin)) {
+    } else if (startMin < endMin) {
       return 'valid';
     }
     return 'same';

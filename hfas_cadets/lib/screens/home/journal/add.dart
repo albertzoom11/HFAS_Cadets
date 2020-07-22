@@ -160,9 +160,7 @@ class _AddState extends State<Add> {
                                           'You\'re missing the date, start time, or end time.\n\nPlease try again.');
                                     } else {
                                       String _isValid =
-                                          conversions.timesAreInvalid(
-                                              _startTime.format(context),
-                                              _endTime.format(context));
+                                          conversions.timesAreInvalid(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
                                       if (_isValid == 'invalid') {
                                         createErrorDialog(context, 'Make sure your start time is before your end time.');
                                       } else if (_isValid == 'same') {
