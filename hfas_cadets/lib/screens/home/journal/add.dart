@@ -169,6 +169,7 @@ class _AddState extends State<Add> {
                                         setState(() {
                                           loading = true;
                                         });
+                                        String _hoursPassed = conversions.calculateTotalHours(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
                                         dynamic result =
                                             await _database.addShift(
                                                 _title,
@@ -179,7 +180,7 @@ class _AddState extends State<Add> {
                                                 _endTime
                                                     .format(context)
                                                     .toString(),
-                                                // totalHours,
+                                                 _hoursPassed,
                                                 _numCalls,
                                                 _numTasks.toString());
                                         if (result == null) {

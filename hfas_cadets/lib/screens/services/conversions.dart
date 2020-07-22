@@ -83,7 +83,32 @@ class Conversions {
     return 'same';
   }
 
-  String calculateTotalHours() {
+  String calculateTotalHours(int startHour, int startMin, int endHour, int endMin) {
 
+    int hours = endHour - startHour;
+    int minutes = endMin - startMin;
+
+    if (minutes < 0) {
+      hours -= 1;
+      minutes += 60;
+    }
+
+    if (minutes <= 7) {
+      minutes = 0;
+    } else if (minutes <= 22) {
+      minutes = 15;
+    } else if (minutes <= 37) {
+      minutes = 30;
+    } else if (minutes <= 52) {
+      minutes = 45;
+    } else {
+      hours += 1;
+      minutes = 0;
+    }
+
+    String output = hours.toString() + '.';
+    output += minutes == 0 ? '00' : ((minutes/3)*5).toString();
+
+    return output;
   }
 }
