@@ -17,6 +17,9 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
+  StorageUploadTask _uploadTask;
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   bool loading = false;
@@ -58,19 +61,6 @@ class _EditProfileState extends State<EditProfile> {
     );
     setState(() {
       _imageFile = cropped ?? _imageFile;
-    });
-  }
-
-  final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
-
-  StorageUploadTask _uploadTask;
-
-  void _startUpload() {
-    String filePath = 'images/${DateTime.now()}.png';
-
-    setState(() {
-      _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
     });
   }
 
@@ -133,7 +123,7 @@ class _EditProfileState extends State<EditProfile> {
                   height: 1 * SizeConfig.blockSizeVertical,
                 ),
                 FlatButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       _imageFile = null;
                     });
@@ -158,6 +148,14 @@ class _EditProfileState extends State<EditProfile> {
     email = email == '' ? user.email : email;
     name = name == '' ? user.name : name;
     final DatabaseService _databaseService = DatabaseService(uid: user.uid);
+    void _startUpload() {
+      String filePath = 'users/${user.uid}/profile.png';
+
+      setState(() {
+        _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
+      });
+    }
+
     return loading
         ? Loading()
         : Scaffold(
@@ -217,7 +215,10 @@ class _EditProfileState extends State<EditProfile> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: _imageFile == null ? AssetImage('assets/images/blankProfile.jpg') : FileImage(_imageFile),
+                                      image: _imageFile == null
+                                          ? AssetImage(
+                                              'assets/images/blankProfile.jpg')
+                                          : FileImage(_imageFile),
                                     ),
                                   ),
                                 ),
@@ -382,8 +383,12 @@ class _EditProfileState extends State<EditProfile> {
                                             setState(() {
                                               loading = true;
                                             });
-                                            dynamic updateEmailResult =
-                                                await _auth.updateEmail(email);
+                                            dynamic updateEmailResult = 'no change';
+                                            if (email != user.email) {
+                                              updateEmailResult =
+                                                  await _auth
+                                                      .updateEmail(email);
+                                            }
                                             if (updateEmailResult == null) {
                                               setState(() {
                                                 error =
