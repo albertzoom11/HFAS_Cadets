@@ -227,7 +227,7 @@ class _ProfileState extends State<Profile> {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              '/edit_profile',
+                              '/editProfile',
                               arguments: widget.user,
                             );
                           },

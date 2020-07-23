@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
@@ -6,6 +8,8 @@ import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -21,6 +25,123 @@ class _EditProfileState extends State<EditProfile> {
   String email = '';
   String name = '';
   String error = '';
+
+  // image capture
+  File _imageFile;
+
+  Future<void> _pickImage(ImageSource source) async {
+    File selected = await ImagePicker.pickImage(source: source);
+    setState(() {
+      _imageFile = selected;
+    });
+  }
+
+  Future<void> _cropImage() async {
+    File cropped = await ImageCropper.cropImage(
+      sourcePath: _imageFile.path,
+      cropStyle: CropStyle.circle,
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Profile Photo',
+        toolbarColor: Colors.indigo[900],
+        statusBarColor: Colors.indigo[900],
+        backgroundColor: Colors.indigo[900],
+        activeControlsWidgetColor: Colors.indigo[900],
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.square,
+        hideBottomControls: true,
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ),
+    );
+    setState(() {
+      _imageFile = cropped ?? _imageFile;
+    });
+  }
+
+  final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
+
+  StorageUploadTask _uploadTask;
+
+  void _startUpload() {
+    String filePath = 'images/${DateTime.now()}.png';
+
+    setState(() {
+      _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
+    });
+  }
+
+  // change profile picture options modal
+  createPictureModal(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Change Profile Photo',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding:
+                      EdgeInsets.only(bottom: 1 * SizeConfig.blockSizeVertical),
+                  child: Divider(
+                    height: 0.1 * SizeConfig.blockSizeVertical,
+                    color: Colors.indigo[900],
+                  ),
+                ),
+                SizedBox(
+                  height: 1 * SizeConfig.blockSizeVertical,
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    await _pickImage(ImageSource.camera);
+                    await _cropImage();
+                  },
+                  child: Text(
+                    'Take Photo with Camera',
+                    style: TextStyle(
+                      color: Colors.indigo[900],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 1 * SizeConfig.blockSizeVertical,
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    await _pickImage(ImageSource.gallery);
+                    await _cropImage();
+                  },
+                  child: Text(
+                    'Choose from Gallery',
+                    style: TextStyle(
+                      color: Colors.indigo[900],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 1 * SizeConfig.blockSizeVertical,
+                ),
+                FlatButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Remove Profile Photo',
+                    style: TextStyle(
+                      color: Colors.indigo[900],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,31 +199,40 @@ class _EditProfileState extends State<EditProfile> {
                       Column(
                         children: <Widget>[
                           FadeAnimation(
-                            .6,
-                            Container(
-                              height: 13 * SizeConfig.blockSizeVertical,
-                              width: 26 * SizeConfig.blockSizeHorizontal,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      AssetImage('assets/images/hfasLogo.png'),
+                              .6,
+                              GestureDetector(
+                                child: Container(
+                                  height: 13 * SizeConfig.blockSizeVertical,
+                                  width: 26 * SizeConfig.blockSizeHorizontal,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/blankProfile.jpg'),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
+                                onTap: () {
+                                  createPictureModal(context);
+                                },
+                              )),
                           SizedBox(
                             height: 2 * SizeConfig.blockSizeVertical,
                           ),
                           FadeAnimation(
                               .7,
-                              Text(
-                                'Change Profile Photo',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
+                              GestureDetector(
+                                child: Text(
+                                  'Change Profile Photo',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
                                 ),
+                                onTap: () {
+                                  createPictureModal(context);
+                                },
                               )),
                         ],
                       ),
@@ -116,8 +246,10 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(7 * SizeConfig.blockSizeVertical),
-                            topRight: Radius.circular(7 * SizeConfig.blockSizeVertical)),
+                            topLeft: Radius.circular(
+                                7 * SizeConfig.blockSizeVertical),
+                            topRight: Radius.circular(
+                                7 * SizeConfig.blockSizeVertical)),
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -236,6 +368,9 @@ class _EditProfileState extends State<EditProfile> {
                                         onTap: () async {
                                           if (_formKey.currentState
                                               .validate()) {
+                                            if (_imageFile != null) {
+                                              await _startUpload();
+                                            }
                                             setState(() {
                                               loading = true;
                                             });

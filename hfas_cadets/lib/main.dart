@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           "/journal": (_) => Journal(),
           "/profile": (_) => Profile(),
           "/add": (_) => Add(),
-          "/edit_profile": (_) => EditProfile(),
+          "/editProfile": (_) => EditProfile(),
         },
         home: MainMenu(),
     );
