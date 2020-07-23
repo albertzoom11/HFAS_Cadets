@@ -31,9 +31,11 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> _pickImage(ImageSource source) async {
     File selected = await ImagePicker.pickImage(source: source);
-    setState(() {
-      _imageFile = selected;
-    });
+    if (selected != null) {
+      setState(() {
+        _imageFile = selected;
+      });
+    }
   }
 
   Future<void> _cropImage() async {
@@ -102,6 +104,7 @@ class _EditProfileState extends State<EditProfile> {
                   onPressed: () async {
                     await _pickImage(ImageSource.camera);
                     await _cropImage();
+                    Navigator.pop(context);
                   },
                   child: Text(
                     'Take Photo with Camera',
@@ -117,6 +120,7 @@ class _EditProfileState extends State<EditProfile> {
                   onPressed: () async {
                     await _pickImage(ImageSource.gallery);
                     await _cropImage();
+                    Navigator.pop(context);
                   },
                   child: Text(
                     'Choose from Gallery',
@@ -208,8 +212,7 @@ class _EditProfileState extends State<EditProfile> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: AssetImage(
-                                          'assets/images/blankProfile.jpg'),
+                                      image: _imageFile == null ? AssetImage('assets/images/blankProfile.jpg') : FileImage(_imageFile),
                                     ),
                                   ),
                                 ),
