@@ -133,7 +133,12 @@ class _EditProfileState extends State<EditProfile> {
                   height: 1 * SizeConfig.blockSizeVertical,
                 ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _imageFile = null;
+                    });
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     'Remove Profile Photo',
                     style: TextStyle(
