@@ -222,8 +222,7 @@ class _EditProfileState extends State<EditProfile> {
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: _imageFile == null
-                                          ? AssetImage(
-                                              'assets/images/blankProfile.jpg')
+                                          ? NetworkImage(user.profilePic)
                                           : FileImage(_imageFile),
                                     ),
                                   ),
