@@ -40,7 +40,7 @@ class DatabaseService {
     }).catchError((e) => print(e));
   }
 
-  Future<bool> isRoleEmpty() async {
+  Future<bool> isEmpty() async {
     bool isEmpty;
     await userCollection.document(uid).get().then((data) {
       isEmpty = data.exists ? false : true;

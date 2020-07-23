@@ -59,8 +59,7 @@ class _ProfileState extends State<Profile> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/blankProfile.jpg'),
+                                    image: NetworkImage(widget.user.profilePic),
                                   ),
                                 ),
                               ),
@@ -211,7 +210,7 @@ class _ProfileState extends State<Profile> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(1 * SizeConfig.blockSizeVertical),
                                   child: Text(
                                     'EDIT PROFILE',
                                     style: TextStyle(

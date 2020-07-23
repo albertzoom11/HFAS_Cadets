@@ -17,9 +17,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
-  StorageUploadTask _uploadTask;
+  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   bool loading = false;
@@ -31,6 +29,7 @@ class _EditProfileState extends State<EditProfile> {
 
   // image capture
   File _imageFile;
+  String _imageURL = '';
 
   Future<void> _pickImage(ImageSource source) async {
     File selected = await ImagePicker.pickImage(source: source);
@@ -147,12 +146,19 @@ class _EditProfileState extends State<EditProfile> {
     final User user = ModalRoute.of(context).settings.arguments;
     email = email == '' ? user.email : email;
     name = name == '' ? user.name : name;
+    _imageURL = _imageURL == '' ? user.profilePic : _imageURL;
     final DatabaseService _databaseService = DatabaseService(uid: user.uid);
-    void _startUpload() {
+
+    Future<void> _startUpload() async {
       String filePath = 'users/${user.uid}/profile.png';
 
+      StorageUploadTask _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
+
+      StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
+      print('file uploaded');
+      String output = await taskSnapshot.ref.getDownloadURL();
       setState(() {
-        _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
+        _imageURL = output;
       });
     }
 
@@ -377,6 +383,7 @@ class _EditProfileState extends State<EditProfile> {
                                         onTap: () async {
                                           if (_formKey.currentState
                                               .validate()) {
+                                            String tempUrl;
                                             if (_imageFile != null) {
                                               await _startUpload();
                                             }
@@ -398,6 +405,7 @@ class _EditProfileState extends State<EditProfile> {
                                             } else {
                                               User newUser = User(
                                                 uid: user.uid,
+                                                profilePic: _imageURL,
                                                 name: name,
                                                 email: email,
                                                 role: user.role,

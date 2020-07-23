@@ -54,11 +54,13 @@ class AuthService {
     assert(user.uid == currentUser.uid);
 
     //create a new document for the user using the uid
-    bool isEmpty = await DatabaseService(uid: currentUser.uid).isRoleEmpty();
+    bool isEmpty = await DatabaseService(uid: currentUser.uid).isEmpty();
     if (isEmpty) {
+      print('isEmpty');
       await DatabaseService(uid: currentUser.uid)
           .updateUserInfo(User(
         uid: user.uid,
+        profilePic: 'https://www.dts.edu/wp-content/uploads/sites/6/2018/04/Blank-Profile-Picture.jpg',
         name: user.displayName,
         email: user.email,
         role: 'Cadet',
@@ -95,6 +97,7 @@ class AuthService {
       //create a new document for the user using the uid
       await DatabaseService(uid: user.uid).updateUserInfo(User(
         uid: user.uid,
+        profilePic: 'https://www.dts.edu/wp-content/uploads/sites/6/2018/04/Blank-Profile-Picture.jpg',
         name: name,
         email: email,
         role: 'Cadet',
