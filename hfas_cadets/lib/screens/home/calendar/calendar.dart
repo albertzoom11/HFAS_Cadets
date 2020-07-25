@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -26,6 +27,8 @@ class _CalendarState extends State<Calendar> {
               if (result == null) {
                 print('sign out failed');
               } else {
+                var prefs = await SharedPreferences.getInstance();
+                prefs.clear();
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/mainMenu', (route) => false);
               }
