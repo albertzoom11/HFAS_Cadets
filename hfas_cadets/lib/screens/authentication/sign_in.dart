@@ -7,6 +7,7 @@ import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
 import 'package:hfascadets/shared/loading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -185,6 +186,8 @@ class _SignInState extends State<SignIn> {
                                   });
                                 } else if (result.isEmailVerified) {
                                   User user = _auth.currentUser;
+                                  var prefs = await SharedPreferences.getInstance();
+                                  prefs.setString('uid', user.uid);
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       '/home', (route) => false,

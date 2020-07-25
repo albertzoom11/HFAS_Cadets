@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -112,6 +113,8 @@ class AuthService {
         print('An error occured while trying to send email verification');
         print(e.toString());
       }
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setString('uid', user.uid);
       return user != null;
     } catch (e) {
       print(e.toString());

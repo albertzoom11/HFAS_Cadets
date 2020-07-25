@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/screen_arguments.dart';
+import 'package:hfascadets/screens/models/user.dart';
+import 'package:hfascadets/screens/services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
-import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 
 class MainMenu extends StatefulWidget {
@@ -13,6 +15,9 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  DatabaseService _database = DatabaseService();
+  User _user;
+
   @override
   initState() {
     super.initState();
@@ -21,7 +26,11 @@ class _MainMenuState extends State<MainMenu> {
 
   initPlatformState() async {
     var prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID');
+    String _uid = prefs.getString('uid');
+    if (_uid != null) {
+      _user = await _database.getUser(_uid);
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(user: _user, tabNumber: 0));
+    }
   }
 
   @override
