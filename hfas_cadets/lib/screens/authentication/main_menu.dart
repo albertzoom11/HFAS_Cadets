@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
@@ -12,6 +13,16 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  @override
+  initState() {
+    super.initState();
+      initPlatformState();
+  }
+
+  initPlatformState() async {
+    var prefs = await SharedPreferences.getInstance();
+    String userID = prefs.getString('userID');
+  }
 
   @override
   Widget build(BuildContext context) {
