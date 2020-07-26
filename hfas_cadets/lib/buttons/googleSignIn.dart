@@ -3,11 +3,14 @@ import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
+import 'package:hfascadets/screens/services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 
 final AuthService _auth = AuthService();
+final DatabaseService _database = DatabaseService();
+String _year = DateTime.now().year.toString();
 
 Widget googleSignInButton(BuildContext context) {
   return OutlineButton(
@@ -18,6 +21,7 @@ Widget googleSignInButton(BuildContext context) {
         print('google sign in failed');
       } else {
         globals.user = _auth.currentUser;
+        globals.profileMonths = await _database.monthStats(_year);
         var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', globals.user.uid);
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0),);

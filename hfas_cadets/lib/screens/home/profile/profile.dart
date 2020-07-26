@@ -5,7 +5,6 @@ import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
-import 'package:hfascadets/shared/loading.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Profile extends StatefulWidget {
@@ -17,17 +16,6 @@ class _ProfileState extends State<Profile> {
   final Conversions _conversions = Conversions();
   DatabaseService _database = DatabaseService();
   int _year = DateTime.now().year;
-  List<Widget> _monthStats;
-
-  @override
-  void initState() {
-    super.initState();
-    _database.monthStats(_year.toString()).then((value) {
-      setState(() {
-        _monthStats = value;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +23,7 @@ class _ProfileState extends State<Profile> {
     String _calls = _conversions.bigToSmall(globals.user.totalCalls);
     String _tasks = _conversions.bigToSmall(globals.user.totalTasks);
 
-    return _monthStats == null ? Loading() : Container(
+    return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -54,7 +42,7 @@ class _ProfileState extends State<Profile> {
               dynamic value = await _database.monthStats(_year.toString());
               setState(() {
                 globals.user = dbUser;
-                _monthStats = value;
+                globals.profileMonths = value;
               });
               return dbUser;
             },
@@ -318,9 +306,9 @@ class _ProfileState extends State<Profile> {
                             .6,
                             Column(
                               children: <Widget>[
-                                if (_monthStats.length == 0)
+                                if (globals.profileMonths.length == 0)
                                   SizedBox(height: 20 * SizeConfig.blockSizeVertical,),
-                                if (_monthStats.length == 0)
+                                if (globals.profileMonths.length == 0)
                                   Text(
                                     'No Shifts Yet',
                                     style: TextStyle(
@@ -329,14 +317,14 @@ class _ProfileState extends State<Profile> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                if (_monthStats.length == 0)
+                                if (globals.profileMonths.length == 0)
                                   SizedBox(height: 25.8 * SizeConfig.blockSizeVertical,),
-                                if (_monthStats.length != 0)
-                                  for (Widget month in _monthStats)
+                                if (globals.profileMonths.length != 0)
+                                  for (Widget month in globals.profileMonths)
                                     Column(children: <Widget>[month, SizedBox(height: 4 * SizeConfig.blockSizeVertical),],),
-                                  if (_monthStats.length == 1)
+                                  if (globals.profileMonths.length == 1)
                                     SizedBox(height: 20.8 * SizeConfig.blockSizeVertical,),
-                                if (_monthStats.length != 0)
+                                if (globals.profileMonths.length != 0)
                                   SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
                               ],
                             )),
