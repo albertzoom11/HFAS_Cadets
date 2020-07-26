@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hfascadets/screens/models/user.dart';
@@ -40,7 +42,7 @@ class DatabaseService {
     }).catchError((e) => print(e));
   }
 
-  Future<bool> isEmpty() async {
+  Future<bool> userIsEmpty() async {
     bool isEmpty;
     await userCollection.document(uid).get().then((data) {
       isEmpty = data.exists ? false : true;
@@ -48,8 +50,23 @@ class DatabaseService {
     return isEmpty;
   }
 
+  Future<bool> monthIsEmpty(String year, String month) async {
+    bool isEmpty;
+    await userCollection
+        .document(uid)
+        .collection(year)
+        .document(month)
+        .get()
+        .then((data) {
+      isEmpty = data.exists ? false : true;
+    });
+    print(isEmpty);
+    return isEmpty;
+  }
+
   // NOT IN USE YET
-  Future addShift(String title, DateTime date, String timeIn, String timeOut, num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addShift(String title, DateTime date, String timeIn, String timeOut,
+      num hoursPassed, int numOfCalls, int numOfTasks) async {
     List<String> months = [
       'January',
       'February',
@@ -65,7 +82,7 @@ class DatabaseService {
       'December',
     ];
     try {
-      return await userCollection.document(uid).collection(date.year.toString()).document(months[date.month-1]).collection('shifts').add({
+      await userCollection.document(uid).collection(date.year.toString()).document(months[date.month - 1]).collection('shifts').add({
         'title': title,
         'date': date.toString().substring(0, 10),
         'timeIn': timeIn,
@@ -74,13 +91,16 @@ class DatabaseService {
         'numOfCalls': numOfCalls,
         'numOfTasks': numOfTasks,
       });
+      return await addToMonthTotals(date.year.toString(),
+          months[date.month - 1], hoursPassed, numOfCalls, numOfTasks);
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  Future addToUserTotals(User user, num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addToUserTotals(
+      User user, num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
       await userCollection.document(uid).updateData({
         'totalHours': FieldValue.increment(hoursPassed),
@@ -90,6 +110,36 @@ class DatabaseService {
       user.updateUserTotals(hoursPassed, numOfCalls, numOfTasks);
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future addToMonthTotals(
+      String year, String month, num hours, int calls, int tasks) async {
+    num points = hours + calls + tasks;
+
+    try {
+      bool isEmpty = await monthIsEmpty(year, month);
+      if (isEmpty) {
+        await userCollection.document(uid).collection(year).document(month).setData({
+          'points': points,
+          'hours': hours,
+          'calls': calls,
+          'tasks': tasks,
+          'shifts': 1,
+        });
+        return 'created';
+      }
+      await userCollection.document(uid).collection(year).document(month).updateData({
+        'points': FieldValue.increment(points),
+        'hours': FieldValue.increment(hours),
+        'calls': FieldValue.increment(calls),
+        'tasks': FieldValue.increment(tasks),
+        'shifts': FieldValue.increment(1),
+      });
+      return 'added';
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }

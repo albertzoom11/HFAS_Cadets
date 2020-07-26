@@ -55,7 +55,7 @@ class AuthService {
     assert(user.uid == currentUser.uid);
 
     //create a new document for the user using the uid
-    bool isEmpty = await DatabaseService(uid: currentUser.uid).isEmpty();
+    bool isEmpty = await DatabaseService(uid: currentUser.uid).userIsEmpty();
     if (isEmpty) {
       print('isEmpty');
       await DatabaseService(uid: currentUser.uid)
