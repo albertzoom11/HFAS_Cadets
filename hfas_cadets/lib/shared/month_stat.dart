@@ -4,7 +4,8 @@ import 'package:hfascadets/screens/models/size_config.dart';
 
 class MonthStat extends StatefulWidget {
   final month;
-  MonthStat({this.month});
+  final year;
+  MonthStat({this.month, this.year});
 
   @override
   _MonthStatState createState() => _MonthStatState();

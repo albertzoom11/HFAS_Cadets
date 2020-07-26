@@ -65,9 +65,9 @@ class DatabaseService {
       'December',
     ];
     try {
-      return await userCollection.document(uid).collection(date.year.toString()).document(months[date.month-1]).collection(months[date.month-1]).add({
+      return await userCollection.document(uid).collection(date.year.toString()).document(months[date.month-1]).collection('shifts').add({
         'title': title,
-        'date': date,
+        'date': date.toString().substring(0, 10),
         'timeIn': timeIn,
         'timeOut': timeOut,
         'hoursPassed': hoursPassed,
