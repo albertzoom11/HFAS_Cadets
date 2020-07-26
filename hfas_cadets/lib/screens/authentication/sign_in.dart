@@ -5,7 +5,6 @@ import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
-import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
@@ -17,10 +16,8 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
-  final DatabaseService _database = DatabaseService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  String _year = DateTime.now().year.toString();
 
   // text field state
   String email = '';
@@ -189,7 +186,6 @@ class _SignInState extends State<SignIn> {
                                   });
                                 } else if (result.isEmailVerified) {
                                   globals.user = _auth.currentUser;
-                                  globals.profileMonths = await _database.monthStats(_year);
                                   var prefs = await SharedPreferences.getInstance();
                                   prefs.setString('uid', globals.user.uid);
                                   Navigator.pushNamedAndRemoveUntil(

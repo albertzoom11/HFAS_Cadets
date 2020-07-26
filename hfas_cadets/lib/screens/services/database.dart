@@ -6,10 +6,6 @@ import 'package:hfascadets/shared/globals.dart' as globals;
 import 'package:hfascadets/shared/month_stat.dart';
 
 class DatabaseService {
-  final uid;
-
-  DatabaseService({this.uid});
-
   // collection reference
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
@@ -60,7 +56,7 @@ class DatabaseService {
 
   Future<bool> userIsEmpty() async {
     bool isEmpty;
-    await userCollection.document(uid).get().then((data) {
+    await userCollection.document(globals.user.uid).get().then((data) {
       isEmpty = data.exists ? false : true;
     });
     return isEmpty;

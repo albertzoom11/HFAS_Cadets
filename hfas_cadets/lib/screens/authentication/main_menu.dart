@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 class MainMenu extends StatefulWidget {
@@ -26,9 +28,7 @@ class _MainMenuState extends State<MainMenu> {
     var prefs = await SharedPreferences.getInstance();
     String _uid = prefs.getString('uid');
     if (_uid != null) {
-      print('globals.profileMonths: ${globals.profileMonths}');
       globals.user = await _database.getUser(_uid);
-      globals.profileMonths = await _database.monthStats(DateTime.now().year.toString());
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0));
     }
   }
@@ -51,19 +51,19 @@ class _MainMenuState extends State<MainMenu> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 220,),
-              Image(
+              FadeAnimation(.5, Image(
                 image: AssetImage('assets/images/hfasLogo.png'), height: 150,
-              ),
+              )),
               SizedBox(height: 30,),
-              Text(
+              FadeAnimation(.7, Text(
                 'HFAS Cadets',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 40,
                 ),
-              ),
+              )),
               SizedBox(height: 30,),
-              GestureDetector(
+              FadeAnimation(.9, GestureDetector(
                 onTap: () async {
                   Navigator.push(
                     context,
@@ -87,9 +87,9 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                   ),
                 ),
-              ),
+              )),
               SizedBox(height: 30,),
-              GestureDetector(
+              FadeAnimation(1.1, GestureDetector(
                 onTap: () async {
                   Navigator.push(
                     context,
@@ -113,7 +113,7 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                   ),
                 ),
-              ),
+              )),
             ],
           ),
         ),
