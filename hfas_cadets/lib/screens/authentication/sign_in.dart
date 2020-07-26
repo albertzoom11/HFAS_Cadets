@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
-import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/authentication/forgot_password.dart';
 import 'package:hfascadets/shared/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class SignIn extends StatefulWidget {
   @override
@@ -185,13 +185,13 @@ class _SignInState extends State<SignIn> {
                                     loading = false;
                                   });
                                 } else if (result.isEmailVerified) {
-                                  User user = _auth.currentUser;
+                                  globals.user = _auth.currentUser;
                                   var prefs = await SharedPreferences.getInstance();
-                                  prefs.setString('uid', user.uid);
+                                  prefs.setString('uid', globals.user.uid);
                                   Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       '/home', (route) => false,
-                                      arguments: ScreenArguments(user: user, tabNumber: 0),
+                                      arguments: ScreenArguments(tabNumber: 0),
                                   );
                                 } else {
                                   setState(() {

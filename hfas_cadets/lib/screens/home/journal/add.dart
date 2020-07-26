@@ -4,10 +4,10 @@ import 'package:flutter/rendering.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
-import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Add extends StatefulWidget {
   @override
@@ -92,8 +92,7 @@ class _AddState extends State<Add> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = ModalRoute.of(context).settings.arguments;
-    final DatabaseService _database = DatabaseService(uid: user.uid);
+    final DatabaseService _database = DatabaseService();
 
     return loading
         ? Loading()
@@ -170,7 +169,7 @@ class _AddState extends State<Add> {
                                           loading = true;
                                         });
                                         num _hoursPassed = _conversions.calculateHoursPassed(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
-                                        await _database.addToUserTotals(user, _hoursPassed, _numCalls, _numTasks);
+                                        await _database.addToUserTotals(_hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
                                             await _database.addShift(
                                                 _title,
@@ -195,8 +194,7 @@ class _AddState extends State<Add> {
                                             context,
                                             '/home',
                                             (route) => false,
-                                            arguments: ScreenArguments(
-                                                user: user, tabNumber: 2),
+                                            arguments: ScreenArguments(tabNumber: 2),
                                           );
                                         }
                                       }

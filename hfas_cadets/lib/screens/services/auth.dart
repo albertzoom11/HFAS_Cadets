@@ -55,10 +55,10 @@ class AuthService {
     assert(user.uid == currentUser.uid);
 
     //create a new document for the user using the uid
-    bool isEmpty = await DatabaseService(uid: currentUser.uid).userIsEmpty();
+    bool isEmpty = await DatabaseService().userIsEmpty();
     if (isEmpty) {
       print('isEmpty');
-      await DatabaseService(uid: currentUser.uid)
+      await DatabaseService()
           .updateUserInfo(User(
         uid: user.uid,
         profilePic: 'https://www.dts.edu/wp-content/uploads/sites/6/2018/04/Blank-Profile-Picture.jpg',
@@ -96,7 +96,7 @@ class AuthService {
       FirebaseUser user = result.user;
 
       //create a new document for the user using the uid
-      await DatabaseService(uid: user.uid).updateUserInfo(User(
+      await DatabaseService().updateUserInfo(User(
         uid: user.uid,
         profilePic: 'https://www.dts.edu/wp-content/uploads/sites/6/2018/04/Blank-Profile-Picture.jpg',
         name: name,

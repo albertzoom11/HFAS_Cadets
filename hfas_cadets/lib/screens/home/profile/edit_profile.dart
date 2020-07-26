@@ -10,6 +10,7 @@ import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class EditProfile extends StatefulWidget {
   @override
@@ -143,14 +144,13 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = ModalRoute.of(context).settings.arguments;
-    email = email == '' ? user.email : email;
-    name = name == '' ? user.name : name;
-    _imageURL = _imageURL == '' ? user.profilePic : _imageURL;
-    final DatabaseService _databaseService = DatabaseService(uid: user.uid);
+    email = email == '' ? globals.user.email : email;
+    name = name == '' ? globals.user.name : name;
+    _imageURL = _imageURL == '' ? globals.user.profilePic : _imageURL;
+    final DatabaseService _databaseService = DatabaseService();
 
     Future<void> _startUpload() async {
-      String filePath = 'users/${user.uid}/profile.png';
+      String filePath = 'users/${globals.user.uid}/profile.png';
 
       StorageUploadTask _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
 
@@ -222,7 +222,7 @@ class _EditProfileState extends State<EditProfile> {
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: _imageFile == null
-                                          ? NetworkImage(user.profilePic)
+                                          ? NetworkImage(globals.user.profilePic)
                                           : FileImage(_imageFile),
                                     ),
                                   ),
@@ -284,7 +284,7 @@ class _EditProfileState extends State<EditProfile> {
                                           icon: Icon(Icons.person),
                                           labelText: 'Name',
                                         ),
-                                        initialValue: user.name,
+                                        initialValue: globals.user.name,
                                         validator: (val) => val.isEmpty
                                             ? 'Please enter a name.'
                                             : null,
@@ -302,7 +302,7 @@ class _EditProfileState extends State<EditProfile> {
                                           icon: Icon(Icons.email),
                                           labelText: 'Email',
                                         ),
-                                        initialValue: user.email,
+                                        initialValue: globals.user.email,
                                         validator: (val) => val.isEmpty
                                             ? 'Please enter an email.'
                                             : null,
@@ -390,7 +390,7 @@ class _EditProfileState extends State<EditProfile> {
                                               loading = true;
                                             });
                                             dynamic updateEmailResult = 'no change';
-                                            if (email != user.email) {
+                                            if (email != globals.user.email) {
                                               updateEmailResult =
                                                   await _auth
                                                       .updateEmail(email);
@@ -402,19 +402,19 @@ class _EditProfileState extends State<EditProfile> {
                                                 loading = false;
                                               });
                                             } else {
-                                              User newUser = User(
-                                                uid: user.uid,
+                                              globals.user = User(
+                                                uid: globals.user.uid,
                                                 profilePic: _imageURL,
                                                 name: name,
                                                 email: email,
-                                                role: user.role,
-                                                totalHours: user.totalHours,
-                                                totalCalls: user.totalCalls,
-                                                totalTasks: user.totalTasks,
+                                                role: globals.user.role,
+                                                totalHours: globals.user.totalHours,
+                                                totalCalls: globals.user.totalCalls,
+                                                totalTasks: globals.user.totalTasks,
                                               );
                                               dynamic result =
                                                   await _databaseService
-                                                      .updateUserInfo(newUser);
+                                                      .updateUserInfo(globals.user);
                                               if (result == null) {
                                                 setState(() {
                                                   error =
@@ -428,7 +428,6 @@ class _EditProfileState extends State<EditProfile> {
                                                   '/home',
                                                   (route) => false,
                                                   arguments: ScreenArguments(
-                                                      user: newUser,
                                                       tabNumber: 3),
                                                 );
                                               }

@@ -5,7 +5,6 @@ import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
-import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Home extends StatefulWidget {
@@ -14,8 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  dynamic user = GlobalKey<User>();
-
   // properties
   int currentTab = 0;
 
@@ -37,7 +34,7 @@ class _HomeState extends State<Home> {
       } else if (currentTab == 2) {
         currentScreen = Journal();
       } else if (currentTab == 3) {
-        currentScreen = Profile(user: data.user,);
+        currentScreen = Profile();
       }
       firstTime = false;
     }
@@ -56,7 +53,6 @@ class _HomeState extends State<Home> {
           Navigator.pushNamed(
             context,
             '/add',
-            arguments: data.user,
           );
         },
       ),
@@ -262,7 +258,7 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(
                         () {
-                          currentScreen = Profile(user: data.user);
+                          currentScreen = Profile();
                           currentTab = 3;
                         },
                       );

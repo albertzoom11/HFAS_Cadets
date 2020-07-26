@@ -6,12 +6,9 @@ import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/month_stat.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Profile extends StatefulWidget {
-  User user;
-
-  Profile({this.user});
-
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -34,9 +31,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    String _hours = _conversions.bigToSmall(widget.user.totalHours);
-    String _calls = _conversions.bigToSmall(widget.user.totalCalls);
-    String _tasks = _conversions.bigToSmall(widget.user.totalTasks);
+    String _hours = _conversions.bigToSmall(globals.user.totalHours);
+    String _calls = _conversions.bigToSmall(globals.user.totalCalls);
+    String _tasks = _conversions.bigToSmall(globals.user.totalTasks);
 
     return Container(
       decoration: BoxDecoration(
@@ -53,9 +50,9 @@ class _ProfileState extends State<Profile> {
         body: SafeArea(
           child: CustomRefreshIndicator(
             onRefresh: () async {
-              User dbUser = await _database.getUser(widget.user.uid);
+              User dbUser = await _database.getUser(globals.user.uid);
               setState(() {
-                widget.user = dbUser;
+                globals.user = dbUser;
               });
               return dbUser;
             },
@@ -123,7 +120,7 @@ class _ProfileState extends State<Profile> {
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: NetworkImage(widget.user.profilePic),
+                                          image: NetworkImage(globals.user.profilePic),
                                         ),
                                       ),
                                     ),
@@ -137,7 +134,7 @@ class _ProfileState extends State<Profile> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            widget.user.name,
+                                            globals.user.name,
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize:
@@ -149,7 +146,7 @@ class _ProfileState extends State<Profile> {
                                             height: 1 * SizeConfig.blockSizeVertical,
                                           ),
                                           Text(
-                                            widget.user.role,
+                                            globals.user.role,
                                             style: TextStyle(
                                               color: Colors.white70,
                                               fontSize:
@@ -291,7 +288,7 @@ class _ProfileState extends State<Profile> {
                                   Navigator.pushNamed(
                                     context,
                                     '/editProfile',
-                                    arguments: widget.user,
+                                    arguments: globals.user,
                                   );
                                 },
                               )),

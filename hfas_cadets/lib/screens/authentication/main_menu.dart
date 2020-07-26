@@ -7,6 +7,7 @@ import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class MainMenu extends StatefulWidget {
 
@@ -16,7 +17,6 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   DatabaseService _database = DatabaseService();
-  User _user;
 
   @override
   initState() {
@@ -28,8 +28,8 @@ class _MainMenuState extends State<MainMenu> {
     var prefs = await SharedPreferences.getInstance();
     String _uid = prefs.getString('uid');
     if (_uid != null) {
-      _user = await _database.getUser(_uid);
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(user: _user, tabNumber: 0));
+      globals.user = await _database.getUser(_uid);
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0));
     }
   }
 

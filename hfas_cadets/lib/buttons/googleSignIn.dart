@@ -4,6 +4,7 @@ import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 
 final AuthService _auth = AuthService();
@@ -16,10 +17,10 @@ Widget googleSignInButton(BuildContext context) {
       if (result == null) {
         print('google sign in failed');
       } else {
-        User user = _auth.currentUser;
+        globals.user = _auth.currentUser;
         var prefs = await SharedPreferences.getInstance();
-        prefs.setString('uid', user.uid);
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(user: user, tabNumber: 0),);
+        prefs.setString('uid', globals.user.uid);
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0),);
       }
     },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeVertical)),
