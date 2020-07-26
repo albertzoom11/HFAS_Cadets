@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:hfascadets/shared/month_stat.dart';
 
 class DatabaseService {
-
   // collection reference
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
@@ -74,18 +75,27 @@ class DatabaseService {
     return isEmpty;
   }
 
-  Future<List<bool>> nonEmptyMonths(String year) async {
-    List<bool> output = [];
-    months.forEach((month) async {
+  Future monthStats(String year) async {
+    List<Widget> output = [];
+    for (int i = months.length - 1; i >= 0; i--) {
       await userCollection
           .document(globals.user.uid)
           .collection(year)
-          .document(month)
+          .document(months[i])
           .get()
           .then((data) {
-            output.add(data.exists);
+        if (data.exists) {
+          output.add(MonthStat(
+            month: months[i],
+            points: data['points'],
+            hours: data['hours'],
+            calls: data['calls'],
+            tasks: data['tasks'],
+            shifts: data['shifts'],
+          ));
+        }
       });
-    });
+    }
     return output;
   }
 
@@ -93,7 +103,12 @@ class DatabaseService {
   Future addShift(String title, DateTime date, String timeIn, String timeOut,
       num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
-      await userCollection.document(globals.user.uid).collection(date.year.toString()).document(months[date.month - 1]).collection('shifts').add({
+      await userCollection
+          .document(globals.user.uid)
+          .collection(date.year.toString())
+          .document(months[date.month - 1])
+          .collection('shifts')
+          .add({
         'title': title,
         'date': date.toString().substring(0, 10),
         'timeIn': timeIn,
@@ -110,7 +125,8 @@ class DatabaseService {
     }
   }
 
-  Future addToUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addToUserTotals(
+      num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
       await userCollection.document(globals.user.uid).updateData({
         'totalHours': FieldValue.increment(hoursPassed),
@@ -130,7 +146,11 @@ class DatabaseService {
     try {
       bool isEmpty = await monthIsEmpty(year, month);
       if (isEmpty) {
-        await userCollection.document(globals.user.uid).collection(year).document(month).setData({
+        await userCollection
+            .document(globals.user.uid)
+            .collection(year)
+            .document(month)
+            .setData({
           'points': points,
           'hours': hours,
           'calls': calls,
@@ -139,7 +159,11 @@ class DatabaseService {
         });
         return 'created';
       }
-      await userCollection.document(globals.user.uid).collection(year).document(month).updateData({
+      await userCollection
+          .document(globals.user.uid)
+          .collection(year)
+          .document(month)
+          .updateData({
         'points': FieldValue.increment(points),
         'hours': FieldValue.increment(hours),
         'calls': FieldValue.increment(calls),

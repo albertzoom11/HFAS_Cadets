@@ -3,9 +3,13 @@ import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 
 class MonthStat extends StatefulWidget {
-  final month;
-  final year;
-  MonthStat({this.month, this.year});
+  final String month;
+  final num points;
+  final num hours;
+  final int calls;
+  final int tasks;
+  final int shifts;
+  MonthStat({this.month, this.points, this.hours, this.calls, this.tasks, this.shifts});
 
   @override
   _MonthStatState createState() => _MonthStatState();
@@ -48,7 +52,7 @@ class _MonthStatState extends State<MonthStat> {
 
     return Container(
       width: 88 * SizeConfig.blockSizeHorizontal,
-      height: 23 * SizeConfig.blockSizeVertical,
+      height: 24 * SizeConfig.blockSizeVertical,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -59,7 +63,7 @@ class _MonthStatState extends State<MonthStat> {
         )],
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10 * SizeConfig.blockSizeHorizontal, vertical: 1.5 * SizeConfig.blockSizeVertical),
+        padding: EdgeInsets.symmetric(horizontal: 3 * SizeConfig.blockSizeHorizontal, vertical: 1.5 * SizeConfig.blockSizeVertical),
         child: Column(
           children: <Widget>[
             FadeAnimation(.1, Text(widget.month, style: TextStyle(
@@ -69,30 +73,48 @@ class _MonthStatState extends State<MonthStat> {
             ),),),
             SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
             FadeAnimation(.3, Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text('23', style: TextStyle(
-                      color: monthColor,
-                      fontSize: 8 * SizeConfig.blockSizeVertical,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                    Text('Points', style: TextStyle(
-                      color: monthColor,
+                    if (widget.points < 15)
+                      Text(
+                          widget.points.toString(),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 6 * SizeConfig.blockSizeVertical,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    if (widget.points < 15)
+                      Text('Points', style: TextStyle(
+                      color: Colors.black,
                       fontSize: 3 * SizeConfig.blockSizeVertical,
                     ),),
+                    if (widget.points >= 15)
+                      Text(
+                        widget.points.toString(),
+                        style: TextStyle(
+                          color: monthColor,
+                          fontSize: 6 * SizeConfig.blockSizeVertical,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    if (widget.points >= 15)
+                      Text('Points', style: TextStyle(
+                        color: monthColor,
+                        fontSize: 3 * SizeConfig.blockSizeVertical,
+                      ),),
                   ],
                 ),
-                SizedBox(width: 5 * SizeConfig.blockSizeHorizontal,),
                 Row(
                   children: <Widget>[
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text('4', style: TextStyle(
+                        Text(widget.shifts.toString(), style: TextStyle(
                           color: Colors.black,
                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                           fontWeight: FontWeight.bold,
@@ -103,7 +125,7 @@ class _MonthStatState extends State<MonthStat> {
                           fontSize: 1.8 * SizeConfig.blockSizeVertical,
                         ),),
                         SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
-                        Text('4', style: TextStyle(
+                        Text(widget.calls.toString(), style: TextStyle(
                           color: Colors.black,
                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                           fontWeight: FontWeight.bold,
@@ -119,7 +141,7 @@ class _MonthStatState extends State<MonthStat> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text('16', style: TextStyle(
+                        Text(widget.hours.toString(), style: TextStyle(
                           color: Colors.black,
                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                           fontWeight: FontWeight.bold,
@@ -130,7 +152,7 @@ class _MonthStatState extends State<MonthStat> {
                           fontSize: 1.8 * SizeConfig.blockSizeVertical,
                         ),),
                         SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
-                        Text('3', style: TextStyle(
+                        Text(widget.tasks.toString(), style: TextStyle(
                           color: Colors.black,
                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                           fontWeight: FontWeight.bold,
