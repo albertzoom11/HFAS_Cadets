@@ -51,8 +51,10 @@ class _ProfileState extends State<Profile> {
           child: CustomRefreshIndicator(
             onRefresh: () async {
               User dbUser = await _database.getUser(globals.user.uid);
+              dynamic value = await _database.monthStats(_year.toString());
               setState(() {
                 globals.user = dbUser;
+                _monthStats = value;
               });
               return dbUser;
             },
@@ -333,7 +335,7 @@ class _ProfileState extends State<Profile> {
                                   for (Widget month in _monthStats)
                                     Column(children: <Widget>[month, SizedBox(height: 4 * SizeConfig.blockSizeVertical),],),
                                   if (_monthStats.length == 1)
-                                    SizedBox(height: 26.8 * SizeConfig.blockSizeVertical,),
+                                    SizedBox(height: 20.8 * SizeConfig.blockSizeVertical,),
                                 if (_monthStats.length != 0)
                                   SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
                               ],
