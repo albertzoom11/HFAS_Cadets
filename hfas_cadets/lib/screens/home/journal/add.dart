@@ -108,7 +108,7 @@ class _AddState extends State<Add> {
                         LinearGradient(begin: Alignment.topCenter, colors: [
                       Colors.indigo[900],
                       Colors.indigo[800],
-                      Colors.blue[500],
+                      Colors.blue[900],
                     ]),
                   ),
                   alignment: Alignment.topCenter,
