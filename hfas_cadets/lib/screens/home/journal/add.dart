@@ -27,6 +27,7 @@ class _AddState extends State<Add> {
   int _numCalls = 0;
   String _title = '';
   bool loading = false;
+  int _year = DateTime.now().year;
 
   Future<String> createAlertDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
@@ -183,6 +184,10 @@ class _AddState extends State<Add> {
                                                  _hoursPassed,
                                                 _numCalls,
                                                 _numTasks);
+                                        dynamic value = await _database.monthStats(_year.toString());
+                                        setState(() {
+                                            globals.profileMonths = value;
+                                        });
                                         if (result == null) {
                                           setState(() {
                                             loading = false;
