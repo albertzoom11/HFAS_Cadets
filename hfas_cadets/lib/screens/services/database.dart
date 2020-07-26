@@ -13,6 +13,21 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
+  List<String> months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
   Future getUser(String uid) async {
     try {
       var userData = await userCollection.document(uid).get();
@@ -60,27 +75,27 @@ class DatabaseService {
         .then((data) {
       isEmpty = data.exists ? false : true;
     });
-    print(isEmpty);
     return isEmpty;
+  }
+
+  Future<List<bool>> nonEmptyMonths(String year) async {
+    List<bool> output = [];
+    months.forEach((month) async {
+      await userCollection
+          .document(uid)
+          .collection(year)
+          .document(month)
+          .get()
+          .then((data) {
+            output.add(data.exists);
+      });
+    });
+    return output;
   }
 
   // NOT IN USE YET
   Future addShift(String title, DateTime date, String timeIn, String timeOut,
       num hoursPassed, int numOfCalls, int numOfTasks) async {
-    List<String> months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
     try {
       await userCollection.document(uid).collection(date.year.toString()).document(months[date.month - 1]).collection('shifts').add({
         'title': title,

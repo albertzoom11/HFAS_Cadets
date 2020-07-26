@@ -5,6 +5,8 @@ import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/models/user.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Home extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  dynamic user = GlobalKey<User>();
+
   // properties
   int currentTab = 0;
 

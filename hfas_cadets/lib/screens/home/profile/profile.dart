@@ -8,7 +8,7 @@ import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/month_stat.dart';
 
 class Profile extends StatefulWidget {
-  final User user;
+  User user;
 
   Profile({this.user});
 
@@ -19,14 +19,24 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final Conversions _conversions = Conversions();
   DatabaseService _database = DatabaseService();
-  User _user;
+  int _year = DateTime.now().year;
+  List<bool> _nonEmptyMonths;
+
+  @override
+  void initState() {
+    super.initState();
+    createMonthsList();
+  }
+
+  void createMonthsList() async {
+    _nonEmptyMonths = await _database.nonEmptyMonths(_year.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
-    _user = _user == null ? widget.user : _user;
-    String _hours = _conversions.bigToSmall(_user.totalHours);
-    String _calls = _conversions.bigToSmall(_user.totalCalls);
-    String _tasks = _conversions.bigToSmall(_user.totalTasks);
+    String _hours = _conversions.bigToSmall(widget.user.totalHours);
+    String _calls = _conversions.bigToSmall(widget.user.totalCalls);
+    String _tasks = _conversions.bigToSmall(widget.user.totalTasks);
 
     return Container(
       decoration: BoxDecoration(
@@ -43,9 +53,9 @@ class _ProfileState extends State<Profile> {
         body: SafeArea(
           child: CustomRefreshIndicator(
             onRefresh: () async {
-              User dbUser = await _database.getUser(_user.uid);
+              User dbUser = await _database.getUser(widget.user.uid);
               setState(() {
-                _user = dbUser;
+                widget.user = dbUser;
               });
               return dbUser;
             },
@@ -113,7 +123,7 @@ class _ProfileState extends State<Profile> {
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: NetworkImage(_user.profilePic),
+                                          image: NetworkImage(widget.user.profilePic),
                                         ),
                                       ),
                                     ),
@@ -127,7 +137,7 @@ class _ProfileState extends State<Profile> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            _user.name,
+                                            widget.user.name,
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize:
@@ -139,7 +149,7 @@ class _ProfileState extends State<Profile> {
                                             height: 1 * SizeConfig.blockSizeVertical,
                                           ),
                                           Text(
-                                            _user.role,
+                                            widget.user.role,
                                             style: TextStyle(
                                               color: Colors.white70,
                                               fontSize:
@@ -281,7 +291,7 @@ class _ProfileState extends State<Profile> {
                                   Navigator.pushNamed(
                                     context,
                                     '/editProfile',
-                                    arguments: _user,
+                                    arguments: widget.user,
                                   );
                                 },
                               )),
