@@ -22,6 +22,7 @@ class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   bool loading = false;
+  Image _defaultProfilePic = Image.network(globals.user.profilePic);
 
   // text field state
   String email = '';
@@ -126,6 +127,7 @@ class _EditProfileState extends State<EditProfile> {
                   onPressed: () async {
                     setState(() {
                       _imageFile = null;
+                      _defaultProfilePic = Image.asset('assets/images/blankProfile.jpg');
                     });
                     Navigator.pop(context);
                   },
@@ -221,9 +223,7 @@ class _EditProfileState extends State<EditProfile> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: _imageFile == null
-                                          ? NetworkImage(globals.user.profilePic)
-                                          : FileImage(_imageFile),
+                                      image: _imageFile == null ? _defaultProfilePic.image : FileImage(_imageFile),
                                     ),
                                   ),
                                 ),
@@ -382,7 +382,6 @@ class _EditProfileState extends State<EditProfile> {
                                         onTap: () async {
                                           if (_formKey.currentState
                                               .validate()) {
-                                            String tempUrl;
                                             if (_imageFile != null) {
                                               await _startUpload();
                                             }
