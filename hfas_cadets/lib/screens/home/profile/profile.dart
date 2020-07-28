@@ -110,7 +110,7 @@ class _ProfileState extends State<Profile> {
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: NetworkImage(globals.user.profilePic),
+                                          image: globals.user.profilePic == null ? AssetImage('assets/images/blankProfile.jpg') : NetworkImage(globals.user.profilePic),
                                         ),
                                       ),
                                     ),
@@ -278,7 +278,6 @@ class _ProfileState extends State<Profile> {
                                   Navigator.pushNamed(
                                     context,
                                     '/editProfile',
-                                    arguments: globals.user,
                                   );
                                 },
                               )),

@@ -22,7 +22,7 @@ class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   bool loading = false;
-  Image _defaultProfilePic = Image.network(globals.user.profilePic);
+  Image _defaultProfilePic = globals.user.profilePic == null ? Image.asset('assets/images/blankProfile.jpg') : Image.network(globals.user.profilePic);
 
   // text field state
   String email = '';
@@ -31,7 +31,7 @@ class _EditProfileState extends State<EditProfile> {
 
   // image capture
   File _imageFile;
-  String _imageURL = '';
+  String _imageURL;
 
   Future<void> _pickImage(ImageSource source) async {
     File selected = await ImagePicker.pickImage(source: source);
@@ -148,7 +148,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     email = email == '' ? globals.user.email : email;
     name = name == '' ? globals.user.name : name;
-    _imageURL = _imageURL == '' ? globals.user.profilePic : _imageURL;
+//    _imageURL = _imageURL == '' ? globals.user.profilePic : _imageURL;
     final DatabaseService _databaseService = DatabaseService();
 
     Future<void> _startUpload() async {
@@ -162,6 +162,16 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {
         _imageURL = output;
       });
+    }
+
+    Future _removeProfilePhoto() async {
+      String filePath = 'users/${globals.user.uid}/profile.png';
+
+      await _storage.ref().child(filePath).delete();
+      setState(() {
+        _imageURL = null;
+      });
+      print('successfully removed profile photo');
     }
 
     return loading
@@ -384,20 +394,19 @@ class _EditProfileState extends State<EditProfile> {
                                               .validate()) {
                                             if (_imageFile != null) {
                                               await _startUpload();
+                                            } else if (globals.user.profilePic != null) {
+                                              await _removeProfilePhoto();
                                             }
                                             setState(() {
                                               loading = true;
                                             });
                                             dynamic updateEmailResult = 'no change';
                                             if (email != globals.user.email) {
-                                              updateEmailResult =
-                                                  await _auth
-                                                      .updateEmail(email);
+                                              updateEmailResult = await _auth.updateEmail(email);
                                             }
                                             if (updateEmailResult == null) {
                                               setState(() {
-                                                error =
-                                                    'Please enter a valid email.';
+                                                error = 'Please enter a valid email.';
                                                 loading = false;
                                               });
                                             } else {
@@ -411,9 +420,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 totalCalls: globals.user.totalCalls,
                                                 totalTasks: globals.user.totalTasks,
                                               );
-                                              dynamic result =
-                                                  await _databaseService
-                                                      .updateUserInfo(globals.user);
+                                              dynamic result = await _databaseService.updateUserInfo(globals.user);
                                               if (result == null) {
                                                 setState(() {
                                                   error =
@@ -426,8 +433,7 @@ class _EditProfileState extends State<EditProfile> {
                                                   context,
                                                   '/home',
                                                   (route) => false,
-                                                  arguments: ScreenArguments(
-                                                      tabNumber: 3),
+                                                  arguments: ScreenArguments(tabNumber: 3),
                                                 );
                                               }
                                             }
