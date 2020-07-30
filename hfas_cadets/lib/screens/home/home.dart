@@ -5,7 +5,9 @@ import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final AuthService _auth = AuthService();
+
   // properties
   int currentTab = 0;
 
@@ -126,6 +130,30 @@ class _HomeState extends State<Home> {
                           Divider(
                             height: 0.1,
                             color: Colors.blue[900],
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              dynamic result = await _auth.signOutGoogle();
+                              if (result == null) {
+                                print('sign out failed');
+                              } else {
+                                var prefs = await SharedPreferences
+                                    .getInstance();
+                                prefs.clear();
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    '/mainMenu', (route) => false);
+                              }
+                            },
+                            child: ListTile(
+                              title: new Text(
+                                "Sign Out",
+                                style: TextStyle(color: Colors.indigo[900]),
+                              ),
+                              leading: new Icon(
+                                Icons.exit_to_app,
+                                color: Colors.indigo[900],
+                              ),
+                            ),
                           ),
                           ListTile(
                             title: new Text(
