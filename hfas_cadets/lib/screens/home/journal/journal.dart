@@ -115,8 +115,7 @@ class _JournalState extends State<Journal> {
                             top: 3 * SizeConfig.blockSizeVertical),
                         child: Column(
                           children: <Widget>[
-                            Row(),
-                            Container(),
+
                           ],
                         ),
                       ),

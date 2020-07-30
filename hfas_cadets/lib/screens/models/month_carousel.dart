@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MonthCarousel extends StatefulWidget {
-  @override
-  _MonthCarouselState createState() => _MonthCarouselState();
-}
-
-class _MonthCarouselState extends State<MonthCarousel> {
+class MonthCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: <Widget>[
+        Row(),
+        Container(),
+      ],
+    );
   }
 }
