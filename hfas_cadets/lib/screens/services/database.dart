@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
-import 'package:hfascadets/shared/month_stat.dart';
+import 'package:hfascadets/screens/models/month_stat.dart';
 
 class DatabaseService {
   final uid;

@@ -81,13 +81,6 @@ class _ProfileState extends State<Profile> {
                 overflow: Overflow.visible,
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Colors.indigo[900],
-                        Colors.indigo[800],
-                        Colors.blue[900],
-                      ]),
-                    ),
                     height: 45 * SizeConfig.blockSizeVertical,
                     child: Padding(
                       padding: EdgeInsets.only(

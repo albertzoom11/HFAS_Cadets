@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 
-class Verification extends StatefulWidget {
-
-  @override
-  _VerificationState createState() => _VerificationState();
-}
-
-class _VerificationState extends State<Verification> {
+class Verification extends StatelessWidget {
   final AuthService _auth = AuthService();
 
   @override
@@ -32,3 +26,4 @@ class _VerificationState extends State<Verification> {
     );
   }
 }
+
