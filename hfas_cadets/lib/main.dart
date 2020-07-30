@@ -25,24 +25,25 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.indigo[900],
-        ),
-        routes: {
-          "/mainMenu": (_) => MainMenu(),
-          "/signIn": (_) => SignIn(),
-          "/signUp": (_) => SignUp(),
-          "/verification": (_) => Verification(),
-          "/forgotPassword": (_) => ForgotPassword(),
-          "/home": (_) => Home(),
-          "/calendar": (_) => Calendar(),
-          "/journal": (_) => Journal(),
-          "/profile": (_) => Profile(),
-          "/add": (_) => Add(),
-          "/editProfile": (_) => EditProfile(),
-        },
-        home: MainMenu(),
+      title: 'HFAS Cadets',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.indigo[900],
+      ),
+      routes: {
+        "/mainMenu": (_) => MainMenu(),
+        "/signIn": (_) => SignIn(),
+        "/signUp": (_) => SignUp(),
+        "/verification": (_) => Verification(),
+        "/forgotPassword": (_) => ForgotPassword(),
+        "/home": (_) => Home(),
+        "/calendar": (_) => Calendar(),
+        "/journal": (_) => Journal(),
+        "/profile": (_) => Profile(),
+        "/add": (_) => Add(),
+        "/editProfile": (_) => EditProfile(),
+      },
+      home: MainMenu(),
     );
   }
 }
