@@ -117,10 +117,10 @@ class _JournalState extends State<Journal> {
                         child: Column(
                           children: <Widget>[
                             MonthCarousel(month: 'August', shifts: [
-                              Shift(title: 'hi', date: 'September 4th'),
-                              Shift(title: 'bye', date: 'August 3rd'),
-                              Shift(title: 'ye', date: 'August 2nd'),
-                              Shift(title: 'aaa', date: 'August 1st')],),
+                              Shift(date: DateTime(2020, 8, 24)),
+                              Shift(date: DateTime(2020, 8, 21)),
+                              Shift(date: DateTime(2020, 8, 4)),
+                              Shift(date: DateTime(2020, 8, 1))],),
                           ],
                         ),
                       ),

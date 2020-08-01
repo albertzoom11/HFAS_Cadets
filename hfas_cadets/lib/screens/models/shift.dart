@@ -1,7 +1,7 @@
 class Shift {
   String imageUrl;
   String title;
-  String date;
+  DateTime date;
   String timeIn;
   String timeOut;
   num hoursPassed;
