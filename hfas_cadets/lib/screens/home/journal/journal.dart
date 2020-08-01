@@ -1,5 +1,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/month_carousel.dart';
+import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
@@ -110,12 +112,15 @@ class _JournalState extends State<Journal> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: 6 * SizeConfig.blockSizeHorizontal,
-                            right: 6 * SizeConfig.blockSizeHorizontal,
-                            top: 3 * SizeConfig.blockSizeVertical),
+                            left: 8 * SizeConfig.blockSizeHorizontal,
+                            top: 5 * SizeConfig.blockSizeVertical),
                         child: Column(
                           children: <Widget>[
-
+                            MonthCarousel(month: 'August', shifts: [
+                              Shift(title: 'hi', date: 'September 4th'),
+                              Shift(title: 'bye', date: 'August 3rd'),
+                              Shift(title: 'ye', date: 'August 2nd'),
+                              Shift(title: 'aaa', date: 'August 1st')],),
                           ],
                         ),
                       ),
