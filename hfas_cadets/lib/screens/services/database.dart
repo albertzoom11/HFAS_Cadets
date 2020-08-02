@@ -108,7 +108,7 @@ class DatabaseService {
         print('${globals.months[i]}: ${_shifts.length}');
         if (_shifts.length != 0) {
           output.add(MonthCarousel(
-            month: globals.months[i],
+            monthIndex: i,
             color: globals.getMonthColor(globals.months[i]),
             shifts: _shifts,
           ));

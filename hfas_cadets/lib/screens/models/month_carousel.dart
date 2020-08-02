@@ -5,11 +5,12 @@ import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 class MonthCarousel extends StatelessWidget {
-  final String month;
+  final int monthIndex;
   final Color color;
   final List<Shift> shifts;
+  int currentMonth = DateTime.now().month;
 
-  MonthCarousel({this.month, this.color, this.shifts});
+  MonthCarousel({this.monthIndex, this.color, this.shifts});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,9 @@ class MonthCarousel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(
-                month,
+                globals.months[monthIndex],
                 style: TextStyle(
-                    color: color,
+                    color: currentMonth == monthIndex + 1 ? color : Colors.black,
                     fontSize: 3 * SizeConfig.blockSizeVertical,
                     fontWeight: FontWeight.bold),
               ),
