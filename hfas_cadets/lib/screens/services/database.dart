@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hfascadets/screens/models/month_carousel.dart';
+import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 import 'package:hfascadets/screens/models/month_stat.dart';
@@ -76,8 +78,11 @@ class DatabaseService {
         if (data.exists) {
           output.add(MonthStat(
             month: globals.months[i],
-            points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
-            hours: data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
+            points: data['points'] % 1 == 0
+                ? data['points'].toInt()
+                : data['points'],
+            hours:
+                data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
             calls: data['calls'],
             tasks: data['tasks'],
             shifts: data['shifts'],
@@ -88,37 +93,45 @@ class DatabaseService {
     return output;
   }
 
-  Future monthCarousels(String year) async {
+  List<Widget> monthCarousels(String year) {
     List<Widget> output = [];
-    for (int i = globals.months.length - 1; i >= 0; i--) {
-      await userCollection
-          .document(globals.user.uid)
-          .collection(year)
-          .document(globals.months[i])
-          .get()
-          .then((data) {
-        if (data.exists) {
-          output.add(MonthStat(
-            month: globals.months[i],
-            points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
-            hours: data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
-            calls: data['calls'],
-            tasks: data['tasks'],
-            shifts: data['shifts'],
+    userCollection
+        .document(globals.user.uid)
+        .collection(year)
+        .snapshots()
+        .listen((snapshot) {
+      snapshot.documents.forEach((doc) {
+        userCollection
+            .document(globals.user.uid)
+            .collection(year)
+            .document(doc.documentID)
+            .collection('shifts')
+            .orderBy('date', descending: true)
+            .snapshots()
+            .listen((snapshot) {
+          List<Shift> _shifts = [];
+          snapshot.documents.forEach((doc) {
+            _shifts.add(Shift.fromData(doc.data));
+          });
+          output.add(MonthCarousel(
+            month: doc.documentID,
+            color: globals.getMonthColor(doc.documentID),
+            shifts: _shifts,
           ));
-        }
+        });
       });
-    }
+    });
     return output;
   }
 
   // NOT IN USE YET
-  Future addShift(String title, DateTime date, String timeIn, String timeOut, num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addShift(String title, DateTime date, String timeIn, String timeOut,
+      num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
       await userCollection
           .document(globals.user.uid)
           .collection(date.year.toString())
-          .document(months[date.month - 1])
+          .document(globals.months[date.month - 1])
           .collection('shifts')
           .add({
         'title': title,
@@ -130,7 +143,7 @@ class DatabaseService {
         'numOfTasks': numOfTasks,
       });
       return await addToMonthTotals(date.year.toString(),
-          months[date.month - 1], hoursPassed, numOfCalls, numOfTasks);
+          globals.months[date.month - 1], hoursPassed, numOfCalls, numOfTasks);
     } catch (e) {
       print(e.toString());
       return null;

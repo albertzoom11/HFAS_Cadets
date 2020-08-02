@@ -5,7 +5,8 @@ import 'package:hfascadets/screens/models/user.dart';
 
 User user;
 List<Widget> profileMonths = [];
-List<Widget> shifts = [];
+int pointsRequired = 15;
+List<Widget> monthCarousels = [];
 List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',];
 

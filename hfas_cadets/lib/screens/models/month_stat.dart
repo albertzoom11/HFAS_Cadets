@@ -46,7 +46,7 @@ class MonthStat extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      if (points < 15)
+                      if (points < globals.pointsRequired)
                         Text(
                           points.toString(),
                           style: TextStyle(
@@ -55,12 +55,12 @@ class MonthStat extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      if (points < 15)
+                      if (points < globals.pointsRequired)
                         Text('Points', style: TextStyle(
                           color: Colors.black,
                           fontSize: 3 * SizeConfig.blockSizeVertical,
                         ),),
-                      if (points >= 15)
+                      if (points >= globals.pointsRequired)
                         Text(
                           points.toString(),
                           style: TextStyle(
@@ -69,7 +69,7 @@ class MonthStat extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      if (points >= 15)
+                      if (points >= globals.pointsRequired)
                         Text('Points', style: TextStyle(
                           color: monthColor,
                           fontSize: 3 * SizeConfig.blockSizeVertical,

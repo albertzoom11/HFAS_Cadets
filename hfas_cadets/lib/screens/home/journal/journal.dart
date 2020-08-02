@@ -1,8 +1,8 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:hfascadets/screens/models/month_carousel.dart';
-import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/models/user.dart';
+import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Journal extends StatefulWidget {
@@ -11,6 +11,9 @@ class Journal extends StatefulWidget {
 }
 
 class _JournalState extends State<Journal> {
+  DatabaseService _database = DatabaseService();
+  int _year = DateTime.now().year;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +30,16 @@ class _JournalState extends State<Journal> {
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: CustomRefreshIndicator(
-            onRefresh: () async {},
+            onRefresh: () async {
+              List<Widget> dbCarousel = _database.monthCarousels(_year.toString());
+              User dbUser = await _database.getUser(globals.user.uid);
+              dynamic value = await _database.monthStats(_year.toString());
+              setState(() {
+                globals.user = dbUser;
+                globals.profileMonths = value;
+                globals.monthCarousels = dbCarousel;
+              });
+            },
             builder: (BuildContext context, Widget child,
                 IndicatorController controller) {
               return AnimatedBuilder(
@@ -115,21 +127,8 @@ class _JournalState extends State<Journal> {
                             top: 5 * SizeConfig.blockSizeVertical),
                         child: Column(
                           children: <Widget>[
-                            MonthCarousel(month: 'August', color: globals.getMonthColor('August'), shifts: [
-                              Shift(date: DateTime(2020, 8, 24), hoursPassed: 4, numCalls: 0),
-                              Shift(date: DateTime(2020, 8, 21), hoursPassed: 4, numCalls: 1),
-                              Shift(date: DateTime(2020, 8, 4), hoursPassed: 4, numCalls: 1),
-                              Shift(date: DateTime(2020, 8, 1), hoursPassed: 4, numCalls: 0)],),
-                            MonthCarousel(month: 'March', color: globals.getMonthColor('March'), shifts: [
-                              Shift(date: DateTime(2020, 3, 24), hoursPassed: 4, numCalls: 0),
-                              Shift(date: DateTime(2020, 3, 21), hoursPassed: 4, numCalls: 1),
-                              Shift(date: DateTime(2020, 3, 4), hoursPassed: 4, numCalls: 1),
-                              Shift(date: DateTime(2020, 3, 1), hoursPassed: 4, numCalls: 0)],),
-                            MonthCarousel(month: 'January', color: globals.getMonthColor('January'), shifts: [
-                              Shift(date: DateTime(2020, 1, 24), hoursPassed: 4, numCalls: 0),
-                              Shift(date: DateTime(2020, 1, 21), hoursPassed: 4, numCalls: 1),
-                              Shift(date: DateTime(2020, 1, 4), hoursPassed: 4, numCalls: 1),
-                              Shift(date: DateTime(2020, 1, 1), hoursPassed: 4, numCalls: 0)],),
+                            for (Widget month in globals.monthCarousels)
+                              month,
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                           ],
                         ),

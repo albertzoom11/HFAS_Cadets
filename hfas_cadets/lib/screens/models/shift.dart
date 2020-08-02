@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Shift {
   String imageUrl;
   String title;
@@ -13,7 +17,7 @@ class Shift {
   Shift.fromData(Map<String, dynamic> data)
       : imageUrl = data['imageUrl'],
         title = data['title'],
-        date = data['date'],
+        date = (data['date'] as Timestamp).toDate(),
         timeIn = data['timeIn'],
         timeOut = data['timeOut'],
         hoursPassed = data['hoursPassed'],

@@ -67,22 +67,22 @@ class MonthCarousel extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4 * SizeConfig.blockSizeHorizontal, vertical: 1.5 * SizeConfig.blockSizeVertical),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+                              SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                               Text(
                                 '${shift.hoursPassed} Hours',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 2.7 * SizeConfig.blockSizeVertical,
+                                    fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 1 * SizeConfig.blockSizeVertical,),
                               Text(
                                 '${shift.numCalls} Calls',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 2.7 * SizeConfig.blockSizeVertical,
+                                    fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
