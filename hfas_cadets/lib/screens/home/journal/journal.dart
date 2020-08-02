@@ -127,8 +127,24 @@ class _JournalState extends State<Journal> {
                             top: 5 * SizeConfig.blockSizeVertical),
                         child: Column(
                           children: <Widget>[
-                            for (Widget month in globals.monthCarousels)
-                              month,
+                            if (globals.monthCarousels.length == 0)
+                              SizedBox(height: 29 * SizeConfig.blockSizeVertical,),
+                            if (globals.monthCarousels.length == 0)
+                              Text(
+                                'No Shifts Yet',
+                                style: TextStyle(
+                                  color: Colors.indigo[900],
+                                  fontSize: 3 * SizeConfig.blockSizeVertical,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            if (globals.monthCarousels.length == 0)
+                              SizedBox(height: 31.8 * SizeConfig.blockSizeVertical,),
+                            if (globals.monthCarousels.length != 0)
+                              for (Widget month in globals.monthCarousels)
+                                month,
+                            if (globals.monthCarousels.length == 1)
+                              SizedBox(height: 18.8 * SizeConfig.blockSizeVertical,),
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                           ],
                         ),
