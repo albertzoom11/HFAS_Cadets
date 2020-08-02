@@ -249,7 +249,7 @@ class _AddState extends State<Add> {
                                             34 * SizeConfig.blockSizeHorizontal,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                             image: AssetImage(
                                                 'assets/images/hfasLogo.png'),
                                           ),

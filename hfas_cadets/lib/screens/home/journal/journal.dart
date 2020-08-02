@@ -100,7 +100,7 @@ class _JournalState extends State<Journal> {
                         EdgeInsets.only(top: 17 * SizeConfig.blockSizeVertical),
                     child: Container(
                       width: 100 * SizeConfig.blockSizeHorizontal,
-                      height: 100 * SizeConfig.blockSizeVertical,
+//                      height: 100 * SizeConfig.blockSizeVertical,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -112,15 +112,25 @@ class _JournalState extends State<Journal> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: 8 * SizeConfig.blockSizeHorizontal,
                             top: 5 * SizeConfig.blockSizeVertical),
                         child: Column(
                           children: <Widget>[
-                            MonthCarousel(month: 'August', shifts: [
-                              Shift(date: DateTime(2020, 8, 24)),
-                              Shift(date: DateTime(2020, 8, 21)),
-                              Shift(date: DateTime(2020, 8, 4)),
-                              Shift(date: DateTime(2020, 8, 1))],),
+                            MonthCarousel(month: 'August', color: globals.getMonthColor('August'), shifts: [
+                              Shift(date: DateTime(2020, 8, 24), hoursPassed: 4, numCalls: 0),
+                              Shift(date: DateTime(2020, 8, 21), hoursPassed: 4, numCalls: 1),
+                              Shift(date: DateTime(2020, 8, 4), hoursPassed: 4, numCalls: 1),
+                              Shift(date: DateTime(2020, 8, 1), hoursPassed: 4, numCalls: 0)],),
+                            MonthCarousel(month: 'March', color: globals.getMonthColor('March'), shifts: [
+                              Shift(date: DateTime(2020, 7, 24), hoursPassed: 4, numCalls: 0),
+                              Shift(date: DateTime(2020, 7, 21), hoursPassed: 4, numCalls: 1),
+                              Shift(date: DateTime(2020, 7, 4), hoursPassed: 4, numCalls: 1),
+                              Shift(date: DateTime(2020, 7, 1), hoursPassed: 4, numCalls: 0)],),
+                            MonthCarousel(month: 'January', color: globals.getMonthColor('January'), shifts: [
+                              Shift(date: DateTime(2020, 7, 24), hoursPassed: 4, numCalls: 0),
+                              Shift(date: DateTime(2020, 7, 21), hoursPassed: 4, numCalls: 1),
+                              Shift(date: DateTime(2020, 7, 4), hoursPassed: 4, numCalls: 1),
+                              Shift(date: DateTime(2020, 7, 1), hoursPassed: 4, numCalls: 0)],),
+                            SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                           ],
                         ),
                       ),
