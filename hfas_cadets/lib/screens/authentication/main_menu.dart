@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/services/database.dart';
+import 'package:hfascadets/shared/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
@@ -16,6 +17,8 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   DatabaseService _database = DatabaseService();
+  String _year = DateTime.now().year.toString();
+  bool loading = false;
 
   @override
   initState() {
@@ -27,8 +30,12 @@ class _MainMenuState extends State<MainMenu> {
     var prefs = await SharedPreferences.getInstance();
     String _uid = prefs.getString('uid');
     if (_uid != null) {
+      setState(() {
+        loading = true;
+      });
       globals.user = await _database.getUser(_uid);
-      globals.profileMonths = await _database.monthStats(DateTime.now().year.toString());
+      globals.monthCarousels = _database.monthCarousels(_year);
+      globals.profileMonths = await _database.monthStats(_year);
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0));
     }
   }
@@ -37,7 +44,7 @@ class _MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
 
     SizeConfig().init(context);
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
