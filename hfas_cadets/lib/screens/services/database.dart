@@ -78,11 +78,8 @@ class DatabaseService {
         if (data.exists) {
           output.add(MonthStat(
             month: globals.months[i],
-            points: data['points'] % 1 == 0
-                ? data['points'].toInt()
-                : data['points'],
-            hours:
-                data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
+            points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
+            hours: data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
             calls: data['calls'],
             tasks: data['tasks'],
             shifts: data['shifts'],

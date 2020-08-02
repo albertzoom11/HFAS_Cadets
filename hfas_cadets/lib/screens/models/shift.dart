@@ -20,7 +20,7 @@ class Shift {
         date = (data['date'] as Timestamp).toDate(),
         timeIn = data['timeIn'],
         timeOut = data['timeOut'],
-        hoursPassed = data['hoursPassed'],
+        hoursPassed = data['hoursPassed'] % 1 == 0 ? data['hoursPassed'].toInt() : data['hoursPassed'],
         numCalls = data['numOfCalls'],
         numTasks = data['numOfTasks'];
 
