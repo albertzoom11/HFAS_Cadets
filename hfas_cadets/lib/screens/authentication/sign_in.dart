@@ -190,6 +190,7 @@ class _SignInState extends State<SignIn> {
                                 } else if (result.isEmailVerified) {
                                   globals.user = _auth.currentUser;
                                   globals.profileMonths = await _database.monthStats(_year);
+                                  globals.shifts = await _database.monthCarousels(_year);
                                   var prefs = await SharedPreferences.getInstance();
                                   prefs.setString('uid', globals.user.uid);
                                   Navigator.pushNamedAndRemoveUntil(

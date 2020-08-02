@@ -14,21 +14,6 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  List<String> months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
   Future getUser(String uid) async {
     try {
       var userData = await userCollection.document(uid).get();
@@ -81,16 +66,40 @@ class DatabaseService {
 
   Future monthStats(String year) async {
     List<Widget> output = [];
-    for (int i = months.length - 1; i >= 0; i--) {
+    for (int i = globals.months.length - 1; i >= 0; i--) {
       await userCollection
           .document(globals.user.uid)
           .collection(year)
-          .document(months[i])
+          .document(globals.months[i])
           .get()
           .then((data) {
         if (data.exists) {
           output.add(MonthStat(
-            month: months[i],
+            month: globals.months[i],
+            points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
+            hours: data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
+            calls: data['calls'],
+            tasks: data['tasks'],
+            shifts: data['shifts'],
+          ));
+        }
+      });
+    }
+    return output;
+  }
+
+  Future monthCarousels(String year) async {
+    List<Widget> output = [];
+    for (int i = globals.months.length - 1; i >= 0; i--) {
+      await userCollection
+          .document(globals.user.uid)
+          .collection(year)
+          .document(globals.months[i])
+          .get()
+          .then((data) {
+        if (data.exists) {
+          output.add(MonthStat(
+            month: globals.months[i],
             points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
             hours: data['hours'] % 1 == 0 ? data['hours'].toInt() : data['hours'],
             calls: data['calls'],
