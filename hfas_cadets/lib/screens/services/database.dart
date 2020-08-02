@@ -95,32 +95,29 @@ class DatabaseService {
 
   List<Widget> monthCarousels(String year) {
     List<Widget> output = [];
-    userCollection
-        .document(globals.user.uid)
-        .collection(year)
-        .snapshots()
-        .listen((snapshot) {
-      snapshot.documents.forEach((doc) {
-        userCollection
-            .document(globals.user.uid)
-            .collection(year)
-            .document(doc.documentID)
-            .collection('shifts')
-            .orderBy('date', descending: true)
-            .snapshots()
-            .listen((snapshot) {
-          List<Shift> _shifts = [];
-          snapshot.documents.forEach((doc) {
-            _shifts.add(Shift.fromData(doc.data));
-          });
+    for (int i = globals.months.length - 1; i >= 0; i--) {
+      userCollection
+          .document(globals.user.uid)
+          .collection(year)
+          .document(globals.months[i])
+          .collection('shifts')
+          .orderBy('date', descending: true)
+          .snapshots()
+          .listen((snapshot) {
+        List<Shift> _shifts = [];
+        snapshot.documents.forEach((doc) {
+          _shifts.add(Shift.fromData(doc.data));
+        });
+        print('${globals.months[i]}: ${_shifts.length}');
+        if (_shifts.length != 0) {
           output.add(MonthCarousel(
-            month: doc.documentID,
-            color: globals.getMonthColor(doc.documentID),
+            month: globals.months[i],
+            color: globals.getMonthColor(globals.months[i]),
             shifts: _shifts,
           ));
-        });
+        }
       });
-    });
+    }
     return output;
   }
 
