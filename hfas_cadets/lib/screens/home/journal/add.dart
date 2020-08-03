@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -19,10 +20,11 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
+  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
   final _formKey = GlobalKey<FormState>();
   final _taskListKey = GlobalKey<AnimatedListState>();
-  List<String> _tasks = [];
   final Conversions _conversions = Conversions();
+  List<String> _tasks = [];
   String _dateOutput = '';
   DateTime _dateTime;
   TimeOfDay _startTime;
@@ -67,7 +69,20 @@ class _AddState extends State<Add> {
     });
   }
 
-  Future<String> createAlertDialog(BuildContext context) {
+  Future<void> _startUpload(String year, String month, String dateTime) async {
+    String filePath = 'users/${globals.user.uid}/$year/$month/$dateTime.png';
+
+    StorageUploadTask _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
+
+    StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
+    print('file uploaded');
+    String output = await taskSnapshot.ref.getDownloadURL();
+    setState(() {
+      _imageURL = output;
+    });
+  }
+
+  Future<String> createTaskDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
 
     return showDialog(
@@ -653,7 +668,7 @@ class _AddState extends State<Add> {
                                       1.3,
                                       GestureDetector(
                                         onTap: () {
-                                          createAlertDialog(context)
+                                          createTaskDialog(context)
                                               .then((value) {
                                             if (value != null) {
                                               _addTask(value);

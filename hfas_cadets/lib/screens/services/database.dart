@@ -126,7 +126,8 @@ class DatabaseService {
           .collection(date.year.toString())
           .document(globals.months[date.month - 1])
           .collection('shifts')
-          .add({
+          .document(date.toString())
+          .setData({
         'title': title,
         'date': date,
         'timeIn': timeIn,
