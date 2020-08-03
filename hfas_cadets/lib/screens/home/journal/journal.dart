@@ -1,5 +1,6 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/database.dart';
@@ -87,22 +88,22 @@ class _JournalState extends State<Journal> {
                           top: 4 * SizeConfig.blockSizeVertical),
                       child: Column(
                         children: <Widget>[
-                          Text(
+                          FadeAnimation(0.3, Text(
                             'Journal',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 4 * SizeConfig.blockSizeVertical,
                             ),
-                          ),
+                          )),
                           SizedBox(height: SizeConfig.blockSizeVertical,),
-                          Text(
+                          FadeAnimation(0.4, Text(
                             'My Shifts',
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 2 * SizeConfig.blockSizeVertical,
                             ),
-                          ),
+                          )),
                         ],
                       ),
                     ),
@@ -125,7 +126,7 @@ class _JournalState extends State<Journal> {
                       child: Padding(
                         padding: EdgeInsets.only(
                             top: 5 * SizeConfig.blockSizeVertical),
-                        child: Column(
+                        child: FadeAnimation(0.5, Column(
                           children: <Widget>[
                             if (globals.monthCarousels.length == 0)
                               SizedBox(height: 29 * SizeConfig.blockSizeVertical,),
@@ -147,7 +148,7 @@ class _JournalState extends State<Journal> {
                               SizedBox(height: 18.8 * SizeConfig.blockSizeVertical,),
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                           ],
-                        ),
+                        )),
                       ),
                     ),
                   ),
