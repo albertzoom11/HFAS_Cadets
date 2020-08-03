@@ -105,7 +105,6 @@ class DatabaseService {
         snapshot.documents.forEach((doc) {
           _shifts.add(Shift.fromData(doc.data));
         });
-        print('${globals.months[i]}: ${_shifts.length}');
         if (_shifts.length != 0) {
           output.add(MonthCarousel(
             monthIndex: i,
