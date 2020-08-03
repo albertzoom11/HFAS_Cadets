@@ -190,16 +190,12 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Icon(
                           Icons.home,
-                          color: currentTab == 0
-                              ? Colors.indigo[900]
-                              : Colors.grey,
+                          color: currentTab == 0 ? Colors.indigo[900] : Colors.grey,
                         ),
                         Text(
                           'Journal',
                           style: TextStyle(
-                            color: currentTab == 0
-                                ? Colors.indigo[900]
-                                : Colors.grey,
+                            color: currentTab == 0 ? Colors.indigo[900] : Colors.grey,
                           ),
                         ),
                       ],

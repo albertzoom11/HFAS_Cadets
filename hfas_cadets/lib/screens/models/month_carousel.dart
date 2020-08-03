@@ -111,9 +111,9 @@ class MonthCarousel extends StatelessWidget {
                               height: 24 * SizeConfig.blockSizeVertical,
                               width: 34 * SizeConfig.blockSizeHorizontal,
                               fit: BoxFit.cover,
-                              image: AssetImage('assets/images/form.png'),
+                              image: NetworkImage(shift.imageUrl),
                             ),
-                            borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                            borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
                           ),
                           Positioned(
                             left: 3 * SizeConfig.blockSizeHorizontal,
