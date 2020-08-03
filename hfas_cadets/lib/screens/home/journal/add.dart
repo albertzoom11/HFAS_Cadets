@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,6 +10,8 @@ import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Add extends StatefulWidget {
   @override
@@ -28,6 +32,39 @@ class _AddState extends State<Add> {
   String _title = '';
   bool loading = false;
   int _year = DateTime.now().year;
+  File _imageFile;
+  String _imageURL;
+
+  Future<void> _pickImage(ImageSource source) async {
+    File selected = await ImagePicker.pickImage(source: source);
+    if (selected != null) {
+      setState(() {
+        _imageFile = selected;
+      });
+    }
+  }
+
+  Future<void> _cropImage() async {
+    File cropped = await ImageCropper.cropImage(
+      sourcePath: _imageFile.path,
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Profile Photo',
+        toolbarColor: Colors.indigo[900],
+        statusBarColor: Colors.indigo[900],
+        backgroundColor: Colors.indigo[900],
+        activeControlsWidgetColor: Colors.indigo[900],
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.original,
+        hideBottomControls: true,
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ),
+    );
+    setState(() {
+      _imageFile = cropped ?? _imageFile;
+    });
+  }
 
   Future<String> createAlertDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
@@ -89,6 +126,14 @@ class _AddState extends State<Add> {
             ],
           );
         });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pickImage(ImageSource.camera).then((value) {
+      _cropImage().then((value) {});
+    });
   }
 
   @override
@@ -244,16 +289,20 @@ class _AddState extends State<Add> {
                                 children: <Widget>[
                                   FadeAnimation(
                                       0.6,
-                                      Container(
-                                        height:
-                                            24 * SizeConfig.blockSizeVertical,
-                                        width:
-                                            34 * SizeConfig.blockSizeHorizontal,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                'assets/images/hfasLogo.png'),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                                        child: Container(
+                                          height:
+                                              24 * SizeConfig.blockSizeVertical,
+                                          width:
+                                              34 * SizeConfig.blockSizeHorizontal,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: _imageFile == null ? Colors.grey : Colors.indigo[900]),
+                                            borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: _imageFile != null ? FileImage(_imageFile) : AssetImage('assets/images/takePhoto.png'),
+                                            ),
                                           ),
                                         ),
                                       )),
@@ -288,14 +337,8 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: _dateTime == null
-                                                        ? Colors.grey
-                                                        : Colors.indigo[900]),
-                                                borderRadius:
-                                                    BorderRadius.circular(8 *
-                                                        SizeConfig
-                                                            .blockSizeHorizontal),
+                                                border: Border.all(color: _dateTime == null ? Colors.grey : Colors.indigo[900]),
+                                                borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
                                               ),
                                               child: Padding(
                                                 padding: _dateTime == null

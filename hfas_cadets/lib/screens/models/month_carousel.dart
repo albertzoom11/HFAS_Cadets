@@ -71,19 +71,19 @@ class MonthCarousel extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
+                              SizedBox(height: 5 * SizeConfig.blockSizeVertical,),
                               Text(
                                 '${shift.hoursPassed} Hours',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                    fontSize: 2.2 * SizeConfig.blockSizeVertical,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 '${shift.numCalls} Calls',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                    fontSize: 2.2 * SizeConfig.blockSizeVertical,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -108,7 +108,7 @@ class MonthCarousel extends StatelessWidget {
                         children: <Widget>[
                           ClipRRect(
                             child: Image(
-                              height: 22 * SizeConfig.blockSizeVertical,
+                              height: 24 * SizeConfig.blockSizeVertical,
                               width: 34 * SizeConfig.blockSizeHorizontal,
                               fit: BoxFit.cover,
                               image: AssetImage('assets/images/form.png'),
