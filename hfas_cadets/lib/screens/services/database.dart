@@ -118,26 +118,17 @@ class DatabaseService {
   }
 
   // NOT IN USE YET
-  Future addShift(String title, DateTime date, String timeIn, String timeOut,
-      num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addShift(Shift shift) async {
     try {
       await userCollection
           .document(globals.user.uid)
-          .collection(date.year.toString())
-          .document(globals.months[date.month - 1])
+          .collection(shift.date.year.toString())
+          .document(globals.months[shift.date.month - 1])
           .collection('shifts')
-          .document(date.toString())
-          .setData({
-        'title': title,
-        'date': date,
-        'timeIn': timeIn,
-        'timeOut': timeOut,
-        'hoursPassed': hoursPassed,
-        'numOfCalls': numOfCalls,
-        'numOfTasks': numOfTasks,
-      });
-      return await addToMonthTotals(date.year.toString(),
-          globals.months[date.month - 1], hoursPassed, numOfCalls, numOfTasks);
+          .document(shift.date.toString())
+          .setData(shift.toJson());
+      return await addToMonthTotals(shift.date.year.toString(),
+          globals.months[shift.date.month - 1], shift.hoursPassed, shift.numCalls, shift.numTasks);
     } catch (e) {
       print(e.toString());
       return null;

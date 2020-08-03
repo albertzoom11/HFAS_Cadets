@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
+import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
@@ -69,8 +70,8 @@ class _AddState extends State<Add> {
     });
   }
 
-  Future<void> _startUpload(String year, String month, String dateTime) async {
-    String filePath = 'users/${globals.user.uid}/$year/$month/$dateTime.png';
+  Future<void> _startUpload(DateTime dateTime) async {
+    String filePath = 'users/${globals.user.uid}/${dateTime.year.toString()}/${globals.months[dateTime.month-1]}/${dateTime.toString()}.png';
 
     StorageUploadTask _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
 
@@ -230,21 +231,20 @@ class _AddState extends State<Add> {
                                         setState(() {
                                           loading = true;
                                         });
+                                        await _startUpload(_dateTime);
                                         num _hoursPassed = _conversions.calculateHoursPassed(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
                                         await _database.addToUserTotals(_hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
-                                            await _database.addShift(
-                                                _title,
-                                                _dateTime,
-                                                _startTime
-                                                    .format(context)
-                                                    .toString(),
-                                                _endTime
-                                                    .format(context)
-                                                    .toString(),
-                                                 _hoursPassed,
-                                                _numCalls,
-                                                _numTasks);
+                                            await _database.addShift(Shift(
+                                                title: _title,
+                                                date: _dateTime,
+                                                imageUrl: _imageURL,
+                                                timeIn: _startTime.format(context).toString(),
+                                                timeOut: _endTime.format(context).toString(),
+                                                hoursPassed: _hoursPassed,
+                                                numCalls: _numCalls,
+                                                numTasks: _numTasks
+                                            ));
                                         List<Widget> dbCarousels = _database.monthCarousels(_year.toString());
                                         dynamic value = await _database.monthStats(_year.toString());
                                         setState(() {
