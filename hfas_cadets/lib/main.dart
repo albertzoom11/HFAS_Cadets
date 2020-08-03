@@ -6,7 +6,6 @@ import 'package:hfascadets/screens/authentication/sign_in.dart';
 import 'package:hfascadets/screens/authentication/sign_up.dart';
 import 'package:hfascadets/screens/authentication/verification.dart';
 import 'package:hfascadets/screens/home/journal/add.dart';
-import 'package:hfascadets/screens/home/calendar/calendar.dart';
 import 'package:hfascadets/screens/home/home.dart';
 import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
@@ -37,7 +36,6 @@ class MyApp extends StatelessWidget {
         "/verification": (_) => Verification(),
         "/forgotPassword": (_) => ForgotPassword(),
         "/home": (_) => Home(),
-        "/calendar": (_) => Calendar(),
         "/journal": (_) => Journal(),
         "/profile": (_) => Profile(),
         "/add": (_) => Add(),

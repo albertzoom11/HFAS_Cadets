@@ -189,7 +189,7 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(
-                          Icons.view_list,
+                          Icons.home,
                           color: currentTab == 0
                               ? Colors.indigo[900]
                               : Colors.grey,
