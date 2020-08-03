@@ -41,6 +41,7 @@ class _AddState extends State<Add> {
       setState(() {
         _imageFile = selected;
       });
+      _cropImage();
     }
   }
 
@@ -131,9 +132,7 @@ class _AddState extends State<Add> {
   @override
   void initState() {
     super.initState();
-    _pickImage(ImageSource.camera).then((value) {
-      _cropImage().then((value) {});
-    });
+    _pickImage(ImageSource.camera);
   }
 
   @override
@@ -289,19 +288,24 @@ class _AddState extends State<Add> {
                                 children: <Widget>[
                                   FadeAnimation(
                                       0.6,
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
-                                        child: Container(
-                                          height:
-                                              24 * SizeConfig.blockSizeVertical,
-                                          width:
-                                              34 * SizeConfig.blockSizeHorizontal,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: _imageFile == null ? Colors.grey : Colors.indigo[900]),
-                                            borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
-                                            image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: _imageFile != null ? FileImage(_imageFile) : AssetImage('assets/images/takePhoto.png'),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          await _pickImage(ImageSource.camera);
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                                          child: Container(
+                                            height:
+                                                24 * SizeConfig.blockSizeVertical,
+                                            width:
+                                                34 * SizeConfig.blockSizeHorizontal,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: _imageFile == null ? Colors.grey : Colors.indigo[900]),
+                                              borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: _imageFile != null ? FileImage(_imageFile) : AssetImage('assets/images/takePhoto.png'),
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -317,9 +321,7 @@ class _AddState extends State<Add> {
                                             onPressed: () {
                                               showDatePicker(
                                                 context: context,
-                                                initialDate: _dateTime == null
-                                                    ? DateTime.now()
-                                                    : _dateTime,
+                                                initialDate: _dateTime == null ? DateTime.now() : _dateTime,
                                                 firstDate: DateTime(2000),
                                                 lastDate: DateTime(2100),
                                               ).then((date) {
