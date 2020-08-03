@@ -148,7 +148,6 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     email = email == '' ? globals.user.email : email;
     name = name == '' ? globals.user.name : name;
-//    _imageURL = _imageURL == '' ? globals.user.profilePic : _imageURL;
     final DatabaseService _databaseService = DatabaseService();
 
     Future<void> _startUpload() async {
