@@ -41,7 +41,7 @@ class DatabaseService {
     await userCollection
         .document(user.uid)
         .updateData({"email": user.email}).whenComplete(() async {
-      print("Completed");
+      print("Updated User Email");
     }).catchError((e) => print(e));
   }
 

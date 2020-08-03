@@ -209,6 +209,8 @@ class _AddState extends State<Add> {
                                         createErrorDialog(context, 'Make sure your start time is before your end time.');
                                       } else if (_isValid == 'same') {
                                         createErrorDialog(context, 'Your start and end time are the same. Please try again.');
+                                      } else if (_imageFile == null) {
+                                        createErrorDialog(context, 'Take a photo of your duty sheet to submit.');
                                       } else {
                                         setState(() {
                                           loading = true;
@@ -404,13 +406,12 @@ class _AddState extends State<Add> {
                                             onPressed: () {
                                               showTimePicker(
                                                 context: context,
-                                                initialTime: _startTime == null
-                                                    ? TimeOfDay.now()
-                                                    : _startTime,
+                                                initialTime: _startTime == null ? TimeOfDay.now() : _startTime,
                                               ).then((time) {
                                                 if (time != null) {
                                                   setState(() {
                                                     _startTime = time;
+                                                    _dateTime = DateTime(_dateTime.year, _dateTime.month, _dateTime.day, _startTime.hour, _startTime.minute);
                                                   });
                                                 }
                                               });
@@ -745,7 +746,6 @@ class _AddState extends State<Add> {
 
   void _addTask(String task) {
     int i = _tasks.length;
-    print(i);
     _tasks.insert(i, task);
     _taskListKey.currentState.insertItem(i);
   }
