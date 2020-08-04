@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
-import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
@@ -152,8 +151,7 @@ class _AddState extends State<Add> {
   Widget build(BuildContext context) {
     final DatabaseService _database = DatabaseService();
 
-    return loading
-        ? Loading()
+    return loading ? Loading()
         : Scaffold(
             body: Stack(
               children: <Widget>[
@@ -276,8 +274,7 @@ class _AddState extends State<Add> {
                                             context,
                                             '/home',
                                             (route) => false,
-                                            arguments:
-                                                ScreenArguments(tabNumber: 2),
+                                            arguments: 0,
                                           );
                                         }
                                       }

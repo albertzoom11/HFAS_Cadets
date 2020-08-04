@@ -12,15 +12,24 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  final controller = PageController(
+  PageController controller = PageController(
     initialPage: 0,
   );
 
   // properties
   int currentTab = 0;
+  bool firstTime = true;
 
   @override
   Widget build(BuildContext context) {
+    final int data = ModalRoute.of(context).settings.arguments;
+    if (firstTime) {
+      setState(() {
+        controller = PageController(initialPage: data);
+        currentTab = data;
+      });
+      firstTime = false;
+    }
 
     return Scaffold(
         body: PageView(

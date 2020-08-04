@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
-import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,7 +35,7 @@ class _MainMenuState extends State<MainMenu> {
       globals.user = await _database.getUser(_uid);
       globals.monthCarousels = _database.monthCarousels(_year);
       globals.profileMonths = await _database.monthStats(_year);
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0));
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);
     }
   }
 

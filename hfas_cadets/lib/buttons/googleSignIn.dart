@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
-import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +23,7 @@ Widget googleSignInButton(BuildContext context) {
         globals.profileMonths = await _database.monthStats(_year);
         var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', globals.user.uid);
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: ScreenArguments(tabNumber: 0),);
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);
       }
     },
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeVertical)),

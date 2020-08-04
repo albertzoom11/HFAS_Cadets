@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
@@ -22,6 +21,7 @@ class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   bool loading = false;
+  bool _imageChanged = false;
   Image _defaultProfilePic = globals.user.profilePic == null ? Image.asset('assets/images/blankProfile.jpg') : Image.network(globals.user.profilePic);
 
   // text field state
@@ -38,6 +38,7 @@ class _EditProfileState extends State<EditProfile> {
     if (selected != null) {
       setState(() {
         _imageFile = selected;
+        _imageChanged = true;
       });
     }
   }
@@ -62,6 +63,7 @@ class _EditProfileState extends State<EditProfile> {
     );
     setState(() {
       _imageFile = cropped ?? _imageFile;
+      _imageChanged = true;
     });
   }
 
@@ -127,6 +129,7 @@ class _EditProfileState extends State<EditProfile> {
                   onPressed: () async {
                     setState(() {
                       _imageFile = null;
+                      _imageChanged = true;
                       _defaultProfilePic = Image.asset('assets/images/blankProfile.jpg');
                     });
                     Navigator.pop(context);
@@ -391,14 +394,14 @@ class _EditProfileState extends State<EditProfile> {
                                         onTap: () async {
                                           if (_formKey.currentState
                                               .validate()) {
-                                            if (_imageFile != null) {
-                                              await _startUpload();
-                                            } else if (globals.user.profilePic != null) {
-                                              await _removeProfilePhoto();
-                                            }
                                             setState(() {
                                               loading = true;
                                             });
+                                            if (_imageFile != null) {
+                                              await _startUpload();
+                                            } else if (_imageChanged) {
+                                              await _removeProfilePhoto();
+                                            }
                                             dynamic updateEmailResult = 'no change';
                                             if (email != globals.user.email) {
                                               updateEmailResult = await _auth.updateEmail(email);
@@ -411,7 +414,7 @@ class _EditProfileState extends State<EditProfile> {
                                             } else {
                                               globals.user = User(
                                                 uid: globals.user.uid,
-                                                profilePic: _imageURL,
+                                                profilePic: _imageChanged ? _imageURL : globals.user.profilePic,
                                                 name: name,
                                                 email: email,
                                                 role: globals.user.role,
@@ -432,7 +435,7 @@ class _EditProfileState extends State<EditProfile> {
                                                   context,
                                                   '/home',
                                                   (route) => false,
-                                                  arguments: ScreenArguments(tabNumber: 3),
+                                                  arguments: 1,
                                                 );
                                               }
                                             }
