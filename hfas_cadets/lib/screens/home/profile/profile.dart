@@ -1,4 +1,5 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
@@ -27,9 +28,10 @@ class _ProfileState extends State<Profile> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
+//            Colors.indigo[900],
+//            Colors.indigo[800],
             Colors.indigo[900],
-            Colors.indigo[800],
-            Colors.blue[900],
+            Color.fromRGBO(20, 52, 143, 1),
           ],
         ),
       ),

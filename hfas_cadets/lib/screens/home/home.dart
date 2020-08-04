@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
-import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,34 +12,29 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  final controller = PageController(
+    initialPage: 0,
+  );
 
   // properties
   int currentTab = 0;
 
-  // active page ( Tab )
-  Widget currentScreen = Journal(); // initial screen in viewport
-  bool firstTime = true;
-
-  final PageStorageBucket bucket = PageStorageBucket();
-
   @override
   Widget build(BuildContext context) {
-    final ScreenArguments data = ModalRoute.of(context).settings.arguments;
-    if (firstTime) {
-      currentTab = data.tabNumber;
-      if (currentTab == 0) {
-        currentScreen = Journal();
-      } else if (currentTab == 1) {
-        currentScreen = Profile();
-      }
-      firstTime = false;
-    }
 
     return Scaffold(
-      body: PageStorage(
-        child: currentScreen,
-        bucket: bucket,
-      ),
+        body: PageView(
+          controller: controller,
+          onPageChanged: (index) {
+            setState(() {
+              currentTab = index;
+            });
+          },
+          children: <Widget>[
+            Journal(),
+            Profile(),
+          ],
+        ),
 
       // FAB
       floatingActionButton: Container(
@@ -181,9 +175,9 @@ class _HomeState extends State<Home> {
                   MaterialButton(
                     minWidth: 40 * SizeConfig.blockSizeHorizontal,
                     onPressed: () {
+                      controller.jumpToPage(0);
                       setState(
                             () {
-                          currentScreen = Journal();
                           currentTab = 0;
                         },
                       );
@@ -212,9 +206,9 @@ class _HomeState extends State<Home> {
                   MaterialButton(
                     minWidth: 40 * SizeConfig.blockSizeHorizontal,
                     onPressed: () {
+                      controller.jumpToPage(1);
                       setState(
                         () {
-                          currentScreen = Profile();
                           currentTab = 1;
                         },
                       );

@@ -21,7 +21,8 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
-  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
+  final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
   final _formKey = GlobalKey<FormState>();
   final _taskListKey = GlobalKey<AnimatedListState>();
   final Conversions _conversions = Conversions();
@@ -71,9 +72,11 @@ class _AddState extends State<Add> {
   }
 
   Future<void> _startUpload(DateTime dateTime) async {
-    String filePath = 'users/${globals.user.uid}/${dateTime.year.toString()}/${globals.months[dateTime.month-1]}/${dateTime.toString()}.png';
+    String filePath =
+        'users/${globals.user.uid}/${dateTime.year.toString()}/${globals.months[dateTime.month - 1]}/${dateTime.toString()}.png';
 
-    StorageUploadTask _uploadTask = _storage.ref().child(filePath).putFile(_imageFile);
+    StorageUploadTask _uploadTask =
+        _storage.ref().child(filePath).putFile(_imageFile);
 
     StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
     print('file uploaded');
@@ -146,12 +149,6 @@ class _AddState extends State<Add> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _pickImage(ImageSource.camera);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final DatabaseService _database = DatabaseService();
 
@@ -167,8 +164,7 @@ class _AddState extends State<Add> {
                     gradient:
                         LinearGradient(begin: Alignment.topCenter, colors: [
                       Colors.indigo[900],
-                      Colors.indigo[800],
-                      Colors.blue[900],
+                      Color.fromRGBO(20, 52, 143, 1),
                     ]),
                   ),
                   alignment: Alignment.topCenter,
@@ -220,36 +216,54 @@ class _AddState extends State<Add> {
                                           'You\'re missing the date, start time, or end time.\n\nPlease try again.');
                                     } else {
                                       String _isValid =
-                                          _conversions.timesAreInvalid(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
+                                          _conversions.timesAreInvalid(
+                                              _startTime.hour,
+                                              _startTime.minute,
+                                              _endTime.hour,
+                                              _endTime.minute);
                                       if (_isValid == 'invalid') {
-                                        createErrorDialog(context, 'Make sure your start time is before your end time.');
+                                        createErrorDialog(context,
+                                            'Make sure your start time is before your end time.');
                                       } else if (_isValid == 'same') {
-                                        createErrorDialog(context, 'Your start and end time are the same. Please try again.');
+                                        createErrorDialog(context,
+                                            'Your start and end time are the same. Please try again.');
                                       } else if (_imageFile == null) {
-                                        createErrorDialog(context, 'Take a photo of your duty sheet to submit.');
+                                        createErrorDialog(context,
+                                            'Take a photo of your duty sheet to submit.');
                                       } else {
                                         setState(() {
                                           loading = true;
                                         });
                                         await _startUpload(_dateTime);
-                                        num _hoursPassed = _conversions.calculateHoursPassed(_startTime.hour, _startTime.minute, _endTime.hour, _endTime.minute);
-                                        await _database.addToUserTotals(_hoursPassed, _numCalls, _numTasks);
+                                        num _hoursPassed =
+                                            _conversions.calculateHoursPassed(
+                                                _startTime.hour,
+                                                _startTime.minute,
+                                                _endTime.hour,
+                                                _endTime.minute);
+                                        await _database.addToUserTotals(
+                                            _hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
                                             await _database.addShift(Shift(
                                                 title: _title,
                                                 date: _dateTime,
                                                 imageUrl: _imageURL,
-                                                timeIn: _startTime.format(context).toString(),
-                                                timeOut: _endTime.format(context).toString(),
+                                                timeIn: _startTime
+                                                    .format(context)
+                                                    .toString(),
+                                                timeOut: _endTime
+                                                    .format(context)
+                                                    .toString(),
                                                 hoursPassed: _hoursPassed,
                                                 numCalls: _numCalls,
-                                                numTasks: _numTasks
-                                            ));
-                                        List<Widget> dbCarousels = _database.monthCarousels(_year.toString());
-                                        dynamic value = await _database.monthStats(_year.toString());
+                                                numTasks: _numTasks));
+                                        List<Widget> dbCarousels = _database
+                                            .monthCarousels(_year.toString());
+                                        dynamic value = await _database
+                                            .monthStats(_year.toString());
                                         setState(() {
-                                            globals.profileMonths = value;
-                                            globals.monthCarousels = dbCarousels;
+                                          globals.profileMonths = value;
+                                          globals.monthCarousels = dbCarousels;
                                         });
                                         if (result == null) {
                                           setState(() {
@@ -262,7 +276,8 @@ class _AddState extends State<Add> {
                                             context,
                                             '/home',
                                             (route) => false,
-                                            arguments: ScreenArguments(tabNumber: 2),
+                                            arguments:
+                                                ScreenArguments(tabNumber: 2),
                                           );
                                         }
                                       }
@@ -310,18 +325,30 @@ class _AddState extends State<Add> {
                                           await _pickImage(ImageSource.camera);
                                         },
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                                          borderRadius: BorderRadius.circular(
+                                              5 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
                                           child: Container(
-                                            height:
-                                                24 * SizeConfig.blockSizeVertical,
-                                            width:
-                                                34 * SizeConfig.blockSizeHorizontal,
+                                            height: 24 *
+                                                SizeConfig.blockSizeVertical,
+                                            width: 34 *
+                                                SizeConfig.blockSizeHorizontal,
                                             decoration: BoxDecoration(
-                                              border: Border.all(color: _imageFile == null ? Colors.grey : Colors.indigo[900]),
-                                              borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
+                                              border: Border.all(
+                                                  color: _imageFile == null
+                                                      ? Colors.grey
+                                                      : Colors.indigo[900]),
+                                              borderRadius:
+                                                  BorderRadius.circular(5 *
+                                                      SizeConfig
+                                                          .blockSizeHorizontal),
                                               image: DecorationImage(
                                                 fit: BoxFit.fill,
-                                                image: _imageFile != null ? FileImage(_imageFile) : AssetImage('assets/images/takePhoto.png'),
+                                                image: _imageFile != null
+                                                    ? FileImage(_imageFile)
+                                                    : AssetImage(
+                                                        'assets/images/takePhoto.png'),
                                               ),
                                             ),
                                           ),
@@ -338,7 +365,9 @@ class _AddState extends State<Add> {
                                             onPressed: () {
                                               showDatePicker(
                                                 context: context,
-                                                initialDate: _dateTime == null ? DateTime.now() : _dateTime,
+                                                initialDate: _dateTime == null
+                                                    ? DateTime.now()
+                                                    : _dateTime,
                                                 firstDate: DateTime(2000),
                                                 lastDate: DateTime(2100),
                                               ).then((date) {
@@ -356,8 +385,14 @@ class _AddState extends State<Add> {
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
-                                                border: Border.all(color: _dateTime == null ? Colors.grey : Colors.indigo[900]),
-                                                borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
+                                                border: Border.all(
+                                                    color: _dateTime == null
+                                                        ? Colors.grey
+                                                        : Colors.indigo[900]),
+                                                borderRadius:
+                                                    BorderRadius.circular(8 *
+                                                        SizeConfig
+                                                            .blockSizeHorizontal),
                                               ),
                                               child: Padding(
                                                 padding: _dateTime == null
@@ -421,12 +456,19 @@ class _AddState extends State<Add> {
                                             onPressed: () {
                                               showTimePicker(
                                                 context: context,
-                                                initialTime: _startTime == null ? TimeOfDay.now() : _startTime,
+                                                initialTime: _startTime == null
+                                                    ? TimeOfDay.now()
+                                                    : _startTime,
                                               ).then((time) {
                                                 if (time != null) {
                                                   setState(() {
                                                     _startTime = time;
-                                                    _dateTime = DateTime(_dateTime.year, _dateTime.month, _dateTime.day, _startTime.hour, _startTime.minute);
+                                                    _dateTime = DateTime(
+                                                        _dateTime.year,
+                                                        _dateTime.month,
+                                                        _dateTime.day,
+                                                        _startTime.hour,
+                                                        _startTime.minute);
                                                   });
                                                 }
                                               });

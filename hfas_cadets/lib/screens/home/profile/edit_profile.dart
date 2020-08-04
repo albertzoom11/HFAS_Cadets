@@ -182,7 +182,7 @@ class _EditProfileState extends State<EditProfile> {
                 gradient: LinearGradient(begin: Alignment.topCenter, colors: [
                   Colors.indigo[900],
                   Colors.indigo[800],
-                  Colors.blue[500],
+                  Colors.blue[900],
                 ]),
               ),
               child: Column(

@@ -21,9 +21,10 @@ class _JournalState extends State<Journal> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
+//            Colors.blue[900],
+            Color.fromRGBO(20, 52, 143, 1),
             Colors.indigo[900],
-            Colors.indigo[800],
-            Colors.blue[900],
+//            Colors.indigo[800],
           ],
         ),
       ),
