@@ -44,10 +44,10 @@ class _HomeState extends State<Home> {
 
       // FAB
       floatingActionButton: Container(
-        height: 9 * SizeConfig.blockSizeVertical,
-        width: 9 * SizeConfig.blockSizeVertical,
+        height: 8 * SizeConfig.blockSizeVertical,
+        width: 8 * SizeConfig.blockSizeVertical,
         child: FloatingActionButton(
-          child: Icon(Icons.add, size: 5 * SizeConfig.blockSizeVertical,),
+          child: Icon(Icons.add, size: 4 * SizeConfig.blockSizeVertical,),
           backgroundColor: Colors.indigo[900],
           onPressed: () {
             Navigator.pushNamed(
