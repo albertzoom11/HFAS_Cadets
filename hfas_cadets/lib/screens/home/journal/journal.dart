@@ -145,7 +145,7 @@ class _JournalState extends State<Journal> {
                               for (Widget month in globals.monthCarousels)
                                 month,
                             if (globals.monthCarousels.length == 1)
-                              SizedBox(height: 22.8 * SizeConfig.blockSizeVertical,),
+                              SizedBox(height: 21.8 * SizeConfig.blockSizeVertical,),
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                           ],
                         )),

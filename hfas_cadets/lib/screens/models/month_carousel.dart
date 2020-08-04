@@ -147,7 +147,7 @@ class MonthCarousel extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
+        SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
       ],
     );
   }

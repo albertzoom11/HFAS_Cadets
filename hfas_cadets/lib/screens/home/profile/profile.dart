@@ -317,9 +317,9 @@ class _ProfileState extends State<Profile> {
                                   for (Widget month in globals.profileMonths)
                                     Column(children: <Widget>[month, SizedBox(height: 4 * SizeConfig.blockSizeVertical),],),
                                   if (globals.profileMonths.length == 1)
-                                    SizedBox(height: 20.8 * SizeConfig.blockSizeVertical,),
+                                    SizedBox(height: 19.8 * SizeConfig.blockSizeVertical,),
                                 if (globals.profileMonths.length != 0)
-                                  SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
+                                  SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                               ],
                             )),
                       ),

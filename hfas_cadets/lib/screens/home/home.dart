@@ -4,7 +4,6 @@ import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/models/screen_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
-import 'package:hfascadets/shared/globals.dart' as globals;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -44,15 +43,19 @@ class _HomeState extends State<Home> {
       ),
 
       // FAB
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.indigo[900],
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            '/add',
-          );
-        },
+      floatingActionButton: Container(
+        height: 9 * SizeConfig.blockSizeVertical,
+        width: 9 * SizeConfig.blockSizeVertical,
+        child: FloatingActionButton(
+          child: Icon(Icons.add, size: 5 * SizeConfig.blockSizeVertical,),
+          backgroundColor: Colors.indigo[900],
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              '/add',
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
