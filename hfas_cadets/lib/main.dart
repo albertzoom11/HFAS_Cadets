@@ -10,6 +10,7 @@ import 'package:hfascadets/screens/home/home.dart';
 import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/home/profile/edit_profile.dart';
+import 'package:hfascadets/screens/models/seeAll.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         "/profile": (_) => Profile(),
         "/add": (_) => Add(),
         "/editProfile": (_) => EditProfile(),
+        "/seeAll": (_) => MonthSeeAll(),
       },
       home: MainMenu(),
     );

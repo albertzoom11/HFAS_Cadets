@@ -16,7 +16,6 @@ class MonthStat extends StatelessWidget {
   Widget build(BuildContext context) {
       Color monthColor = globals.getMonthColor(month);
 
-
       return Container(
         width: 88 * SizeConfig.blockSizeHorizontal,
         height: 24 * SizeConfig.blockSizeVertical,
