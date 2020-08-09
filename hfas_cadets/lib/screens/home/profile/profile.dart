@@ -28,8 +28,6 @@ class _ProfileState extends State<Profile> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-//            Colors.indigo[900],
-//            Colors.indigo[800],
             Colors.indigo[900],
             Color.fromRGBO(20, 52, 143, 1),
           ],
@@ -120,13 +118,17 @@ class _ProfileState extends State<Profile> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text(
-                                            globals.user.name,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize:
-                                                  3 * SizeConfig.blockSizeVertical,
-                                              fontWeight: FontWeight.bold,
+                                          Container(
+                                            width: 47 * SizeConfig.blockSizeHorizontal,
+                                            child: Text(
+                                              globals.user.name,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 3 * SizeConfig.blockSizeVertical,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
                                             ),
                                           ),
                                           SizedBox(
@@ -252,7 +254,7 @@ class _ProfileState extends State<Profile> {
                                   width: 90 * SizeConfig.blockSizeHorizontal,
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(20.0),
+                                    borderRadius: BorderRadius.circular(6 * SizeConfig.blockSizeHorizontal),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

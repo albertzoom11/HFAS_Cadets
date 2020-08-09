@@ -7,10 +7,14 @@ import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 import 'package:hfascadets/screens/models/month_stat.dart';
 
+import 'conversions.dart';
+
 class DatabaseService {
   final uid;
 
   DatabaseService({this.uid});
+
+  final Conversions _conversions = Conversions();
 
   // collection reference
   final CollectionReference userCollection =
@@ -108,7 +112,7 @@ class DatabaseService {
         if (_shifts.length != 0) {
           output.add(MonthCarousel(
             monthIndex: i,
-            color: globals.getMonthColor(globals.months[i]),
+            color: _conversions.getMonthColor(i+1),
             shifts: _shifts,
           ));
         }

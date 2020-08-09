@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
 class MonthStat extends StatelessWidget {
@@ -11,10 +12,11 @@ class MonthStat extends StatelessWidget {
   final int tasks;
   final int shifts;
   MonthStat({this.month, this.points, this.hours, this.calls, this.tasks, this.shifts});
+  final Conversions _conversions = Conversions();
 
   @override
   Widget build(BuildContext context) {
-      Color monthColor = globals.getMonthColor(month);
+      Color monthColor = _conversions.getMonthColor(month);
 
       return Container(
         width: 88 * SizeConfig.blockSizeHorizontal,
@@ -24,7 +26,7 @@ class MonthStat extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [BoxShadow(
             color: monthColor,
-            blurRadius: 20,
+            blurRadius: 5 * SizeConfig.blockSizeHorizontal,
             offset: Offset(0, 10),
           )],
         ),

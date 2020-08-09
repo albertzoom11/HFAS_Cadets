@@ -114,4 +114,44 @@ class Conversions {
     }
     return inputNum.toStringAsFixed(0);
   }
+
+  Color getMonthColor(dynamic month) {
+    if (month == 'January' || month == 1) {
+      return Color.fromRGBO(13, 71, 161, 1);
+    } else if (month == 'February' || month == 2) {
+      return Color.fromRGBO(14, 67, 158, 1);
+    } else if (month == 'March' || month == 3) {
+      return Color.fromRGBO(15, 63, 155, 1);
+    } else if (month == 'April' || month == 4) {
+      return Color.fromRGBO(16, 59, 152, 1);
+    } else if (month == 'May' || month == 5) {
+      return Color.fromRGBO(17, 56, 149, 1);
+    } else if (month == 'June' || month == 6) {
+      return Color.fromRGBO(19, 53, 145, 1);
+    } else if (month == 'July' || month == 7) {
+      return Color.fromRGBO(20, 50, 142, 1);
+    } else if (month == 'August' || month == 8) {
+      return Color.fromRGBO(21, 47, 139, 1);
+    } else if (month == 'September' || month == 9) {
+      return Color.fromRGBO(22, 44, 136, 1);
+    } else if (month == 'October' || month == 10) {
+      return Color.fromRGBO(23, 41, 133, 1);
+    } else if (month == 'November' || month == 11) {
+      return Color.fromRGBO(25, 38, 130, 1);
+    } else if (month == 'December' || month == 12) {
+      return Color.fromRGBO(26, 35, 126, 1);
+    } else {
+      return Colors.black;
+    }
+  }
+
+  bool isDay(String time) {
+    bool isAM = time.substring(time.length - 2) == 'AM';
+    String hour = time[2] == ':' ? time.substring(0, 2) : time.substring(0, 1);
+
+    if ((isAM && int.parse(hour) < 6) || (!isAM && int.parse(hour) > 7)) {
+      return false;
+    }
+    return true;
+  }
 }

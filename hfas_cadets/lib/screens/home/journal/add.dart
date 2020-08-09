@@ -206,12 +206,12 @@ class _AddState extends State<Add> {
                                 ),
                                 iconSize: 8 * SizeConfig.blockSizeHorizontal,
                                 onPressed: () async {
+                                  print(_numCalls);
                                   if (_formKey.currentState.validate()) {
-                                    if (_dateTime == null ||
-                                        _startTime == null ||
-                                        _endTime == null) {
-                                      createErrorDialog(context,
-                                          'You\'re missing the date, start time, or end time.\n\nPlease try again.');
+                                    if (_numCalls < 0 || _numCalls > 10 || _numCalls.isNaN) {
+                                      createErrorDialog(context, 'Please enter a real number of calls in one shift.');
+                                    } else if (_dateTime == null || _startTime == null || _endTime == null) {
+                                      createErrorDialog(context, 'You\'re missing the date, start time, or end time.\n\nPlease try again.');
                                     } else {
                                       String _isValid =
                                           _conversions.timesAreInvalid(

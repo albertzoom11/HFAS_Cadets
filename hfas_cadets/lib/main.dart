@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.indigo[900],
+        accentColor: Colors.blue[900],
       ),
       routes: {
         "/mainMenu": (_) => MainMenu(),
