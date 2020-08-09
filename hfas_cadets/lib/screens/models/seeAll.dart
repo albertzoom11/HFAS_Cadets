@@ -207,7 +207,7 @@ class MonthSeeAll extends StatelessWidget {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${shift.numCalls} Calls',
+                                    shift.numCalls == 1 ? '1 Call' : '${shift.numCalls} Calls',
                                     style: TextStyle(
                                       color: shift.numCalls == 0 ? Colors.blue[900] : Colors.white,
                                       fontSize: 1.8 * SizeConfig.blockSizeVertical,
@@ -228,7 +228,7 @@ class MonthSeeAll extends StatelessWidget {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${shift.numTasks} Tasks',
+                                    shift.numTasks == 1 ? '1 Task' : '${shift.numTasks} Tasks',
                                     style: TextStyle(
                                       color: shift.numTasks == 0 ? Colors.blue[900] : Colors.white,
                                       fontSize: 1.8 * SizeConfig.blockSizeVertical,
