@@ -206,7 +206,6 @@ class _AddState extends State<Add> {
                                 ),
                                 iconSize: 8 * SizeConfig.blockSizeHorizontal,
                                 onPressed: () async {
-                                  print(_numCalls);
                                   if (_formKey.currentState.validate()) {
                                     if (_numCalls < 0 || _numCalls > 10 || _numCalls.isNaN) {
                                       createErrorDialog(context, 'Please enter a real number of calls in one shift.');
@@ -369,11 +368,17 @@ class _AddState extends State<Add> {
                                                 lastDate: DateTime(2100),
                                               ).then((date) {
                                                 if (date != null) {
-                                                  setState(() {
-                                                    _dateTime = date;
-                                                    _dateOutput = _conversions
-                                                        .toDateString(date);
-                                                  });
+                                                  if (_startTime == null) {
+                                                    setState(() {
+                                                      _dateTime = date;
+                                                      _dateOutput = _conversions.toDateString(date);
+                                                    });
+                                                  } else {
+                                                    setState(() {
+                                                      _dateTime = DateTime(date.year, date.month, date.day, _startTime.hour, _startTime.minute);
+                                                      _dateOutput = _conversions.toDateString(date);
+                                                    });
+                                                  }
                                                 }
                                               });
                                             },
@@ -460,12 +465,7 @@ class _AddState extends State<Add> {
                                                 if (time != null) {
                                                   setState(() {
                                                     _startTime = time;
-                                                    _dateTime = DateTime(
-                                                        _dateTime.year,
-                                                        _dateTime.month,
-                                                        _dateTime.day,
-                                                        _startTime.hour,
-                                                        _startTime.minute);
+                                                    _dateTime = _dateTime == null ? null : DateTime(_dateTime.year, _dateTime.month, _dateTime.day, _startTime.hour, _startTime.minute);
                                                   });
                                                 }
                                               });
@@ -528,8 +528,7 @@ class _AddState extends State<Add> {
                                                         fontSize: 2 *
                                                             SizeConfig
                                                                 .blockSizeVertical,
-                                                        color: _startTime ==
-                                                                null
+                                                        color: _startTime == null
                                                             ? Colors.grey
                                                             : Colors
                                                                 .indigo[900],
