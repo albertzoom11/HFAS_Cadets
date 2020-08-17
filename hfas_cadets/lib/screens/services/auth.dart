@@ -61,7 +61,7 @@ class AuthService {
       await DatabaseService()
           .updateUserInfo(User(
         uid: user.uid,
-        profilePic: 'https://www.dts.edu/wp-content/uploads/sites/6/2018/04/Blank-Profile-Picture.jpg',
+        profilePic: null,
         name: user.displayName,
         email: user.email,
         role: 'Cadet',
@@ -98,7 +98,7 @@ class AuthService {
       //create a new document for the user using the uid
       await DatabaseService().updateUserInfo(User(
         uid: user.uid,
-        profilePic: 'https://www.dts.edu/wp-content/uploads/sites/6/2018/04/Blank-Profile-Picture.jpg',
+        profilePic: null,
         name: name,
         email: email,
         role: 'Cadet',
