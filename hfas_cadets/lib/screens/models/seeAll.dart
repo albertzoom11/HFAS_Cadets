@@ -2,11 +2,71 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
+import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:hfascadets/shared/loading.dart';
 
-class MonthSeeAll extends StatelessWidget {
+class MonthSeeAll extends StatefulWidget {
+  @override
+  _MonthSeeAllState createState() => _MonthSeeAllState();
+}
+
+class _MonthSeeAllState extends State<MonthSeeAll> {
   final String _year = DateTime.now().year.toString();
   final Conversions _conversions = Conversions();
+  final DatabaseService _database = DatabaseService();
+
+  Future<String> createDeleteDialog(BuildContext context, DateTime date) {
+    String monthName = globals.months[date.month - 1];
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Delete Month',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            content: Text(
+              'Delete $monthName shifts?',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () async {
+                  Navigator.pushNamed(context, '/loading');
+                  dynamic result = await _database.deleteMonth(date.year.toString(), monthName);
+                  globals.monthCarousels = _database.monthCarousels(_year.toString());
+                  globals.profileMonths = await _database.monthStats(_year.toString());
+                  if (result != null) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/home',
+                          (route) => false,
+                      arguments: 0,
+                    );
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +83,7 @@ class MonthSeeAll extends StatelessWidget {
                 height: 100 * SizeConfig.blockSizeHorizontal,
                 decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadius.circular(4 * SizeConfig.blockSizeHorizontal),
+                  BorderRadius.circular(4 * SizeConfig.blockSizeHorizontal),
                   boxShadow: [
                     BoxShadow(
                       color: _monthColor,
@@ -65,6 +125,7 @@ class MonthSeeAll extends StatelessWidget {
                         iconSize: 5 * SizeConfig.blockSizeVertical,
                         onPressed: () {
                           print('Delete month');
+                          createDeleteDialog(context, shifts[0].date);
                         },
                       ),
                     ],

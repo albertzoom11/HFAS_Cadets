@@ -11,6 +11,7 @@ import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/home/profile/edit_profile.dart';
 import 'package:hfascadets/screens/models/seeAll.dart';
+import 'package:hfascadets/shared/loading.dart';
 
 void main() {
   runApp(MyApp());
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         "/add": (_) => Add(),
         "/editProfile": (_) => EditProfile(),
         "/seeAll": (_) => MonthSeeAll(),
+        '/loading': (_) => Loading(),
       },
       home: MainMenu(),
     );

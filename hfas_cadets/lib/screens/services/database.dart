@@ -17,8 +17,7 @@ class DatabaseService {
   final Conversions _conversions = Conversions();
 
   // collection reference
-  final CollectionReference userCollection =
-      Firestore.instance.collection('users');
+  final CollectionReference userCollection = Firestore.instance.collection('users');
 
   Future getUser(String uid) async {
     try {
@@ -101,21 +100,30 @@ class DatabaseService {
           .document(globals.user.uid)
           .collection(year)
           .document(globals.months[i])
-          .collection('shifts')
-          .orderBy('date', descending: true)
-          .snapshots()
-          .listen((snapshot) {
-        List<Shift> _shifts = [];
-        snapshot.documents.forEach((doc) {
-          _shifts.add(Shift.fromData(doc.data));
-        });
-        if (_shifts.length != 0) {
-          output.add(MonthCarousel(
-            monthIndex: i,
-            color: _conversions.getMonthColor(i+1),
-            shifts: _shifts,
-          ));
-        }
+          .get()
+          .then((data) {
+            if (data.exists) {
+              userCollection
+                  .document(globals.user.uid)
+                  .collection(year)
+                  .document(globals.months[i])
+                  .collection('shifts')
+                  .orderBy('date', descending: true)
+                  .snapshots()
+                  .listen((snapshot) {
+                List<Shift> _shifts = [];
+                snapshot.documents.forEach((doc) {
+                  _shifts.add(Shift.fromData(doc.data));
+                });
+                if (_shifts.length != 0) {
+                  output.add(MonthCarousel(
+                    monthIndex: i,
+                    color: _conversions.getMonthColor(i+1),
+                    shifts: _shifts,
+                  ));
+                }
+              });
+            }
       });
     }
     return output;
@@ -139,8 +147,7 @@ class DatabaseService {
     }
   }
 
-  Future addToUserTotals(
-      num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addToUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
       await userCollection.document(globals.user.uid).updateData({
         'totalHours': FieldValue.increment(hoursPassed),
@@ -153,8 +160,7 @@ class DatabaseService {
     }
   }
 
-  Future addToMonthTotals(
-      String year, String month, num hours, int calls, int tasks) async {
+  Future addToMonthTotals(String year, String month, num hours, int calls, int tasks) async {
     num points = hours + calls + tasks;
 
     try {
@@ -185,6 +191,21 @@ class DatabaseService {
         'shifts': FieldValue.increment(1),
       });
       return 'added';
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future deleteMonth(String year, String month) async {
+    try {
+      await userCollection.document(globals.user.uid).collection(year).document(month).collection('shifts').getDocuments().then((snapshot) {
+        for (DocumentSnapshot ds in snapshot.documents){
+          ds.reference.delete();
+        }
+      });
+      await userCollection.document(globals.user.uid).collection(year).document(month).delete();
+      return 'deleted';
     } catch (e) {
       print(e.toString());
       return null;

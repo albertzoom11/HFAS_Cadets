@@ -20,8 +20,7 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
-  final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
+  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
   final _formKey = GlobalKey<FormState>();
   final _taskListKey = GlobalKey<AnimatedListState>();
   final Conversions _conversions = Conversions();
@@ -238,8 +237,7 @@ class _AddState extends State<Add> {
                                                 _startTime.minute,
                                                 _endTime.hour,
                                                 _endTime.minute);
-                                        await _database.addToUserTotals(
-                                            _hoursPassed, _numCalls, _numTasks);
+                                        await _database.addToUserTotals(_hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
                                             await _database.addShift(Shift(
                                                 title: _title,
