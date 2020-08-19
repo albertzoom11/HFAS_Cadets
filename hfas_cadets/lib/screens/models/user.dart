@@ -33,7 +33,7 @@ class User {
     };
   }
 
-  updateUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) {
+  incrementUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) {
     totalHours += hoursPassed;
     totalCalls += numOfCalls;
     totalTasks += numOfTasks;

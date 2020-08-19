@@ -154,7 +154,7 @@ class DatabaseService {
         'totalCalls': FieldValue.increment(numOfCalls),
         'totalTasks': FieldValue.increment(numOfTasks),
       });
-      globals.user.updateUserTotals(hoursPassed, numOfCalls, numOfTasks);
+      globals.user.incrementUserTotals(hoursPassed, numOfCalls, numOfTasks);
     } catch (e) {
       print(e.toString());
     }
