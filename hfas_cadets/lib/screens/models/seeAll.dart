@@ -4,7 +4,6 @@ import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
-import 'package:hfascadets/shared/loading.dart';
 
 class MonthSeeAll extends StatefulWidget {
   @override
@@ -124,7 +123,6 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                         ),
                         iconSize: 5 * SizeConfig.blockSizeVertical,
                         onPressed: () {
-                          print('Delete month');
                           createDeleteDialog(context, shifts[0].date);
                         },
                       ),
