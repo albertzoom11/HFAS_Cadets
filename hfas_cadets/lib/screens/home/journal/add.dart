@@ -237,7 +237,7 @@ class _AddState extends State<Add> {
                                                 _startTime.minute,
                                                 _endTime.hour,
                                                 _endTime.minute);
-                                        await _database.addToUserTotals(_hoursPassed, _numCalls, _numTasks);
+                                        await _database.addOrSubtractUserTotals(_hoursPassed, _numCalls, _numTasks);
                                         dynamic result =
                                             await _database.addShift(Shift(
                                                 title: _title,

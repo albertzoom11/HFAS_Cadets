@@ -147,14 +147,14 @@ class DatabaseService {
     }
   }
 
-  Future addToUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) async {
+  Future addOrSubtractUserTotals(num hoursPassed, int numOfCalls, int numOfTasks) async {
     try {
       await userCollection.document(globals.user.uid).updateData({
         'totalHours': FieldValue.increment(hoursPassed),
         'totalCalls': FieldValue.increment(numOfCalls),
         'totalTasks': FieldValue.increment(numOfTasks),
       });
-      globals.user.incrementUserTotals(hoursPassed, numOfCalls, numOfTasks);
+      globals.user.updateUserTotals(hoursPassed, numOfCalls, numOfTasks);
     } catch (e) {
       print(e.toString());
     }
@@ -198,13 +198,22 @@ class DatabaseService {
   }
 
   Future deleteMonth(String year, String month) async {
+    num hours = 0;
+    int calls = 0;
+    int tasks = 0;
     try {
       await userCollection.document(globals.user.uid).collection(year).document(month).collection('shifts').getDocuments().then((snapshot) {
         for (DocumentSnapshot ds in snapshot.documents){
           ds.reference.delete();
         }
       });
+      await userCollection.document(globals.user.uid).collection(year).document(month).get().then((doc) {
+        hours = doc.data['hours'];
+        calls = doc.data['calls'];
+        tasks = doc.data['tasks'];
+      });
       await userCollection.document(globals.user.uid).collection(year).document(month).delete();
+      await addOrSubtractUserTotals(-1 * hours, -1 * calls, -1 * tasks);
       return 'deleted';
     } catch (e) {
       print(e.toString());
