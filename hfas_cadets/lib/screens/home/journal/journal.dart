@@ -112,7 +112,6 @@ class _JournalState extends State<Journal> {
                         EdgeInsets.only(top: 17 * SizeConfig.blockSizeVertical),
                     child: Container(
                       width: 100 * SizeConfig.blockSizeHorizontal,
-//                      height: 100 * SizeConfig.blockSizeVertical,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
