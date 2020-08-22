@@ -111,7 +111,7 @@ class _ShiftPageState extends State<ShiftPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: 43 * SizeConfig.blockSizeHorizontal,
+                              width: 44 * SizeConfig.blockSizeHorizontal,
                               height: 20 * SizeConfig.blockSizeVertical,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,7 +201,7 @@ class _ShiftPageState extends State<ShiftPage> {
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
                               child: Container(
                                 height: 30 * SizeConfig.blockSizeVertical,
-                                width: 43 * SizeConfig.blockSizeHorizontal,
+                                width: 41 * SizeConfig.blockSizeHorizontal,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
