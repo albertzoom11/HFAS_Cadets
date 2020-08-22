@@ -54,7 +54,6 @@ class MonthCarousel extends StatelessWidget {
               Shift shift = shifts[index];
               return GestureDetector(
                 onTap: () {
-                  print('${shift.title}');
                   Navigator.pushNamed(context, '/shiftPage');
                 },
                 child: Container(
