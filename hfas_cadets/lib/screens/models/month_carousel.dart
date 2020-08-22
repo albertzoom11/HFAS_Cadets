@@ -52,97 +52,103 @@ class MonthCarousel extends StatelessWidget {
             itemCount: shifts.length,
             itemBuilder: (BuildContext context, int index) {
               Shift shift = shifts[index];
-              return Container(
-                margin: EdgeInsets.symmetric(horizontal: 2 * SizeConfig.blockSizeHorizontal, vertical: 1 * SizeConfig.blockSizeVertical),
-                width: 38 * SizeConfig.blockSizeHorizontal,
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: <Widget>[
-                    Positioned(
-                      child: Container(
-                        height: 15 * SizeConfig.blockSizeVertical,
-                        width: 36 * SizeConfig.blockSizeHorizontal,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
-                            color: color,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4 * SizeConfig.blockSizeHorizontal, vertical: 1.5 * SizeConfig.blockSizeVertical),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(height: 5 * SizeConfig.blockSizeVertical,),
-                              Text(
-                                '${shift.hoursPassed} Hours',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 2.2 * SizeConfig.blockSizeVertical,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${shift.numCalls} Calls',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 2.2 * SizeConfig.blockSizeVertical,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+              return GestureDetector(
+                onTap: () {
+                  print('${shift.title}');
+                  Navigator.pushNamed(context, '/shiftPage');
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 2 * SizeConfig.blockSizeHorizontal, vertical: 1 * SizeConfig.blockSizeVertical),
+                  width: 38 * SizeConfig.blockSizeHorizontal,
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: <Widget>[
+                      Positioned(
+                        child: Container(
+                          height: 15 * SizeConfig.blockSizeVertical,
+                          width: 36 * SizeConfig.blockSizeHorizontal,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
+                              color: color,
                           ),
-                        ),
-                      ),
-                      bottom: 0,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
-                        boxShadow: [
-                          BoxShadow(
-                            color: color,
-                            offset: Offset(0, 2),
-                            blurRadius: 1 * SizeConfig.blockSizeHorizontal,
-                          ),
-                        ],
-                      ),
-                      child: Stack(
-                        children: <Widget>[
-                          ClipRRect(
-                            child: Image(
-                              height: 24 * SizeConfig.blockSizeVertical,
-                              width: 34 * SizeConfig.blockSizeHorizontal,
-                              fit: BoxFit.cover,
-                              image: NetworkImage(shift.imageUrl),
-                            ),
-                            borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
-                          ),
-                          Positioned(
-                            left: 3 * SizeConfig.blockSizeHorizontal,
-                            bottom: 1 * SizeConfig.blockSizeVertical,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4 * SizeConfig.blockSizeHorizontal, vertical: 1.5 * SizeConfig.blockSizeVertical),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                SizedBox(height: 5 * SizeConfig.blockSizeVertical,),
                                 Text(
-                                  shift.date.day.toString(),
+                                  '${shift.hoursPassed} Hours',
                                   style: TextStyle(
-                                      color: color,
-                                      fontSize: 5 * SizeConfig.blockSizeVertical,
+                                      color: Colors.white,
+                                      fontSize: 2.2 * SizeConfig.blockSizeVertical,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  globals.weekdays[shift.date.weekday - 1],
+                                  '${shift.numCalls} Calls',
                                   style: TextStyle(
-                                      color: color,
-                                      fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                      color: Colors.white,
+                                      fontSize: 2.2 * SizeConfig.blockSizeVertical,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
-                        ],
+                        ),
+                        bottom: 0,
                       ),
-                    ),
-                  ],
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
+                          boxShadow: [
+                            BoxShadow(
+                              color: color,
+                              offset: Offset(0, 2),
+                              blurRadius: 1 * SizeConfig.blockSizeHorizontal,
+                            ),
+                          ],
+                        ),
+                        child: Stack(
+                          children: <Widget>[
+                            ClipRRect(
+                              child: Image(
+                                height: 24 * SizeConfig.blockSizeVertical,
+                                width: 34 * SizeConfig.blockSizeHorizontal,
+                                fit: BoxFit.cover,
+                                image: NetworkImage(shift.imageUrl),
+                              ),
+                              borderRadius: BorderRadius.circular(3 * SizeConfig.blockSizeHorizontal),
+                            ),
+                            Positioned(
+                              left: 3 * SizeConfig.blockSizeHorizontal,
+                              bottom: 1 * SizeConfig.blockSizeVertical,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    shift.date.day.toString(),
+                                    style: TextStyle(
+                                        color: color,
+                                        fontSize: 5 * SizeConfig.blockSizeVertical,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    globals.weekdays[shift.date.weekday - 1],
+                                    style: TextStyle(
+                                        color: color,
+                                        fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
