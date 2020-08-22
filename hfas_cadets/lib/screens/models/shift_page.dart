@@ -72,6 +72,8 @@ class _ShiftPageState extends State<ShiftPage> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 4 * SizeConfig.blockSizeVertical,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
                             ),
                             SizedBox(height: 2.5 * SizeConfig.blockSizeVertical,),
