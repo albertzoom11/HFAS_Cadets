@@ -70,8 +70,7 @@ class _AddState extends State<Add> {
   }
 
   Future<void> _startUpload(DateTime dateTime) async {
-    String filePath =
-        'users/${globals.user.uid}/${dateTime.year.toString()}/${globals.months[dateTime.month - 1]}/${dateTime.toString()}.png';
+    String filePath = 'users/${globals.user.uid}/${dateTime.year.toString()}/${globals.months[dateTime.month - 1]}/${dateTime.toString()}.png';
 
     StorageUploadTask _uploadTask =
         _storage.ref().child(filePath).putFile(_imageFile);

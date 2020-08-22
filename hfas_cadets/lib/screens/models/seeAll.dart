@@ -15,8 +15,12 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
   final Conversions _conversions = Conversions();
   final DatabaseService _database = DatabaseService();
 
-  Future<String> createDeleteDialog(BuildContext context, DateTime date) {
-    String monthName = globals.months[date.month - 1];
+  Future<String> createDeleteDialog(BuildContext context, List<Shift> shifts) {
+    String monthName = globals.months[shifts[0].date.month - 1];
+    List<String> urls = [];
+    for (int i = 0; i < shifts.length; i++) {
+      urls.add(shifts[i].imageUrl);
+    }
 
     return showDialog(
         context: context,
@@ -49,9 +53,10 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                 ),
                 onPressed: () async {
                   Navigator.pushNamed(context, '/loading');
-                  dynamic result = await _database.deleteMonth(date.year.toString(), monthName);
-                  globals.monthCarousels = _database.monthCarousels(_year.toString());
-                  globals.profileMonths = await _database.monthStats(_year.toString());
+                  await _database.deleteMonthFiles(urls);
+                  dynamic result = await _database.deleteMonth(shifts[0].date.year.toString(), monthName);
+                  globals.monthCarousels = _database.monthCarousels(shifts[0].date.year.toString());
+                  globals.profileMonths = await _database.monthStats(shifts[0].date.year.toString());
                   if (result != null) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
@@ -123,7 +128,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                         ),
                         iconSize: 5 * SizeConfig.blockSizeVertical,
                         onPressed: () {
-                          createDeleteDialog(context, shifts[0].date);
+                          createDeleteDialog(context, shifts);
                         },
                       ),
                     ],

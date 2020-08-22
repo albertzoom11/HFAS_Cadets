@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hfascadets/screens/models/month_carousel.dart';
 import 'package:hfascadets/screens/models/shift.dart';
@@ -218,6 +219,14 @@ class DatabaseService {
     } catch (e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  Future deleteMonthFiles(List<String> urls) async {
+    for (int i = 0; i < urls.length; i++) {
+      StorageReference storageReference = await FirebaseStorage.instance.getReferenceFromUrl(urls[i]);
+      await storageReference.delete();
+      print('deleted image ${i + 1}');
     }
   }
 }
