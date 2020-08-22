@@ -1,10 +1,9 @@
-
-
+import 'package:hfascadets/shared/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 class Conversions {
 
-  String toDateString(DateTime dateTime) {
+  String toDateString(DateTime dateTime, {bool shortened = false}) {
     String date = dateTime.toString();
 
     // get date info
@@ -13,36 +12,11 @@ class Conversions {
     String day = date.substring(8, 10);
 
     // create word variables
-    String wordMonth;
+    String wordMonth = globals.months[int.parse(month) - 1];
     String wordDay = day;
 
-    // find word form of the month
-    if (month.substring(0, 1) == '0') {
-      if (month == '01') {
-        wordMonth = 'Jan';
-      } else if (month == '02') {
-        wordMonth = 'Feb';
-      } else if (month == '03') {
-        wordMonth = 'Mar';
-      } else if (month == '04') {
-        wordMonth = 'Apr';
-      } else if (month == '05') {
-        wordMonth = 'May';
-      } else if (month == '06') {
-        wordMonth = 'Jun';
-      } else if (month == '07') {
-        wordMonth = 'Jul';
-      } else if (month == '08') {
-        wordMonth = 'Aug';
-      } else if (month == '09') {
-        wordMonth = 'Sep';
-      }
-    } else if (month == '10') {
-      wordMonth = 'Oct';
-    } else if (month == '11') {
-      wordMonth = 'Nov';
-    } else if (month == '12') {
-      wordMonth = 'Dec';
+    if (shortened) {
+      wordMonth = wordMonth.substring(0, 3);
     }
 
     // find word form of the day

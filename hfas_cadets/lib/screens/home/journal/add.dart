@@ -363,12 +363,12 @@ class _AddState extends State<Add> {
                                                   if (_startTime == null) {
                                                     setState(() {
                                                       _dateTime = date;
-                                                      _dateOutput = _conversions.toDateString(date);
+                                                      _dateOutput = _conversions.toDateString(date, shortened: true);
                                                     });
                                                   } else {
                                                     setState(() {
                                                       _dateTime = DateTime(date.year, date.month, date.day, _startTime.hour, _startTime.minute);
-                                                      _dateOutput = _conversions.toDateString(date);
+                                                      _dateOutput = _conversions.toDateString(date, shortened: true);
                                                     });
                                                   }
                                                 }

@@ -44,7 +44,7 @@ class MonthCarousel extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 1.5 * SizeConfig.blockSizeVertical,),
+        SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
         Container(
           height: 35 * SizeConfig.blockSizeVertical,
           child: ListView.builder(
@@ -54,7 +54,7 @@ class MonthCarousel extends StatelessWidget {
               Shift shift = shifts[index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/shiftPage');
+                  Navigator.pushNamed(context, '/shiftPage', arguments: shift);
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 2 * SizeConfig.blockSizeHorizontal, vertical: 1 * SizeConfig.blockSizeVertical),

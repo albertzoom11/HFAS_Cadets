@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/services/conversions.dart';
 
 class ShiftPage extends StatefulWidget {
   @override
@@ -9,7 +10,11 @@ class ShiftPage extends StatefulWidget {
 
 class _ShiftPageState extends State<ShiftPage> {
   @override
+  final Conversions _conversions = Conversions();
+
   Widget build(BuildContext context) {
+    final Shift _shift = ModalRoute.of(context).settings.arguments;
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -61,7 +66,7 @@ class _ShiftPageState extends State<ShiftPage> {
                             Container(
                               width: 86 * SizeConfig.blockSizeHorizontal,
                               child: Text(
-                                'The Adams Administration',
+                                _shift.title,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -71,7 +76,7 @@ class _ShiftPageState extends State<ShiftPage> {
                             ),
                             SizedBox(height: 2.5 * SizeConfig.blockSizeVertical,),
                             Text(
-                              'December 22nd, 2020',
+                              _conversions.toDateString(_shift.date),
                               style: TextStyle(
                                 fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                 fontWeight: FontWeight.w600,
@@ -82,20 +87,20 @@ class _ShiftPageState extends State<ShiftPage> {
                             Row(
                               children: [
                                 Text(
-                                  '11:07 AM',
+                                  _shift.timeIn,
                                   style: TextStyle(
                                     fontSize: 2.2 * SizeConfig.blockSizeVertical,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.blue[700],
+                                    color: _conversions.isDay(_shift.timeIn) ? Colors.blue[700] : Colors.indigo[900],
                                   ),
                                 ),
                                 Text('  -  ', style: TextStyle(fontSize: 2.2 * SizeConfig.blockSizeVertical, fontWeight: FontWeight.bold,),),
                                 Text(
-                                  '10:07 PM',
+                                  _shift.timeOut,
                                   style: TextStyle(
                                     fontSize: 2.2 * SizeConfig.blockSizeVertical,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.indigo[900],
+                                    color: _conversions.isDay(_shift.timeIn) ? Colors.blue[700] : Colors.indigo[900],
                                   ),
                                 ),
                               ],
@@ -106,7 +111,7 @@ class _ShiftPageState extends State<ShiftPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: 41 * SizeConfig.blockSizeHorizontal,
+                              width: 43 * SizeConfig.blockSizeHorizontal,
                               height: 20 * SizeConfig.blockSizeVertical,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,11 +133,11 @@ class _ShiftPageState extends State<ShiftPage> {
                                         ],
                                       ),
                                       Text(
-                                        '5',
+                                        _shift.hoursPassed.toString(),
                                         style: TextStyle(
                                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                           fontWeight: FontWeight.w600,
-                                          color: Colors.blue[900],
+                                          color: _shift.hoursPassed == 0 ? Colors.black54 : Colors.blue[900],
                                         ),
                                       ),
                                     ],
@@ -154,11 +159,11 @@ class _ShiftPageState extends State<ShiftPage> {
                                         ],
                                       ),
                                       Text(
-                                        '1',
+                                        _shift.numCalls.toString(),
                                         style: TextStyle(
                                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                           fontWeight: FontWeight.w600,
-                                          color: Colors.blue[900],
+                                          color: _shift.numCalls == 0 ? Colors.black54 : Colors.blue[900],
                                         ),
                                       ),
                                     ],
@@ -180,11 +185,11 @@ class _ShiftPageState extends State<ShiftPage> {
                                         ],
                                       ),
                                       Text(
-                                        '0',
+                                        _shift.numTasks.toString(),
                                         style: TextStyle(
                                           fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                           fontWeight: FontWeight.w600,
-                                          color: Colors.blue[900],
+                                          color: _shift.numTasks == 0 ? Colors.black54 : Colors.blue[900],
                                         ),
                                       ),
                                     ],
@@ -202,7 +207,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: AssetImage('assets/images/takePhoto.png'),
+                                    image: NetworkImage(_shift.imageUrl),
                                   ),
                                 ),
                               ),
