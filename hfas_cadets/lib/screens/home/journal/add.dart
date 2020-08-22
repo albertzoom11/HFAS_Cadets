@@ -300,16 +300,11 @@ class _AddState extends State<Add> {
                         ),
                         height: 86 * SizeConfig.blockSizeVertical,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 7 * SizeConfig.blockSizeHorizontal),
+                          padding: EdgeInsets.only(top: 6 * SizeConfig.blockSizeVertical, left: 6.5 * SizeConfig.blockSizeHorizontal, right: 6.5 * SizeConfig.blockSizeHorizontal),
                           child: Column(
                             children: <Widget>[
-                              SizedBox(
-                                height: 6 * SizeConfig.blockSizeVertical,
-                              ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   FadeAnimation(
                                       0.6,
@@ -380,7 +375,7 @@ class _AddState extends State<Add> {
                                               });
                                             },
                                             child: Container(
-                                              width: 43 *
+                                              width: 44 *
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
@@ -399,7 +394,7 @@ class _AddState extends State<Add> {
                                                         vertical: 1 *
                                                             SizeConfig
                                                                 .blockSizeVertical,
-                                                        horizontal: 11.2 *
+                                                        horizontal: 2 *
                                                             SizeConfig
                                                                 .blockSizeHorizontal)
                                                     : EdgeInsets.symmetric(
@@ -468,7 +463,7 @@ class _AddState extends State<Add> {
                                               });
                                             },
                                             child: Container(
-                                              width: 43 *
+                                              width: 44 *
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
@@ -557,7 +552,7 @@ class _AddState extends State<Add> {
                                               });
                                             },
                                             child: Container(
-                                              width: 43 *
+                                              width: 44 *
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
