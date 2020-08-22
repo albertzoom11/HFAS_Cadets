@@ -84,7 +84,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
           Stack(
             children: <Widget>[
               Container(
-                height: 100 * SizeConfig.blockSizeHorizontal,
+                height: 60 * SizeConfig.blockSizeHorizontal,
                 decoration: BoxDecoration(
                   borderRadius:
                   BorderRadius.circular(4 * SizeConfig.blockSizeHorizontal),
