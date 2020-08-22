@@ -300,7 +300,7 @@ class _AddState extends State<Add> {
                         ),
                         height: 86 * SizeConfig.blockSizeVertical,
                         child: Padding(
-                          padding: EdgeInsets.only(top: 6 * SizeConfig.blockSizeVertical, left: 6.5 * SizeConfig.blockSizeHorizontal, right: 6.5 * SizeConfig.blockSizeHorizontal),
+                          padding: EdgeInsets.only(top: 6 * SizeConfig.blockSizeVertical, left: 7 * SizeConfig.blockSizeHorizontal, right: 7 * SizeConfig.blockSizeHorizontal),
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -349,8 +349,8 @@ class _AddState extends State<Add> {
                                     children: <Widget>[
                                       FadeAnimation(
                                           0.7,
-                                          FlatButton(
-                                            onPressed: () {
+                                          GestureDetector(
+                                            onTap: () {
                                               showDatePicker(
                                                 context: context,
                                                 initialDate: _dateTime == null
@@ -375,7 +375,7 @@ class _AddState extends State<Add> {
                                               });
                                             },
                                             child: Container(
-                                              width: 44 *
+                                              width: 45 *
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
@@ -427,6 +427,7 @@ class _AddState extends State<Add> {
                                                           ? 'Date'
                                                           : _dateOutput,
                                                       style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
                                                         fontSize: 2 *
                                                             SizeConfig
                                                                 .blockSizeVertical,
@@ -446,8 +447,8 @@ class _AddState extends State<Add> {
                                               2 * SizeConfig.blockSizeVertical),
                                       FadeAnimation(
                                           0.8,
-                                          FlatButton(
-                                            onPressed: () {
+                                          GestureDetector(
+                                            onTap: () {
                                               showTimePicker(
                                                 context: context,
                                                 initialTime: _startTime == null
@@ -463,7 +464,7 @@ class _AddState extends State<Add> {
                                               });
                                             },
                                             child: Container(
-                                              width: 44 *
+                                              width: 45 *
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
@@ -517,6 +518,7 @@ class _AddState extends State<Add> {
                                                               .format(context)
                                                               .toString(),
                                                       style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
                                                         fontSize: 2 *
                                                             SizeConfig
                                                                 .blockSizeVertical,
@@ -536,8 +538,8 @@ class _AddState extends State<Add> {
                                               2 * SizeConfig.blockSizeVertical),
                                       FadeAnimation(
                                           0.9,
-                                          FlatButton(
-                                            onPressed: () {
+                                          GestureDetector(
+                                            onTap: () {
                                               showTimePicker(
                                                 context: context,
                                                 initialTime: _endTime == null
@@ -552,7 +554,7 @@ class _AddState extends State<Add> {
                                               });
                                             },
                                             child: Container(
-                                              width: 44 *
+                                              width: 45 *
                                                   SizeConfig
                                                       .blockSizeHorizontal,
                                               decoration: BoxDecoration(
@@ -606,6 +608,7 @@ class _AddState extends State<Add> {
                                                               .format(context)
                                                               .toString(),
                                                       style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
                                                         fontSize: 2 *
                                                             SizeConfig
                                                                 .blockSizeVertical,
