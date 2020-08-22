@@ -59,7 +59,7 @@ class _ShiftPageState extends State<ShiftPage> {
                             ),
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                             Container(
-                              width: 85 * SizeConfig.blockSizeHorizontal,
+                              width: 86 * SizeConfig.blockSizeHorizontal,
                               child: Text(
                                 'The Adams Administration',
                                 style: TextStyle(
