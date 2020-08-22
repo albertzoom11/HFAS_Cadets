@@ -251,8 +251,7 @@ class _AddState extends State<Add> {
                                                 hoursPassed: _hoursPassed,
                                                 numCalls: _numCalls,
                                                 numTasks: _numTasks));
-                                        List<Widget> dbCarousels = _database
-                                            .monthCarousels(_year.toString());
+                                        List<Widget> dbCarousels = await _database.monthCarousels(_year.toString());
                                         dynamic value = await _database
                                             .monthStats(_year.toString());
                                         setState(() {

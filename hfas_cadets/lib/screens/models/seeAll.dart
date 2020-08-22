@@ -55,7 +55,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                   Navigator.pushNamed(context, '/loading');
                   await _database.deleteMonthFiles(urls);
                   dynamic result = await _database.deleteMonth(shifts[0].date.year.toString(), monthName);
-                  globals.monthCarousels = _database.monthCarousels(shifts[0].date.year.toString());
+                  globals.monthCarousels = await _database.monthCarousels(shifts[0].date.year.toString());
                   globals.profileMonths = await _database.monthStats(shifts[0].date.year.toString());
                   if (result != null) {
                     Navigator.pushNamedAndRemoveUntil(

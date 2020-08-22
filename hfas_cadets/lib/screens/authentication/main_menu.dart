@@ -33,7 +33,7 @@ class _MainMenuState extends State<MainMenu> {
         loading = true;
       });
       globals.user = await _database.getUser(_uid);
-      globals.monthCarousels = _database.monthCarousels(_year);
+      globals.monthCarousels = await _database.monthCarousels(_year);
       globals.profileMonths = await _database.monthStats(_year);
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);
     }

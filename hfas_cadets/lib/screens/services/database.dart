@@ -94,17 +94,17 @@ class DatabaseService {
     return output;
   }
 
-  List<Widget> monthCarousels(String year) {
+  Future<List<Widget>> monthCarousels(String year) async {
     List<Widget> output = [];
     for (int i = globals.months.length - 1; i >= 0; i--) {
-      userCollection
+      await userCollection
           .document(globals.user.uid)
           .collection(year)
           .document(globals.months[i])
           .get()
           .then((data) {
             if (data.exists) {
-              userCollection
+               userCollection
                   .document(globals.user.uid)
                   .collection(year)
                   .document(globals.months[i])
@@ -215,7 +215,7 @@ class DatabaseService {
       });
       await userCollection.document(globals.user.uid).collection(year).document(month).delete();
       await addOrSubtractUserTotals(-1 * hours, -1 * calls, -1 * tasks);
-      return 'deleted';
+      return 'deleted month';
     } catch (e) {
       print(e.toString());
       return null;
@@ -227,6 +227,44 @@ class DatabaseService {
       StorageReference storageReference = await FirebaseStorage.instance.getReferenceFromUrl(urls[i]);
       await storageReference.delete();
       print('deleted image ${i + 1}');
+    }
+  }
+
+  Future deleteShift(Shift shift) async {
+    try {
+      StorageReference storageReference = await FirebaseStorage.instance.getReferenceFromUrl(shift.imageUrl);
+      await storageReference.delete();
+      print('deleted shift image');
+
+      await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
+      await addOrSubtractUserTotals(-1 * shift.hoursPassed, -1 * shift.numCalls, -1 * shift.numTasks);
+      print('deleted shift from firestore');
+
+      try {
+        bool lastShift = false;
+        await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).get().then((doc) {
+          if (doc.data['shifts'] == 1) {
+            lastShift = true;
+          }
+        });
+        if (lastShift) {
+          await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).delete();
+        } else {
+          await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).updateData({
+            'shifts': FieldValue.increment(-1),
+            'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
+            'hours': FieldValue.increment(-1 * shift.hoursPassed),
+            'calls': FieldValue.increment(-1 * shift.numCalls),
+            'tasks': FieldValue.increment(-1 * shift.numTasks),
+          });
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+      return 'deleted shift';
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }

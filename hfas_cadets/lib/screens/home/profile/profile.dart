@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
         body: SafeArea(
           child: CustomRefreshIndicator(
             onRefresh: () async {
-              List<Widget> dbCarousel = _database.monthCarousels(_year.toString());
+              List<Widget> dbCarousel = await _database.monthCarousels(_year.toString());
               User dbUser = await _database.getUser(globals.user.uid);
               dynamic value = await _database.monthStats(_year.toString());
               setState(() {

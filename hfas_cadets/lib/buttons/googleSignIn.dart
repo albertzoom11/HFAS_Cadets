@@ -19,7 +19,7 @@ Widget googleSignInButton(BuildContext context) {
         print('google sign in failed');
       } else {
         globals.user = _auth.currentUser;
-        globals.monthCarousels = _database.monthCarousels(_year);
+        globals.monthCarousels = await _database.monthCarousels(_year);
         globals.profileMonths = await _database.monthStats(_year);
         var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', globals.user.uid);

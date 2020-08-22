@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
+import 'package:hfascadets/screens/services/database.dart';
+import 'package:hfascadets/shared/globals.dart' as globals;
 
 class ShiftPage extends StatefulWidget {
   @override
@@ -9,9 +11,56 @@ class ShiftPage extends StatefulWidget {
 }
 
 class _ShiftPageState extends State<ShiftPage> {
-  @override
   final Conversions _conversions = Conversions();
+  final DatabaseService _database = DatabaseService();
 
+  Future<String> createDeleteDialog(BuildContext context, Shift shift) {
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Delete Shift',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            content: Text(
+              'Delete ${shift.title}?',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () async {
+                  Navigator.pushNamed(context, '/loading');
+                  dynamic result = await _database.deleteShift(shift);
+                  globals.monthCarousels = await _database.monthCarousels(shift.date.year.toString());
+                  globals.profileMonths = await _database.monthStats(shift.date.year.toString());
+                  if (result != null) {
+                    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Shift _shift = ModalRoute.of(context).settings.arguments;
 
@@ -235,8 +284,8 @@ class _ShiftPageState extends State<ShiftPage> {
           child: FloatingActionButton(
             child: Icon(Icons.delete, size: 4.5 * SizeConfig.blockSizeVertical, color: Colors.indigo[900],),
             backgroundColor: Colors.white,
-            onPressed: () {
-              print('delete');
+            onPressed: () async {
+              createDeleteDialog(context, _shift);
             },
           ),
         ),
