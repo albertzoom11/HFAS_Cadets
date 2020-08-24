@@ -21,7 +21,7 @@ class _TaskDisplayState extends State<TaskDisplay> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal)),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(12 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(12 * SizeConfig.blockSizeHorizontal)),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 6 * SizeConfig.blockSizeHorizontal, vertical: 2 * SizeConfig.blockSizeVertical),
