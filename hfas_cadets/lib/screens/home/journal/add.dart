@@ -745,8 +745,7 @@ class _AddState extends State<Add> {
                                       key: _taskListKey,
                                       initialItemCount: _tasks.length,
                                       itemBuilder: (context, index, animation) {
-                                        return _buildTask(
-                                            _tasks[index], animation, index);
+                                        return _buildTask(_tasks[index], animation, index);
                                       },
                                     ),
                                   )),
