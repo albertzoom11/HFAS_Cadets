@@ -383,7 +383,7 @@ class _AddState extends State<Add> {
                                                 border: Border.all(
                                                     color: _dateTime == null
                                                         ? Colors.grey
-                                                        : Colors.indigo[900]),
+                                                        : Colors.blue[900]),
                                                 borderRadius:
                                                     BorderRadius.circular(8 *
                                                         SizeConfig
@@ -416,7 +416,7 @@ class _AddState extends State<Add> {
                                                               .blockSizeVertical,
                                                       color: _dateTime == null
                                                           ? Colors.grey
-                                                          : Colors.indigo[900],
+                                                          : Colors.blue[900],
                                                     ),
                                                     SizedBox(
                                                       width: 1 *
@@ -434,8 +434,7 @@ class _AddState extends State<Add> {
                                                                 .blockSizeVertical,
                                                         color: _dateTime == null
                                                             ? Colors.grey
-                                                            : Colors
-                                                                .indigo[900],
+                                                            : Colors.blue[900],
                                                       ),
                                                     ),
                                                   ],
@@ -472,7 +471,7 @@ class _AddState extends State<Add> {
                                                 border: Border.all(
                                                     color: _startTime == null
                                                         ? Colors.grey
-                                                        : Colors.indigo[900]),
+                                                        : _conversions.isDay(_startTime.format(context)) ? Colors.blue[700] : Colors.indigo[900]),
                                                 borderRadius:
                                                     BorderRadius.circular(8 *
                                                         SizeConfig
@@ -505,7 +504,7 @@ class _AddState extends State<Add> {
                                                               .blockSizeVertical,
                                                       color: _startTime == null
                                                           ? Colors.grey
-                                                          : Colors.indigo[900],
+                                                          : _conversions.isDay(_startTime.format(context)) ? Colors.blue[700] : Colors.indigo[900],
                                                     ),
                                                     SizedBox(
                                                       width: 1 *
@@ -516,8 +515,7 @@ class _AddState extends State<Add> {
                                                       _startTime == null
                                                           ? 'Start Time'
                                                           : _startTime
-                                                              .format(context)
-                                                              .toString(),
+                                                              .format(context),
                                                       style: TextStyle(
                                                         fontWeight: FontWeight.w600,
                                                         fontSize: 2 *
@@ -525,8 +523,7 @@ class _AddState extends State<Add> {
                                                                 .blockSizeVertical,
                                                         color: _startTime == null
                                                             ? Colors.grey
-                                                            : Colors
-                                                                .indigo[900],
+                                                            : _conversions.isDay(_startTime.format(context)) ? Colors.blue[700] : Colors.indigo[900],
                                                       ),
                                                     ),
                                                   ],
@@ -562,7 +559,7 @@ class _AddState extends State<Add> {
                                                 border: Border.all(
                                                     color: _endTime == null
                                                         ? Colors.grey
-                                                        : Colors.indigo[900]),
+                                                        : _conversions.isDay(_endTime.format(context)) ? Colors.blue[700] : Colors.indigo[900]),
                                                 borderRadius:
                                                     BorderRadius.circular(8 *
                                                         SizeConfig
@@ -595,7 +592,7 @@ class _AddState extends State<Add> {
                                                               .blockSizeVertical,
                                                       color: _endTime == null
                                                           ? Colors.grey
-                                                          : Colors.indigo[900],
+                                                          : _conversions.isDay(_endTime.format(context)) ? Colors.blue[700] : Colors.indigo[900],
                                                     ),
                                                     SizedBox(
                                                       width: 1 *
@@ -606,8 +603,7 @@ class _AddState extends State<Add> {
                                                       _endTime == null
                                                           ? 'End Time'
                                                           : _endTime
-                                                              .format(context)
-                                                              .toString(),
+                                                              .format(context),
                                                       style: TextStyle(
                                                         fontWeight: FontWeight.w600,
                                                         fontSize: 2 *
@@ -615,8 +611,7 @@ class _AddState extends State<Add> {
                                                                 .blockSizeVertical,
                                                         color: _endTime == null
                                                             ? Colors.grey
-                                                            : Colors
-                                                                .indigo[900],
+                                                            : _conversions.isDay(_endTime.format(context)) ? Colors.blue[700] : Colors.indigo[900],
                                                       ),
                                                     ),
                                                   ],

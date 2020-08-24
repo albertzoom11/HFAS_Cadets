@@ -264,7 +264,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                               SizeConfig.blockSizeVertical,
                                           fontWeight: FontWeight.w600,
                                           color:
-                                              _conversions.isDay(_shift.timeIn)
+                                              _conversions.isDay(_shift.timeOut)
                                                   ? Colors.blue[700]
                                                   : Colors.indigo[900],
                                         ),
