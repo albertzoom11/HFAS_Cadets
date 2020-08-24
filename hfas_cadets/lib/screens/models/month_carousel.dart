@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hfascadets/screens/models/seeAll.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;

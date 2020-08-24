@@ -24,6 +24,7 @@ class _AddState extends State<Add> {
   final _formKey = GlobalKey<FormState>();
   final _taskListKey = GlobalKey<AnimatedListState>();
   final Conversions _conversions = Conversions();
+  final DatabaseService _database = DatabaseService();
   List<String> _tasks = [];
   String _dateOutput = '';
   DateTime _dateTime;
@@ -147,7 +148,6 @@ class _AddState extends State<Add> {
 
   @override
   Widget build(BuildContext context) {
-    final DatabaseService _database = DatabaseService();
 
     return loading ? Loading()
         : Scaffold(

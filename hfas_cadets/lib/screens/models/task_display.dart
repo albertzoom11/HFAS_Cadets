@@ -15,7 +15,6 @@ class TaskDisplay extends StatefulWidget {
 class _TaskDisplayState extends State<TaskDisplay> {
   @override
   Widget build(BuildContext context) {
-    print(widget.task);
 
     return Padding(
       padding: EdgeInsets.only(left: 8 * SizeConfig.blockSizeHorizontal, bottom: 3 * SizeConfig.blockSizeVertical),

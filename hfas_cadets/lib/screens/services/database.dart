@@ -267,4 +267,12 @@ class DatabaseService {
       return null;
     }
   }
+
+  Future getShiftData(DateTime dateTime) async {
+    Shift newShift;
+    await userCollection.document(globals.user.uid).collection(dateTime.year.toString()).document(globals.months[dateTime.month - 1]).collection('shifts').document(dateTime.toString()).get().then((doc) {
+      newShift = Shift.fromData(doc.data);
+    });
+    return newShift;
+  }
 }

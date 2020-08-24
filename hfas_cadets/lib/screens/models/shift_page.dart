@@ -15,6 +15,9 @@ class ShiftPage extends StatefulWidget {
 class _ShiftPageState extends State<ShiftPage> {
   final Conversions _conversions = Conversions();
   final DatabaseService _database = DatabaseService();
+  Shift _shift;
+  bool firstTime = true;
+  bool edited = false;
 
   Future<String> createDeleteDialog(BuildContext context, Shift shift) {
     return showDialog(
@@ -67,7 +70,13 @@ class _ShiftPageState extends State<ShiftPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Shift _shift = ModalRoute.of(context).settings.arguments;
+    Shift argShift = ModalRoute.of(context).settings.arguments;
+    if (firstTime) {
+      setState(() {
+        _shift = argShift;
+      });
+      firstTime = false;
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -89,7 +98,15 @@ class _ShiftPageState extends State<ShiftPage> {
           SafeArea(
             child: CustomRefreshIndicator(
               onRefresh: () async {
-                print('hi');
+                List<Widget> dbCarousel = await _database.monthCarousels(_shift.date.year.toString());
+                dynamic result = await _database.getShiftData(_shift.date);
+                if (result != null) {
+                  setState(() {
+                    _shift = result;
+                    globals.monthCarousels = dbCarousel;
+                    edited = true;
+                  });
+                }
               },
               builder: (BuildContext context, Widget child,
                   IndicatorController controller) {
@@ -159,7 +176,11 @@ class _ShiftPageState extends State<ShiftPage> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            Navigator.pop(context);
+                                            if (edited) {
+                                              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);
+                                            } else {
+                                              Navigator.pop(context);
+                                            }
                                           },
                                           child: Icon(
                                             Icons.arrow_back,

@@ -22,11 +22,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final int data = ModalRoute.of(context).settings.arguments;
+    final int page = ModalRoute.of(context).settings.arguments;
     if (firstTime) {
       setState(() {
-        controller = PageController(initialPage: data);
-        currentTab = data;
+        controller = PageController(initialPage: page);
+        currentTab = page;
       });
       firstTime = false;
     }
