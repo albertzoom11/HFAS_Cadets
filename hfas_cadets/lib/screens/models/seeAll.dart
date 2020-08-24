@@ -267,6 +267,46 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                                   Container(
                                     width: 22 * SizeConfig.blockSizeHorizontal,
                                     height: 4 * SizeConfig.blockSizeVertical,
+                                    decoration: BoxDecoration(
+                                      color: _conversions.isDay(shift.timeIn) ? Colors.blue[700] : Colors.indigo[900],
+                                      borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      shift.timeIn,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 1.8 * SizeConfig.blockSizeVertical,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 3 * SizeConfig.blockSizeHorizontal,),
+                                  Container(
+                                    width: 22 * SizeConfig.blockSizeHorizontal,
+                                    height: 4 * SizeConfig.blockSizeVertical,
+                                    decoration: BoxDecoration(
+                                      color: _conversions.isDay(shift.timeOut) ? Colors.blue[700] : Colors.indigo[900],
+                                      borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      shift.timeOut,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 1.8 * SizeConfig.blockSizeVertical,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 22 * SizeConfig.blockSizeHorizontal,
+                                    height: 4 * SizeConfig.blockSizeVertical,
                                     decoration: shift.numCalls == 0 ? BoxDecoration(
                                       border: Border.all(color: Colors.blue[900]),
                                       borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
@@ -300,46 +340,6 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                                       shift.numTasks == 1 ? '1 Task' : '${shift.numTasks} Tasks',
                                       style: TextStyle(
                                         color: shift.numTasks == 0 ? Colors.blue[900] : Colors.white,
-                                        fontSize: 1.8 * SizeConfig.blockSizeVertical,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 2 * SizeConfig.blockSizeVertical,),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 22 * SizeConfig.blockSizeHorizontal,
-                                    height: 4 * SizeConfig.blockSizeVertical,
-                                    decoration: BoxDecoration(
-                                      color: _conversions.isDay(shift.timeIn) ? Colors.blue[700] : Colors.indigo[900],
-                                      borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      shift.timeIn,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 1.8 * SizeConfig.blockSizeVertical,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 3 * SizeConfig.blockSizeHorizontal,),
-                                  Container(
-                                    width: 22 * SizeConfig.blockSizeHorizontal,
-                                    height: 4 * SizeConfig.blockSizeVertical,
-                                    decoration: BoxDecoration(
-                                      color: _conversions.isDay(shift.timeOut) ? Colors.blue[700] : Colors.indigo[900],
-                                      borderRadius: BorderRadius.circular(8 * SizeConfig.blockSizeHorizontal),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      shift.timeOut,
-                                      style: TextStyle(
-                                        color: Colors.white,
                                         fontSize: 1.8 * SizeConfig.blockSizeVertical,
                                         fontWeight: FontWeight.w600,
                                       ),
