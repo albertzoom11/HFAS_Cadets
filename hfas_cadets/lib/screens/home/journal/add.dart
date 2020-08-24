@@ -97,6 +97,7 @@ class _AddState extends State<Add> {
             ),
             content: TextField(
               controller: customController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 hintText: 'Task Name',
               ),
@@ -633,6 +634,7 @@ class _AddState extends State<Add> {
                                     FadeAnimation(
                                         1,
                                         TextFormField(
+                                          textCapitalization: TextCapitalization.words,
                                           decoration: InputDecoration(
                                             icon: Icon(Icons.title),
                                             hintText: 'Title',
