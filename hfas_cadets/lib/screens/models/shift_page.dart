@@ -451,7 +451,7 @@ class _ShiftPageState extends State<ShiftPage> {
                     ),
                     Container(
                       constraints: BoxConstraints(
-                        minHeight: 25 * SizeConfig.blockSizeVertical,
+                        minHeight: 23 * SizeConfig.blockSizeVertical,
                       ),
                       child: _shift.numTasks == 0
                           ? Center(
