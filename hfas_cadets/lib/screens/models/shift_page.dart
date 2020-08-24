@@ -78,71 +78,65 @@ class _ShiftPageState extends State<ShiftPage> {
       firstTime = false;
     }
 
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromRGBO(20, 52, 143, 1),
-            Colors.indigo[900],
-          ],
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(children: <Widget>[
-          Container(
-            color: Colors.white,
-            height: 40 * SizeConfig.blockSizeVertical,
-            width: double.infinity,
-          ),
-          SafeArea(
-            child: CustomRefreshIndicator(
-              onRefresh: () async {
-                List<Widget> dbCarousel = await _database.monthCarousels(_shift.date.year.toString());
-                dynamic result = await _database.getShiftData(_shift.date);
-                if (result != null) {
-                  setState(() {
-                    _shift = result;
-                    globals.monthCarousels = dbCarousel;
-                    edited = true;
-                  });
-                }
-              },
-              builder: (BuildContext context, Widget child,
-                  IndicatorController controller) {
-                return AnimatedBuilder(
-                  animation: controller,
-                  builder: (BuildContext context, _) {
-                    return Stack(
-                      alignment: Alignment.topCenter,
-                      children: <Widget>[
-                        if (!controller.isIdle)
-                          Positioned(
-                            top: 4 *
-                                SizeConfig.blockSizeVertical *
-                                controller.value,
-                            child: SizedBox(
-                              height: 4 * SizeConfig.blockSizeVertical,
-                              width: 4 * SizeConfig.blockSizeVertical,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.indigo[900]),
-                                value: !controller.isLoading
-                                    ? controller.value.clamp(0.0, 1.0)
-                                    : null,
-                              ),
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: CustomRefreshIndicator(
+            onRefresh: () async {
+              List<Widget> dbCarousel = await _database.monthCarousels(_shift.date.year.toString());
+              dynamic result = await _database.getShiftData(_shift.date);
+              if (result != null) {
+                setState(() {
+                  _shift = result;
+                  globals.monthCarousels = dbCarousel;
+                  edited = true;
+                });
+              }
+            },
+            builder: (BuildContext context, Widget child,
+                IndicatorController controller) {
+              return AnimatedBuilder(
+                animation: controller,
+                builder: (BuildContext context, _) {
+                  return Stack(
+                    alignment: Alignment.topCenter,
+                    children: <Widget>[
+                      if (!controller.isIdle)
+                        Positioned(
+                          top: 4 *
+                              SizeConfig.blockSizeVertical *
+                              controller.value,
+                          child: SizedBox(
+                            height: 4 * SizeConfig.blockSizeVertical,
+                            width: 4 * SizeConfig.blockSizeVertical,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.indigo[900]),
+                              value: !controller.isLoading
+                                  ? controller.value.clamp(0.0, 1.0)
+                                  : null,
                             ),
                           ),
-                        Transform.translate(
-                          offset: Offset(0, 100.0 * controller.value),
-                          child: child,
                         ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: SingleChildScrollView(
+                      Transform.translate(
+                        offset: Offset(0, 100.0 * controller.value),
+                        child: child,
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(20, 52, 143, 1),
+                      Colors.indigo[900],
+                    ],
+                  ),
+                ),
                 child: Column(
                   children: [
                     Container(
@@ -488,7 +482,7 @@ class _ShiftPageState extends State<ShiftPage> {
               ),
             ),
           ),
-        ]),
+        ),
         floatingActionButton: Container(
           height: 7.5 * SizeConfig.blockSizeVertical,
           width: 7.5 * SizeConfig.blockSizeVertical,
@@ -504,7 +498,6 @@ class _ShiftPageState extends State<ShiftPage> {
             },
           ),
         ),
-      ),
-    );
+      );
   }
 }
