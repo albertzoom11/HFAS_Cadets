@@ -1,3 +1,4 @@
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
@@ -18,6 +19,7 @@ Widget googleSignInButton(BuildContext context) {
       if (result == null) {
         print('google sign in failed');
       } else {
+        Navigator.pushNamed(context, '/loading');
         globals.user = _auth.currentUser;
         globals.monthCarousels = await _database.monthCarousels(_year);
         globals.profileMonths = await _database.monthStats(_year);
