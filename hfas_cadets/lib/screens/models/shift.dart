@@ -9,8 +9,9 @@ class Shift {
   num hoursPassed;
   int numCalls;
   int numTasks;
+  List<String> listOfTasks;
 
-  Shift({this.imageUrl, this.title, this.date, this.timeIn, this.timeOut, this.hoursPassed, this.numCalls, this.numTasks});
+  Shift({this.imageUrl, this.title, this.date, this.timeIn, this.timeOut, this.hoursPassed, this.numCalls, this.numTasks, this.listOfTasks});
 
   Shift.fromData(Map<String, dynamic> data)
       : imageUrl = data['imageUrl'],
@@ -20,7 +21,8 @@ class Shift {
         timeOut = data['timeOut'],
         hoursPassed = data['hoursPassed'] % 1 == 0 ? data['hoursPassed'].toInt() : data['hoursPassed'],
         numCalls = data['numOfCalls'],
-        numTasks = data['numOfTasks'];
+        numTasks = data['numOfTasks'],
+        listOfTasks = (data['listOfTasks']).split('\$~\$');
 
   Map<String, dynamic> toJson() {
     return {
@@ -32,6 +34,7 @@ class Shift {
       'hoursPassed': hoursPassed,
       'numOfCalls': numCalls,
       'numOfTasks': numTasks,
+      'listOfTasks': listOfTasks.join('\$~\$'),
     };
   }
 }

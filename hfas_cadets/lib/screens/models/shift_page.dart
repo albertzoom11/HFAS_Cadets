@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
+import 'package:hfascadets/screens/models/task_display.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
@@ -75,11 +76,11 @@ class _ShiftPageState extends State<ShiftPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            Expanded(
-              flex: 6,
-              child: Container(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 75 * SizeConfig.blockSizeVertical,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(18 * SizeConfig.blockSizeHorizontal)),
@@ -172,7 +173,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.hourglass_empty),
+                                          Icon(Icons.hourglass_empty, size: 3.5 * SizeConfig.blockSizeVertical,),
                                           SizedBox(width: 3 * SizeConfig.blockSizeHorizontal,),
                                           Text(
                                             'Hours',
@@ -198,7 +199,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.phone),
+                                          Icon(Icons.phone, size: 3.5 * SizeConfig.blockSizeVertical,),
                                           SizedBox(width: 3 * SizeConfig.blockSizeHorizontal,),
                                           Text(
                                             'Calls',
@@ -224,7 +225,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.list),
+                                          Icon(Icons.list, size: 3.5 * SizeConfig.blockSizeVertical,),
                                           SizedBox(width: 3 * SizeConfig.blockSizeHorizontal,),
                                           Text(
                                             'Tasks',
@@ -249,15 +250,15 @@ class _ShiftPageState extends State<ShiftPage> {
                               ),
                             ),
                             ClipRRect(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(4 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
                               child: Container(
                                 height: 30 * SizeConfig.blockSizeVertical,
                                 width: 41 * SizeConfig.blockSizeHorizontal,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(4 * SizeConfig.blockSizeHorizontal), bottomLeft: Radius.circular(8 * SizeConfig.blockSizeHorizontal),),
                                   image: DecorationImage(
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                     image: NetworkImage(_shift.imageUrl),
                                   ),
                                 ),
@@ -271,12 +272,32 @@ class _ShiftPageState extends State<ShiftPage> {
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(),
-            ),
-          ],
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: 25 * SizeConfig.blockSizeVertical,
+                ),
+                child: _shift.numTasks == 0
+                    ? Center(
+                  child: Text(
+                          'No Tasks Completed',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          SizedBox(height: 4 * SizeConfig.blockSizeVertical,),
+                          for (int i = 0; i < _shift.listOfTasks.length; i++)
+                            TaskDisplay(task: _shift.listOfTasks[i], taskNum: i + 1, editable: false,),
+                          SizedBox(height: 8 * SizeConfig.blockSizeVertical,),
+                        ],
+                      ),
+              ),
+            ],
+          ),
         ),
         floatingActionButton: Container(
           height: 7.5 * SizeConfig.blockSizeVertical,

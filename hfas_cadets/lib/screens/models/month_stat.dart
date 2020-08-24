@@ -23,7 +23,7 @@ class MonthStat extends StatelessWidget {
         height: 24 * SizeConfig.blockSizeVertical,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
           boxShadow: [BoxShadow(
             color: monthColor,
             blurRadius: 5 * SizeConfig.blockSizeHorizontal,
