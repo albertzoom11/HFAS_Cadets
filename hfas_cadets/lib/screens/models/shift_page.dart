@@ -20,6 +20,8 @@ class _ShiftPageState extends State<ShiftPage> {
   String _title;
   String _imageUrl;
   DateTime _date;
+  TimeOfDay _startTime;
+  TimeOfDay _endTime;
   String _timeIn;
   String _timeOut;
   num _hoursPassed;
@@ -199,6 +201,17 @@ class _ShiftPageState extends State<ShiftPage> {
                                             onTap: () {
                                               setState(() {
                                                 editMode = false;
+                                                _title = _shift.title;
+                                                _imageUrl = _shift.imageUrl;
+                                                _date = _shift.date;
+                                                _timeIn = _shift.timeIn;
+                                                _timeOut = _shift.timeOut;
+                                                _hoursPassed = _shift.hoursPassed;
+                                                _numCalls = _shift.numCalls;
+                                                _numTasks = _shift.numTasks;
+                                                _listOfTasks = _shift.listOfTasks.sublist(0);
+                                                _startTime = null;
+                                                _endTime = null;
                                               });
                                             },
                                             child: Icon(
@@ -251,13 +264,29 @@ class _ShiftPageState extends State<ShiftPage> {
                                       height:
                                           2.5 * SizeConfig.blockSizeVertical,
                                     ),
-                                    Text(
-                                      _conversions.toDateString(_date),
-                                      style: TextStyle(
-                                        fontSize: 2.5 *
-                                            SizeConfig.blockSizeVertical,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.blue[900],
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDatePicker(
+                                          context: context,
+                                          initialDate: _date == null
+                                              ? DateTime.now()
+                                              : _date,
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(2100),
+                                        ).then((date) {
+                                          if (date != null) {
+                                            _date = DateTime(date.year, date.month, date.day, _date.hour, _date.minute);
+                                          }
+                                        });
+                                      },
+                                      child: Text(
+                                        _conversions.toDateString(_date),
+                                        style: TextStyle(
+                                          fontSize: 2.5 *
+                                              SizeConfig.blockSizeVertical,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.blue[900],
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -266,16 +295,33 @@ class _ShiftPageState extends State<ShiftPage> {
                                     ),
                                     Row(
                                       children: [
-                                        Text(
-                                          _timeIn,
-                                          style: TextStyle(
-                                            fontSize: 2.2 *
-                                                SizeConfig.blockSizeVertical,
-                                            fontWeight: FontWeight.w600,
-                                            color: _conversions
-                                                    .isDay(_shift.timeIn)
-                                                ? Colors.blue[700]
-                                                : Colors.indigo[900],
+                                        GestureDetector(
+                                          onTap: () {
+                                            showTimePicker(
+                                              context: context,
+                                              initialTime: _startTime == null
+                                                  ? _conversions.stringToTime(_timeIn)
+                                                  : _startTime,
+                                            ).then((time) {
+                                              if (time != null) {
+                                                setState(() {
+                                                  _startTime = time;
+                                                  _date = DateTime(_date.year, _date.month, _date.day, time.hour, time.minute);
+                                                });
+                                              }
+                                            });
+                                          },
+                                          child: Text(
+                                            _startTime == null ? _timeIn : _startTime.format(context),
+                                            style: TextStyle(
+                                              fontSize: 2.2 *
+                                                  SizeConfig.blockSizeVertical,
+                                              fontWeight: FontWeight.w600,
+                                              color: _conversions
+                                                      .isDay(_startTime == null ? _timeIn : _startTime.format(context))
+                                                  ? Colors.blue[700]
+                                                  : Colors.indigo[900],
+                                            ),
                                           ),
                                         ),
                                         Text(
@@ -286,16 +332,32 @@ class _ShiftPageState extends State<ShiftPage> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Text(
-                                          _timeOut,
-                                          style: TextStyle(
-                                            fontSize: 2.2 *
-                                                SizeConfig.blockSizeVertical,
-                                            fontWeight: FontWeight.w600,
-                                            color: _conversions
-                                                    .isDay(_shift.timeOut)
-                                                ? Colors.blue[700]
-                                                : Colors.indigo[900],
+                                        GestureDetector(
+                                          onTap: () {
+                                            showTimePicker(
+                                              context: context,
+                                              initialTime: _endTime == null
+                                                  ? _conversions.stringToTime(_timeOut)
+                                                  : _endTime,
+                                            ).then((time) {
+                                              if (time != null) {
+                                                setState(() {
+                                                  _endTime = time;
+                                                });
+                                              }
+                                            });
+                                          },
+                                          child: Text(
+                                            _endTime == null ? _timeOut : _endTime.format(context),
+                                            style: TextStyle(
+                                              fontSize: 2.2 *
+                                                  SizeConfig.blockSizeVertical,
+                                              fontWeight: FontWeight.w600,
+                                              color: _conversions
+                                                      .isDay(_endTime == null ? _timeOut : _endTime.format(context))
+                                                  ? Colors.blue[700]
+                                                  : Colors.indigo[900],
+                                            ),
                                           ),
                                         ),
                                       ],

@@ -128,4 +128,13 @@ class Conversions {
     }
     return true;
   }
+
+  TimeOfDay stringToTime(String time) {
+    bool isPM = time.substring(5) == ' PM' || time.substring(5) == 'PM';
+    List<String> hoursMinutes = time.substring(0, 5).split(":");
+
+    int hour = isPM ? int.parse(hoursMinutes[0]) + 12 : int.parse(hoursMinutes[0]);
+    int minutes = int.parse(hoursMinutes[1]);
+    return TimeOfDay(hour: hour, minute: minutes);
+  }
 }
