@@ -22,7 +22,7 @@ class Shift {
         hoursPassed = data['hoursPassed'] % 1 == 0 ? data['hoursPassed'].toInt() : data['hoursPassed'],
         numCalls = data['numOfCalls'],
         numTasks = data['numOfTasks'],
-        listOfTasks = (data['listOfTasks']).split('\$~\$');
+        listOfTasks = data['listOfTasks'] == '' ? [] : (data['listOfTasks']).split('\$~\$');
 
   Map<String, dynamic> toJson() {
     return {

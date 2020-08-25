@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/month_carousel.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/user.dart';
@@ -236,32 +236,38 @@ class DatabaseService {
       await storageReference.delete();
       print('deleted shift image');
 
-      await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
-      await addOrSubtractUserTotals(-1 * shift.hoursPassed, -1 * shift.numCalls, -1 * shift.numTasks);
-      print('deleted shift from firestore');
-
-      try {
-        bool lastShift = false;
-        await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).get().then((doc) {
-          if (doc.data['shifts'] == 1) {
-            lastShift = true;
-          }
-        });
-        if (lastShift) {
-          await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).delete();
-        } else {
-          await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).updateData({
-            'shifts': FieldValue.increment(-1),
-            'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
-            'hours': FieldValue.increment(-1 * shift.hoursPassed),
-            'calls': FieldValue.increment(-1 * shift.numCalls),
-            'tasks': FieldValue.increment(-1 * shift.numTasks),
-          });
-        }
-      } catch (e) {
-        print(e.toString());
-      }
+      await deleteShiftFromDatabase(shift);
       return 'deleted shift';
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future deleteShiftFromDatabase(Shift shift) async {
+    await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
+    await addOrSubtractUserTotals(-1 * shift.hoursPassed, -1 * shift.numCalls, -1 * shift.numTasks);
+    print('deleted shift from firestore');
+
+    try {
+      bool lastShift = false;
+      await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).get().then((doc) {
+        if (doc.data['shifts'] == 1) {
+          lastShift = true;
+        }
+      });
+      if (lastShift) {
+        await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).delete();
+      } else {
+        await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).updateData({
+          'shifts': FieldValue.increment(-1),
+          'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
+          'hours': FieldValue.increment(-1 * shift.hoursPassed),
+          'calls': FieldValue.increment(-1 * shift.numCalls),
+          'tasks': FieldValue.increment(-1 * shift.numTasks),
+        });
+      }
+      return 'success';
     } catch (e) {
       print(e.toString());
       return null;
@@ -274,5 +280,20 @@ class DatabaseService {
       newShift = Shift.fromData(doc.data);
     });
     return newShift;
+  }
+
+  Future editShift(Shift oldShift, Shift newShift) async {
+    try {
+      if (oldShift.imageUrl != newShift.imageUrl) {
+        StorageReference storageReference = await FirebaseStorage.instance.getReferenceFromUrl(oldShift.imageUrl);
+        await storageReference.delete();
+      }
+      await deleteShiftFromDatabase(oldShift);
+      await addShift(newShift);
+      return 'success';
+    } catch (e) {
+     print(e.toString());
+     return null;
+    }
   }
 }

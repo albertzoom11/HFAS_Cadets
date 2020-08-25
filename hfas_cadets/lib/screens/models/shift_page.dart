@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/task_display.dart';
+import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:hfascadets/shared/loading.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class ShiftPage extends StatefulWidget {
@@ -20,8 +22,6 @@ class _ShiftPageState extends State<ShiftPage> {
   String _title;
   String _imageUrl;
   DateTime _date;
-  TimeOfDay _startTime;
-  TimeOfDay _endTime;
   String _timeIn;
   String _timeOut;
   num _hoursPassed;
@@ -31,6 +31,7 @@ class _ShiftPageState extends State<ShiftPage> {
   bool firstTime = true;
   bool editMode = false;
   bool edited = false;
+  bool loading = false;
 
   Future<String> createDeleteDialog(BuildContext context, Shift shift) {
     return showDialog(
@@ -159,9 +160,11 @@ class _ShiftPageState extends State<ShiftPage> {
             maxValue: 10,
           );
         }).then((value) {
-          setState(() {
-            _numCalls = value;
-          });
+          if (value != null) {
+           setState(() {
+             _numCalls = value;
+           });
+          }
     });
   }
 
@@ -184,7 +187,7 @@ class _ShiftPageState extends State<ShiftPage> {
       firstTime = false;
     }
 
-    return editMode
+    return loading ? Loading() : editMode
         ? Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(
@@ -244,8 +247,6 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 _numCalls = _shift.numCalls;
                                                 _numTasks = _shift.numTasks;
                                                 _listOfTasks = _shift.listOfTasks.sublist(0);
-                                                _startTime = null;
-                                                _endTime = null;
                                               });
                                             },
                                             child: Icon(
@@ -257,11 +258,34 @@ class _ShiftPageState extends State<ShiftPage> {
                                             ),
                                           ),
                                           GestureDetector(
-                                            onTap: () {
-                                              print('check tapped');
+                                            onTap: () async {
                                               setState(() {
+                                                loading = true;
                                                 edited = true;
                                                 editMode = false;
+                                              });
+                                              Shift _newShift = Shift(
+                                                title: _title,
+                                                imageUrl: _imageUrl,
+                                                date: _date,
+                                                timeIn: _timeIn,
+                                                timeOut: _timeOut,
+                                                hoursPassed: _hoursPassed,
+                                                numCalls: _numCalls,
+                                                numTasks: _numTasks,
+                                                listOfTasks: _listOfTasks,
+                                              );
+                                              await _database.editShift(_shift, _newShift);
+                                              await _database.addOrSubtractUserTotals(_newShift.hoursPassed, _newShift.numCalls, _newShift.numTasks);
+                                              List<Widget> dbCarousel = await _database.monthCarousels(_shift.date.year.toString());
+                                              User dbUser = await _database.getUser(globals.user.uid);
+                                              dynamic value = await _database.monthStats(_newShift.date.year.toString());
+                                              setState(() {
+                                                _shift = _newShift;
+                                                globals.user = dbUser;
+                                                globals.monthCarousels = dbCarousel;
+                                                globals.profileMonths = value;
+                                                loading = false;
                                               });
                                             },
                                             child: Icon(
@@ -285,9 +309,11 @@ class _ShiftPageState extends State<ShiftPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           createTitleDialog(context).then((value) {
-                                            setState(() {
-                                              _title = value;
-                                            });
+                                            if (value != null) {
+                                              setState(() {
+                                                _title = value;
+                                              });
+                                            }
                                           });
                                         },
                                         child: Text(
@@ -311,14 +337,14 @@ class _ShiftPageState extends State<ShiftPage> {
                                       onTap: () {
                                         showDatePicker(
                                           context: context,
-                                          initialDate: _date == null
-                                              ? DateTime.now()
-                                              : _date,
+                                          initialDate: _date,
                                           firstDate: DateTime(2000),
                                           lastDate: DateTime(2100),
                                         ).then((date) {
                                           if (date != null) {
-                                            _date = DateTime(date.year, date.month, date.day, _date.hour, _date.minute);
+                                            setState(() {
+                                              _date = DateTime(date.year, date.month, date.day, _date.hour, _date.minute);
+                                            });
                                           }
                                         });
                                       },
@@ -342,26 +368,23 @@ class _ShiftPageState extends State<ShiftPage> {
                                           onTap: () {
                                             showTimePicker(
                                               context: context,
-                                              initialTime: _startTime == null
-                                                  ? _conversions.stringToTime(_timeIn)
-                                                  : _startTime,
+                                              initialTime: _conversions.stringToTime(_timeIn)
                                             ).then((time) {
                                               if (time != null) {
                                                 setState(() {
-                                                  _startTime = time;
+                                                  _timeIn = time.format(context);
                                                   _date = DateTime(_date.year, _date.month, _date.day, time.hour, time.minute);
                                                 });
                                               }
                                             });
                                           },
                                           child: Text(
-                                            _startTime == null ? _timeIn : _startTime.format(context),
+                                            _timeIn,
                                             style: TextStyle(
                                               fontSize: 2.2 *
                                                   SizeConfig.blockSizeVertical,
                                               fontWeight: FontWeight.w600,
-                                              color: _conversions
-                                                      .isDay(_startTime == null ? _timeIn : _startTime.format(context))
+                                              color: _conversions.isDay(_timeIn)
                                                   ? Colors.blue[700]
                                                   : Colors.indigo[900],
                                             ),
@@ -379,25 +402,22 @@ class _ShiftPageState extends State<ShiftPage> {
                                           onTap: () {
                                             showTimePicker(
                                               context: context,
-                                              initialTime: _endTime == null
-                                                  ? _conversions.stringToTime(_timeOut)
-                                                  : _endTime,
+                                              initialTime: _conversions.stringToTime(_timeOut)
                                             ).then((time) {
                                               if (time != null) {
                                                 setState(() {
-                                                  _endTime = time;
+                                                  _timeOut = time.format(context);
                                                 });
                                               }
                                             });
                                           },
                                           child: Text(
-                                            _endTime == null ? _timeOut : _endTime.format(context),
+                                            _timeOut,
                                             style: TextStyle(
                                               fontSize: 2.2 *
                                                   SizeConfig.blockSizeVertical,
                                               fontWeight: FontWeight.w600,
-                                              color: _conversions
-                                                      .isDay(_endTime == null ? _timeOut : _endTime.format(context))
+                                              color: _conversions.isDay(_timeOut)
                                                   ? Colors.blue[700]
                                                   : Colors.indigo[900],
                                             ),
@@ -686,8 +706,7 @@ class _ShiftPageState extends State<ShiftPage> {
             body: SafeArea(
               child: CustomRefreshIndicator(
                 onRefresh: () async {
-                  List<Widget> dbCarousel = await _database
-                      .monthCarousels(_shift.date.year.toString());
+                  List<Widget> dbCarousel = await _database.monthCarousels(_shift.date.year.toString());
                   dynamic result = await _database.getShiftData(_shift.date);
                   if (result != null) {
                     setState(() {
