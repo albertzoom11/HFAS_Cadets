@@ -6,6 +6,7 @@ import 'package:hfascadets/screens/models/task_display.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:numberpicker/numberpicker.dart';
 
 class ShiftPage extends StatefulWidget {
   @override
@@ -16,6 +17,15 @@ class _ShiftPageState extends State<ShiftPage> {
   final Conversions _conversions = Conversions();
   final DatabaseService _database = DatabaseService();
   Shift _shift;
+  String _title;
+  String _imageUrl;
+  DateTime _date;
+  String _timeIn;
+  String _timeOut;
+  num _hoursPassed;
+  int _numCalls;
+  int _numTasks;
+  List<String> _listOfTasks;
   bool firstTime = true;
   bool editMode = false;
   bool edited = false;
@@ -69,12 +79,71 @@ class _ShiftPageState extends State<ShiftPage> {
         });
   }
 
+  Future<String> createTaskDialog(BuildContext context) {
+    TextEditingController customController = TextEditingController();
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Add Task',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            content: TextField(
+              controller: customController,
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                hintText: 'Task Name',
+              ),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () {
+                  Navigator.pop(context, customController.text.toString());
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void _showNumberPicker(int initial) {
+    showDialog<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return NumberPickerDialog.integer(
+            initialIntegerValue: initial,
+            minValue: 0,
+            maxValue: 10,
+          );
+        }).then((value) {
+          setState(() {
+            _numCalls = value;
+          });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Shift argShift = ModalRoute.of(context).settings.arguments;
     if (firstTime) {
       setState(() {
         _shift = argShift;
+        _title = _shift.title;
+        _imageUrl = _shift.imageUrl;
+        _date = _shift.date;
+        _timeIn = _shift.timeIn;
+        _timeOut = _shift.timeOut;
+        _hoursPassed = _shift.hoursPassed;
+        _numCalls = _shift.numCalls;
+        _numTasks = _shift.numTasks;
+        _listOfTasks = _shift.listOfTasks.sublist(0);
       });
       firstTime = false;
     }
@@ -167,7 +236,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                       width:
                                           86 * SizeConfig.blockSizeHorizontal,
                                       child: Text(
-                                        _shift.title,
+                                        _title,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -183,7 +252,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                           2.5 * SizeConfig.blockSizeVertical,
                                     ),
                                     Text(
-                                      _conversions.toDateString(_shift.date),
+                                      _conversions.toDateString(_date),
                                       style: TextStyle(
                                         fontSize: 2.5 *
                                             SizeConfig.blockSizeVertical,
@@ -198,7 +267,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                     Row(
                                       children: [
                                         Text(
-                                          _shift.timeIn,
+                                          _timeIn,
                                           style: TextStyle(
                                             fontSize: 2.2 *
                                                 SizeConfig.blockSizeVertical,
@@ -218,7 +287,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                           ),
                                         ),
                                         Text(
-                                          _shift.timeOut,
+                                          _timeOut,
                                           style: TextStyle(
                                             fontSize: 2.2 *
                                                 SizeConfig.blockSizeVertical,
@@ -277,14 +346,14 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 ],
                                               ),
                                               Text(
-                                                _shift.hoursPassed.toString(),
+                                                _hoursPassed.toString(),
                                                 style: TextStyle(
                                                   fontSize: 2.5 *
                                                       SizeConfig
                                                           .blockSizeVertical,
                                                   fontWeight: FontWeight.w600,
                                                   color:
-                                                      _shift.hoursPassed == 0
+                                                      _hoursPassed == 0
                                                           ? Colors.black54
                                                           : Colors.blue[900],
                                                 ),
@@ -321,16 +390,21 @@ class _ShiftPageState extends State<ShiftPage> {
                                                   ),
                                                 ],
                                               ),
-                                              Text(
-                                                _shift.numCalls.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 2.5 *
-                                                      SizeConfig
-                                                          .blockSizeVertical,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: _shift.numCalls == 0
-                                                      ? Colors.black54
-                                                      : Colors.blue[900],
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  _showNumberPicker(_numCalls);
+                                                },
+                                                child: Text(
+                                                  _numCalls.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 2.5 *
+                                                        SizeConfig
+                                                            .blockSizeVertical,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: _numCalls == 0
+                                                        ? Colors.black54
+                                                        : Colors.blue[900],
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -366,7 +440,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 ],
                                               ),
                                               Text(
-                                                _shift.numTasks.toString(),
+                                                _numTasks.toString(),
                                                 style: TextStyle(
                                                   fontSize: 2.5 *
                                                       SizeConfig
@@ -408,7 +482,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image:
-                                                NetworkImage(_shift.imageUrl),
+                                                NetworkImage(_imageUrl),
                                           ),
                                         ),
                                       ),
@@ -427,7 +501,7 @@ class _ShiftPageState extends State<ShiftPage> {
                         constraints: BoxConstraints(
                           minHeight: 23 * SizeConfig.blockSizeVertical,
                         ),
-                        child: _shift.numTasks == 0
+                        child: _numTasks == 0
                             ? Center(
                                 child: Text(
                                   'No Tasks Completed',
@@ -444,13 +518,28 @@ class _ShiftPageState extends State<ShiftPage> {
                                   SizedBox(
                                     height: 4 * SizeConfig.blockSizeVertical,
                                   ),
-                                  for (int i = 0;
-                                      i < _shift.listOfTasks.length;
-                                      i++)
-                                    TaskDisplay(
-                                      task: _shift.listOfTasks[i],
-                                      taskNum: i + 1,
-                                      editable: false,
+                                  for (int i = 0; i < _listOfTasks.length; i++)
+                                    Stack(
+                                      children: [
+                                        TaskDisplay(task: _listOfTasks[i], taskNum: i + 1, editable: true,),
+                                        Positioned(
+                                          top: 1 * SizeConfig.blockSizeVertical,
+                                          right: 1 * SizeConfig.blockSizeHorizontal,
+                                          child: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                _listOfTasks.removeAt(i);
+                                                _numTasks -= 1;
+                                              });
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              size: 4 * SizeConfig.blockSizeVertical,
+                                              color: Colors.indigo[900],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   SizedBox(
                                     height: 8 * SizeConfig.blockSizeVertical,
@@ -468,13 +557,21 @@ class _ShiftPageState extends State<ShiftPage> {
               width: 7.5 * SizeConfig.blockSizeVertical,
               child: FloatingActionButton(
                 child: Icon(
-                  Icons.delete,
+                  Icons.add,
                   size: 4.5 * SizeConfig.blockSizeVertical,
                   color: Colors.indigo[900],
                 ),
                 backgroundColor: Colors.white,
-                onPressed: () async {
-                  createDeleteDialog(context, _shift);
+                onPressed: () {
+                  createTaskDialog(context)
+                      .then((value) {
+                    if (value != null) {
+                      setState(() {
+                        _listOfTasks.add(value);
+                        _numTasks += 1;
+                      });
+                    }
+                  });
                 },
               ),
             ),
