@@ -115,6 +115,40 @@ class _ShiftPageState extends State<ShiftPage> {
         });
   }
 
+  Future<String> createTitleDialog(BuildContext context) {
+    TextEditingController customController = TextEditingController();
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Change Title',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            content: TextField(
+              controller: customController,
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                hintText: 'Title Name',
+              ),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () {
+                  Navigator.pop(context, customController.text.toString());
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   void _showNumberPicker(int initial) {
     showDialog<int>(
         context: context,
@@ -248,16 +282,25 @@ class _ShiftPageState extends State<ShiftPage> {
                                     Container(
                                       width:
                                           86 * SizeConfig.blockSizeHorizontal,
-                                      child: Text(
-                                        _title,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 4 *
-                                              SizeConfig.blockSizeVertical,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          createTitleDialog(context).then((value) {
+                                            setState(() {
+                                              _title = value;
+                                            });
+                                          });
+                                        },
+                                        child: Text(
+                                          _title,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 4 *
+                                                SizeConfig.blockSizeVertical,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
                                       ),
                                     ),
                                     SizedBox(
