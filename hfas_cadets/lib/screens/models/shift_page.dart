@@ -657,8 +657,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                           ),
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image:
-                                                NetworkImage(_imageUrl),
+                                            image: NetworkImage(_imageUrl),
                                           ),
                                         ),
                                       ),
