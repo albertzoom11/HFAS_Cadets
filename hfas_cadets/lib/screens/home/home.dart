@@ -142,24 +142,6 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            print('delete all shifts from end drawer');
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 1 * SizeConfig.blockSizeVertical),
-                            child: ListTile(
-                              title: Text(
-                                "Delete All Shifts",
-                                style: TextStyle(color: Colors.indigo[900]),
-                              ),
-                              leading: Icon(
-                                Icons.delete,
-                                color: Colors.indigo[900],
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],
