@@ -86,7 +86,8 @@ class Conversions {
     } else if (inputNum >= 10000) {
       return (inputNum/1000).toStringAsFixed(1) + 'K';
     }
-    return inputNum.toStringAsFixed(0);
+    num output = inputNum % 1 == 0 ? inputNum.toInt() : inputNum;
+    return output.toString();
   }
 
   Color getMonthColor(dynamic month) {
