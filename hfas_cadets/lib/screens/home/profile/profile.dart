@@ -152,10 +152,10 @@ class _ProfileState extends State<Profile> {
                                       .3,
                                       IconButton(
                                         onPressed: () {
-                                          Scaffold.of(context).openEndDrawer();
+                                          Navigator.pushNamed(context, '/settings');
                                         },
                                         icon: Icon(
-                                          Icons.menu,
+                                          Icons.settings,
                                           size: 5 * SizeConfig.blockSizeVertical,
                                         ),
                                         color: Colors.white,

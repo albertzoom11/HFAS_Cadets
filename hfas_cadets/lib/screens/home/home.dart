@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
-import 'package:hfascadets/screens/services/auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hfascadets/shared/globals.dart' as globals;
 
 class Home extends StatefulWidget {
   @override
@@ -12,7 +9,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final AuthService _auth = AuthService();
   PageController controller = PageController(
     initialPage: 0,
   );
@@ -62,93 +58,6 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
-      endDrawer: currentTab == 1
-          ? Drawer(
-              elevation: 10,
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        UserAccountsDrawerHeader(
-                          accountName: Text(globals.user.name),
-                          accountEmail: Text(globals.user.email),
-                          currentAccountPicture: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: globals.user.profilePic == null ? AssetImage('assets/images/blankProfile.jpg') : NetworkImage(globals.user.profilePic),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/editProfile',
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 1 * SizeConfig.blockSizeVertical),
-                            child: ListTile(
-                              title: Text(
-                                "Edit Profile",
-                                style: TextStyle(color: Colors.indigo[900]),
-                              ),
-                              leading: Icon(
-                                Icons.person,
-                                color: Colors.indigo[900],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 0,
-                          color: Colors.indigo[900],
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Divider(
-                          height: 0,
-                          color: Colors.indigo[900],
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            dynamic result = await _auth.signOutGoogle();
-                            if (result == null) {
-                              print('sign out failed');
-                            } else {
-                              var prefs = await SharedPreferences
-                                  .getInstance();
-                              prefs.clear();
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  '/mainMenu', (route) => false);
-                            }
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 1 * SizeConfig.blockSizeVertical),
-                            child: ListTile(
-                              title: Text(
-                                "Sign Out",
-                                style: TextStyle(color: Colors.indigo[900]),
-                              ),
-                              leading: Icon(
-                                Icons.exit_to_app,
-                                color: Colors.indigo[900],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : null,
 
       // Bottom Nav Bar
       bottomNavigationBar: BottomAppBar(

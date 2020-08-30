@@ -10,6 +10,7 @@ import 'package:hfascadets/screens/home/home.dart';
 import 'package:hfascadets/screens/home/journal/journal.dart';
 import 'package:hfascadets/screens/home/profile/profile.dart';
 import 'package:hfascadets/screens/home/profile/edit_profile.dart';
+import 'package:hfascadets/screens/home/profile/settings.dart';
 import 'package:hfascadets/screens/models/seeAll.dart';
 import 'package:hfascadets/screens/models/shift_page.dart';
 import 'package:hfascadets/shared/loading.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         "/home": (_) => Home(),
         "/journal": (_) => Journal(),
         "/profile": (_) => Profile(),
+        "/settings": (_) => Settings(),
         "/add": (_) => Add(),
         "/editProfile": (_) => EditProfile(),
         "/seeAll": (_) => MonthSeeAll(),
