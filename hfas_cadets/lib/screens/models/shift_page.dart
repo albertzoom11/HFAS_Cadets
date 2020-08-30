@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
@@ -8,6 +11,8 @@ import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 import 'package:hfascadets/shared/loading.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class ShiftPage extends StatefulWidget {
@@ -18,9 +23,11 @@ class ShiftPage extends StatefulWidget {
 class _ShiftPageState extends State<ShiftPage> {
   final Conversions _conversions = Conversions();
   final DatabaseService _database = DatabaseService();
+  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://hfas-cadets.appspot.com');
   Shift _shift;
   String _title;
   String _imageUrl;
+  File _imageFile;
   DateTime _date;
   String _timeIn;
   String _timeOut;
@@ -197,6 +204,52 @@ class _ShiftPageState extends State<ShiftPage> {
         });
   }
 
+  Future<void> _pickImage(ImageSource source) async {
+    File selected = await ImagePicker.pickImage(source: source);
+    if (selected != null) {
+      setState(() {
+        _imageFile = selected;
+      });
+      _cropImage();
+    }
+  }
+
+  Future<void> _cropImage() async {
+    File cropped = await ImageCropper.cropImage(
+      sourcePath: _imageFile.path,
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Crop Profile Photo',
+        toolbarColor: Colors.indigo[900],
+        statusBarColor: Colors.indigo[900],
+        backgroundColor: Colors.indigo[900],
+        activeControlsWidgetColor: Colors.indigo[900],
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.original,
+        hideBottomControls: true,
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      ),
+    );
+    setState(() {
+      _imageFile = cropped ?? _imageFile;
+    });
+  }
+
+  Future<void> _startUpload(DateTime dateTime) async {
+    String filePath = 'users/${globals.user.uid}/${dateTime.year.toString()}/${globals.months[dateTime.month - 1]}/${DateTime.now()}.png';
+
+    StorageUploadTask _uploadTask =
+    _storage.ref().child(filePath).putFile(_imageFile);
+
+    StorageTaskSnapshot taskSnapshot = await _uploadTask.onComplete;
+    print('file uploaded');
+    String output = await taskSnapshot.ref.getDownloadURL();
+    setState(() {
+      _imageUrl = output;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Shift argShift = ModalRoute.of(context).settings.arguments;
@@ -293,6 +346,9 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 edited = true;
                                                 editMode = false;
                                               });
+                                              if (_imageFile != null) {
+                                                await _startUpload(_date);
+                                              }
                                               Shift _newShift = Shift(
                                                 title: _title,
                                                 imageUrl: _imageUrl,
@@ -401,7 +457,6 @@ class _ShiftPageState extends State<ShiftPage> {
                                             ).then((time) {
                                               if (time != null) {
                                                 String _isValid = _conversions.timesAreInvalid(time.hour, time.minute, _conversions.stringToTime(_timeOut).hour, _conversions.stringToTime(_timeOut).minute);
-                                                print(_isValid);
                                                 if (_isValid == 'invalid') {
                                                   createErrorDialog(context, 'Your new start time is before your end time. Please try again.');
                                                 } else if (_isValid == 'same') {
@@ -446,7 +501,6 @@ class _ShiftPageState extends State<ShiftPage> {
                                             ).then((time) {
                                               if (time != null) {
                                                 String _isValid = _conversions.timesAreInvalid(_conversions.stringToTime(_timeIn).hour, _conversions.stringToTime(_timeIn).minute, time.hour, time.minute);
-                                                print('timeOut change is $_isValid');
                                                 if (_isValid == 'invalid') {
                                                   createErrorDialog(context, 'Your new end time is before your start time. Please try again.');
                                                 } else if (_isValid == 'same') {
@@ -632,32 +686,37 @@ class _ShiftPageState extends State<ShiftPage> {
                                         ],
                                       ),
                                     ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(4 *
-                                            SizeConfig.blockSizeHorizontal),
-                                        bottomLeft: Radius.circular(8 *
-                                            SizeConfig.blockSizeHorizontal),
-                                      ),
-                                      child: Container(
-                                        height:
-                                            30 * SizeConfig.blockSizeVertical,
-                                        width: 41 *
-                                            SizeConfig.blockSizeHorizontal,
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.black),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(4 *
-                                                SizeConfig
-                                                    .blockSizeHorizontal),
-                                            bottomLeft: Radius.circular(8 *
-                                                SizeConfig
-                                                    .blockSizeHorizontal),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(_imageUrl),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await _pickImage(ImageSource.camera);
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(4 *
+                                              SizeConfig.blockSizeHorizontal),
+                                          bottomLeft: Radius.circular(8 *
+                                              SizeConfig.blockSizeHorizontal),
+                                        ),
+                                        child: Container(
+                                          height:
+                                              30 * SizeConfig.blockSizeVertical,
+                                          width: 41 *
+                                              SizeConfig.blockSizeHorizontal,
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.black),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(4 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
+                                              bottomLeft: Radius.circular(8 *
+                                                  SizeConfig
+                                                      .blockSizeHorizontal),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: _imageFile == null ? NetworkImage(_imageUrl) : FileImage(_imageFile),
+                                            ),
                                           ),
                                         ),
                                       ),
