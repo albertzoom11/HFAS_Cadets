@@ -168,6 +168,35 @@ class _ShiftPageState extends State<ShiftPage> {
     });
   }
 
+  createErrorDialog(BuildContext context, String msg) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            content: Text(
+              msg,
+              style: TextStyle(color: Colors.indigo[900]),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5,
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.indigo[900]),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     Shift argShift = ModalRoute.of(context).settings.arguments;
@@ -371,10 +400,21 @@ class _ShiftPageState extends State<ShiftPage> {
                                               initialTime: _conversions.stringToTime(_timeIn)
                                             ).then((time) {
                                               if (time != null) {
-                                                setState(() {
-                                                  _timeIn = time.format(context);
-                                                  _date = DateTime(_date.year, _date.month, _date.day, time.hour, time.minute);
-                                                });
+                                                String _isValid = _conversions.timesAreInvalid(time.hour, time.minute, _conversions.stringToTime(_timeOut).hour, _conversions.stringToTime(_timeOut).minute);
+                                                print(_isValid);
+                                                if (_isValid == 'invalid') {
+                                                  createErrorDialog(context, 'Your new start time is before your end time. Please try again.');
+                                                } else if (_isValid == 'same') {
+                                                  createErrorDialog(context, 'Your start and end time are the same. Please try again.');
+                                                } else {
+                                                  num hoursPassedTemp = _conversions.calculateHoursPassed(time.hour, time.minute, _conversions.stringToTime(_timeOut).hour, _conversions.stringToTime(_timeOut).minute);
+                                                  hoursPassedTemp = hoursPassedTemp % 1 == 0 ? hoursPassedTemp.toInt() : hoursPassedTemp;
+                                                  setState(() {
+                                                    _timeIn = time.format(context);
+                                                    _hoursPassed = hoursPassedTemp;
+                                                    _date = DateTime(_date.year, _date.month, _date.day, time.hour, time.minute);
+                                                  });
+                                                }
                                               }
                                             });
                                           },
@@ -405,9 +445,20 @@ class _ShiftPageState extends State<ShiftPage> {
                                               initialTime: _conversions.stringToTime(_timeOut)
                                             ).then((time) {
                                               if (time != null) {
-                                                setState(() {
-                                                  _timeOut = time.format(context);
-                                                });
+                                                String _isValid = _conversions.timesAreInvalid(_conversions.stringToTime(_timeIn).hour, _conversions.stringToTime(_timeIn).minute, time.hour, time.minute);
+                                                print('timeOut change is $_isValid');
+                                                if (_isValid == 'invalid') {
+                                                  createErrorDialog(context, 'Your new end time is before your start time. Please try again.');
+                                                } else if (_isValid == 'same') {
+                                                  createErrorDialog(context, 'Your start and end time are the same. Please try again.');
+                                                } else {
+                                                  num hoursPassedTemp = _conversions.calculateHoursPassed(_conversions.stringToTime(_timeIn).hour, _conversions.stringToTime(_timeIn).minute, time.hour, time.minute);
+                                                  hoursPassedTemp = hoursPassedTemp % 1 == 0 ? hoursPassedTemp.toInt() : hoursPassedTemp;
+                                                  setState(() {
+                                                    _timeOut = time.format(context);
+                                                    _hoursPassed = hoursPassedTemp;
+                                                  });
+                                                }
                                               }
                                             });
                                           },
