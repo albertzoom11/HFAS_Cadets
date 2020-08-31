@@ -85,6 +85,8 @@ class Conversions {
       return (inputNum/1000000).toStringAsFixed(1) + 'M';
     } else if (inputNum >= 10000) {
       return (inputNum/1000).toStringAsFixed(1) + 'K';
+    } else if (inputNum >= 100) {
+      return inputNum.toStringAsFixed(0);
     }
     num output = inputNum % 1 == 0 ? inputNum.toInt() : inputNum;
     return output.toString();

@@ -47,34 +47,21 @@ class MonthStat extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      if (points < globals.pointsRequired)
-                        Text(
-                          points.toString(),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 6 * SizeConfig.blockSizeVertical,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Text(
+                        points.toString(),
+                        style: TextStyle(
+                          color: points < globals.pointsRequired ? Colors.black : monthColor,
+                          fontSize: 6 * SizeConfig.blockSizeVertical,
+                          fontWeight: FontWeight.bold,
                         ),
-                      if (points < globals.pointsRequired)
-                        Text('Points', style: TextStyle(
+                      ),
+                      Text(
+                        'Points',
+                        style: TextStyle(
                           color: Colors.black,
-                          fontSize: 3 * SizeConfig.blockSizeVertical,
-                        ),),
-                      if (points >= globals.pointsRequired)
-                        Text(
-                          points.toString(),
-                          style: TextStyle(
-                            color: monthColor,
-                            fontSize: 6 * SizeConfig.blockSizeVertical,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          fontSize: 2.5 * SizeConfig.blockSizeVertical,
                         ),
-                      if (points >= globals.pointsRequired)
-                        Text('Points', style: TextStyle(
-                          color: monthColor,
-                          fontSize: 3 * SizeConfig.blockSizeVertical,
-                        ),),
+                      ),
                     ],
                   ),
                   Row(

@@ -8,7 +8,6 @@ class MonthCarousel extends StatelessWidget {
   final int monthIndex;
   final Color color;
   final List<Shift> shifts;
-  final int currentMonth = DateTime.now().month;
 
   MonthCarousel({this.monthIndex, this.color, this.shifts});
 
@@ -25,7 +24,7 @@ class MonthCarousel extends StatelessWidget {
               Text(
                 globals.months[monthIndex],
                 style: TextStyle(
-                    color: currentMonth == monthIndex + 1 ? color : Colors.black,
+                    color: Colors.black,
                     fontSize: 3 * SizeConfig.blockSizeVertical,
                     fontWeight: FontWeight.bold),
               ),
@@ -128,16 +127,32 @@ class MonthCarousel extends StatelessWidget {
                                   Text(
                                     shift.date.day.toString(),
                                     style: TextStyle(
-                                        color: currentMonth == monthIndex + 1 ? color : Colors.black,
-                                        fontSize: 5 * SizeConfig.blockSizeVertical,
-                                        fontWeight: FontWeight.bold),
+                                      color: color,
+                                      fontSize: 5 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.bold,
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                          offset: Offset(0, 0.1),
+                                          blurRadius: 0.5 * SizeConfig.blockSizeHorizontal,
+                                          color: Colors.white,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Text(
                                     globals.weekdays[shift.date.weekday - 1],
                                     style: TextStyle(
-                                        color: currentMonth == monthIndex + 1 ? color : Colors.black,
-                                        fontSize: 2.5 * SizeConfig.blockSizeVertical,
-                                        fontWeight: FontWeight.bold),
+                                      color: color,
+                                      fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.bold,
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                          offset: Offset(0, 0.1),
+                                          blurRadius: 0.5 * SizeConfig.blockSizeHorizontal,
+                                          color: Colors.white,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
