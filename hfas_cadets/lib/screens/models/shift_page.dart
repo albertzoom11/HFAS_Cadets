@@ -388,30 +388,39 @@ class _ShiftPageState extends State<ShiftPage> {
                                       height:
                                           3 * SizeConfig.blockSizeVertical,
                                     ),
-                                    Container(
-                                      width:
-                                          86 * SizeConfig.blockSizeHorizontal,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          createTitleDialog(context).then((value) {
-                                            if (value != null) {
-                                              setState(() {
-                                                _title = value;
-                                              });
-                                            }
-                                          });
-                                        },
-                                        child: Text(
-                                          _title,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 4 *
-                                                SizeConfig.blockSizeVertical,
+                                    GestureDetector(
+                                      onTap: () {
+                                        createTitleDialog(context).then((value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              _title = value;
+                                            });
+                                          }
+                                        });
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: 76 * SizeConfig.blockSizeHorizontal,
+                                            ),
+                                            child: Text(
+                                              _title,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 4 * SizeConfig.blockSizeVertical,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                            ),
                                           ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                        ),
+                                          SizedBox(width: 2 * SizeConfig.blockSizeHorizontal,),
+                                          Icon(
+                                            Icons.edit,
+                                            size: 4 * SizeConfig.blockSizeVertical,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
@@ -433,14 +442,24 @@ class _ShiftPageState extends State<ShiftPage> {
                                           }
                                         });
                                       },
-                                      child: Text(
-                                        _conversions.toDateString(_date),
-                                        style: TextStyle(
-                                          fontSize: 2.5 *
-                                              SizeConfig.blockSizeVertical,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.blue[900],
-                                        ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            _conversions.toDateString(_date),
+                                            style: TextStyle(
+                                              fontSize: 2.5 *
+                                                  SizeConfig.blockSizeVertical,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.blue[900],
+                                            ),
+                                          ),
+                                          SizedBox(width: 2 * SizeConfig.blockSizeHorizontal,),
+                                          Icon(
+                                            Icons.edit,
+                                            size: 2.5 * SizeConfig.blockSizeVertical,
+                                            color: Colors.blue[900],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
@@ -473,16 +492,28 @@ class _ShiftPageState extends State<ShiftPage> {
                                               }
                                             });
                                           },
-                                          child: Text(
-                                            _timeIn,
-                                            style: TextStyle(
-                                              fontSize: 2.2 *
-                                                  SizeConfig.blockSizeVertical,
-                                              fontWeight: FontWeight.w600,
-                                              color: _conversions.isDay(_timeIn)
-                                                  ? Colors.blue[700]
-                                                  : Colors.indigo[900],
-                                            ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                _timeIn,
+                                                style: TextStyle(
+                                                  fontSize: 2.2 *
+                                                      SizeConfig.blockSizeVertical,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: _conversions.isDay(_timeIn)
+                                                      ? Colors.blue[700]
+                                                      : Colors.indigo[900],
+                                                ),
+                                              ),
+                                              SizedBox(width: 2 * SizeConfig.blockSizeHorizontal,),
+                                              Icon(
+                                                Icons.edit,
+                                                size: 2.2 * SizeConfig.blockSizeVertical,
+                                                color: _conversions.isDay(_timeIn)
+                                                    ? Colors.blue[700]
+                                                    : Colors.indigo[900],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         Text(
@@ -516,16 +547,28 @@ class _ShiftPageState extends State<ShiftPage> {
                                               }
                                             });
                                           },
-                                          child: Text(
-                                            _timeOut,
-                                            style: TextStyle(
-                                              fontSize: 2.2 *
-                                                  SizeConfig.blockSizeVertical,
-                                              fontWeight: FontWeight.w600,
-                                              color: _conversions.isDay(_timeOut)
-                                                  ? Colors.blue[700]
-                                                  : Colors.indigo[900],
-                                            ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                _timeOut,
+                                                style: TextStyle(
+                                                  fontSize: 2.2 *
+                                                      SizeConfig.blockSizeVertical,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: _conversions.isDay(_timeOut)
+                                                      ? Colors.blue[700]
+                                                      : Colors.indigo[900],
+                                                ),
+                                              ),
+                                              SizedBox(width: 2 * SizeConfig.blockSizeHorizontal,),
+                                              Icon(
+                                                Icons.edit,
+                                                size: 2.5 * SizeConfig.blockSizeVertical,
+                                                color: _conversions.isDay(_timeOut)
+                                                    ? Colors.blue[700]
+                                                    : Colors.indigo[900],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -538,7 +581,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                   children: [
                                     Container(
                                       width:
-                                          44 * SizeConfig.blockSizeHorizontal,
+                                          48 * SizeConfig.blockSizeHorizontal,
                                       height:
                                           20 * SizeConfig.blockSizeVertical,
                                       child: Column(
@@ -575,18 +618,24 @@ class _ShiftPageState extends State<ShiftPage> {
                                                   ),
                                                 ],
                                               ),
-                                              Text(
-                                                _hoursPassed.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 2.5 *
-                                                      SizeConfig
-                                                          .blockSizeVertical,
-                                                  fontWeight: FontWeight.w600,
-                                                  color:
-                                                      _hoursPassed == 0
-                                                          ? Colors.black54
-                                                          : Colors.blue[900],
-                                                ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    _hoursPassed.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 2.5 *
+                                                          SizeConfig
+                                                              .blockSizeVertical,
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          _hoursPassed == 0
+                                                              ? Colors.black54
+                                                              : Colors.blue[900],
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
+                                                  Icon(Icons.edit, size: 2.5 * SizeConfig.blockSizeVertical, color: Colors.transparent,),
+                                                ],
                                               ),
                                             ],
                                           ),
@@ -624,17 +673,27 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 onTap: () async {
                                                   _showNumberPicker(_numCalls);
                                                 },
-                                                child: Text(
-                                                  _numCalls.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 2.5 *
-                                                        SizeConfig
-                                                            .blockSizeVertical,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: _numCalls == 0
-                                                        ? Colors.black54
-                                                        : Colors.blue[900],
-                                                  ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      _numCalls.toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 2.5 *
+                                                            SizeConfig
+                                                                .blockSizeVertical,
+                                                        fontWeight: FontWeight.w600,
+                                                        color: _numCalls == 0
+                                                            ? Colors.black54
+                                                            : Colors.blue[900],
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 1 * SizeConfig.blockSizeHorizontal),
+                                                    Icon(
+                                                      Icons.edit,
+                                                      size: 2.5 * SizeConfig.blockSizeVertical,
+                                                      color: Colors.blue[900],
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -669,17 +728,23 @@ class _ShiftPageState extends State<ShiftPage> {
                                                   ),
                                                 ],
                                               ),
-                                              Text(
-                                                _numTasks.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 2.5 *
-                                                      SizeConfig
-                                                          .blockSizeVertical,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: _shift.numTasks == 0
-                                                      ? Colors.black54
-                                                      : Colors.blue[900],
-                                                ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    _numTasks.toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 2.5 *
+                                                          SizeConfig
+                                                              .blockSizeVertical,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: _shift.numTasks == 0
+                                                          ? Colors.black54
+                                                          : Colors.blue[900],
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 1 * SizeConfig.blockSizeHorizontal,),
+                                                  Icon(Icons.edit, size: 2.5 * SizeConfig.blockSizeVertical, color: Colors.transparent,),
+                                                ],
                                               ),
                                             ],
                                           ),
@@ -690,35 +755,67 @@ class _ShiftPageState extends State<ShiftPage> {
                                       onTap: () async {
                                         await _pickImage(ImageSource.camera);
                                       },
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(4 *
-                                              SizeConfig.blockSizeHorizontal),
-                                          bottomLeft: Radius.circular(8 *
-                                              SizeConfig.blockSizeHorizontal),
-                                        ),
-                                        child: Container(
-                                          height:
-                                              30 * SizeConfig.blockSizeVertical,
-                                          width: 41 *
-                                              SizeConfig.blockSizeHorizontal,
-                                          decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.black),
+                                      child: Stack(
+                                        children: [
+                                          ClipRRect(
                                             borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(4 *
-                                                  SizeConfig
-                                                      .blockSizeHorizontal),
+                                                  SizeConfig.blockSizeHorizontal),
                                               bottomLeft: Radius.circular(8 *
-                                                  SizeConfig
-                                                      .blockSizeHorizontal),
+                                                  SizeConfig.blockSizeHorizontal),
                                             ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: _imageFile == null ? NetworkImage(_imageUrl) : FileImage(_imageFile),
+                                            child: Container(
+                                              height:
+                                                  30 * SizeConfig.blockSizeVertical,
+                                              width: 41 *
+                                                  SizeConfig.blockSizeHorizontal,
+                                              decoration: BoxDecoration(
+                                                border:
+                                                    Border.all(color: Colors.black),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4 *
+                                                      SizeConfig
+                                                          .blockSizeHorizontal),
+                                                  bottomLeft: Radius.circular(8 *
+                                                      SizeConfig
+                                                          .blockSizeHorizontal),
+                                                ),
+                                                image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: _imageFile == null ? NetworkImage(_imageUrl) : FileImage(_imageFile),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(4 *
+                                                  SizeConfig.blockSizeHorizontal),
+                                              bottomLeft: Radius.circular(8 *
+                                                  SizeConfig.blockSizeHorizontal),
+                                            ),
+                                            child: Container(
+                                              height:
+                                              30 * SizeConfig.blockSizeVertical,
+                                              width: 41 *
+                                                  SizeConfig.blockSizeHorizontal,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4 *
+                                                      SizeConfig
+                                                          .blockSizeHorizontal),
+                                                  bottomLeft: Radius.circular(8 *
+                                                      SizeConfig
+                                                          .blockSizeHorizontal),
+                                                ),
+                                                image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: AssetImage('assets/images/takePhotoBlack.png'),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
