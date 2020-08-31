@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
+import 'package:hfascadets/screens/models/shift_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
 
@@ -52,7 +53,7 @@ class MonthCarousel extends StatelessWidget {
               Shift shift = shifts[index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/shiftPage', arguments: shift);
+                  Navigator.pushNamed(context, '/shiftPage', arguments: ShiftArguments(shift: shift, editMode: false));
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 2 * SizeConfig.blockSizeHorizontal, vertical: 1 * SizeConfig.blockSizeVertical),

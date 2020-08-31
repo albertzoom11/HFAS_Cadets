@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/shift.dart';
+import 'package:hfascadets/screens/models/shift_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/task_display.dart';
 import 'package:hfascadets/screens/models/user.dart';
@@ -252,10 +254,11 @@ class _ShiftPageState extends State<ShiftPage> {
 
   @override
   Widget build(BuildContext context) {
-    Shift argShift = ModalRoute.of(context).settings.arguments;
+    ShiftArguments shiftArgs = ModalRoute.of(context).settings.arguments;
     if (firstTime) {
       setState(() {
-        _shift = argShift;
+        editMode = shiftArgs.editMode;
+        _shift = shiftArgs.shift;
         _title = _shift.title;
         _imageUrl = _shift.imageUrl;
         _date = _shift.date;
@@ -312,7 +315,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                       padding: EdgeInsets.only(
                                           right: 7 *
                                               SizeConfig.blockSizeHorizontal),
-                                      child: Row(
+                                      child: FadeAnimation(0.3, Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
@@ -382,13 +385,13 @@ class _ShiftPageState extends State<ShiftPage> {
                                             ),
                                           ),
                                         ],
-                                      ),
+                                      )),
                                     ),
                                     SizedBox(
                                       height:
                                           3 * SizeConfig.blockSizeVertical,
                                     ),
-                                    GestureDetector(
+                                    FadeAnimation(0.4, GestureDetector(
                                       onTap: () {
                                         createTitleDialog(context).then((value) {
                                           if (value != null) {
@@ -422,12 +425,12 @@ class _ShiftPageState extends State<ShiftPage> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    )),
                                     SizedBox(
                                       height:
                                           2.5 * SizeConfig.blockSizeVertical,
                                     ),
-                                    GestureDetector(
+                                    FadeAnimation(0.5, GestureDetector(
                                       onTap: () {
                                         showDatePicker(
                                           context: context,
@@ -461,12 +464,12 @@ class _ShiftPageState extends State<ShiftPage> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    )),
                                     SizedBox(
                                       height:
                                           2 * SizeConfig.blockSizeVertical,
                                     ),
-                                    Row(
+                                    FadeAnimation(0.6, Row(
                                       children: [
                                         GestureDetector(
                                           onTap: () {
@@ -572,7 +575,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                           ),
                                         ),
                                       ],
-                                    ),
+                                    )),
                                   ],
                                 ),
                                 Row(
@@ -588,7 +591,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
+                                          FadeAnimation(0.7, Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment
                                                     .spaceBetween,
@@ -638,8 +641,8 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 ],
                                               ),
                                             ],
-                                          ),
-                                          Row(
+                                          )),
+                                          FadeAnimation(0.8, Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment
                                                     .spaceBetween,
@@ -697,8 +700,8 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 ),
                                               ),
                                             ],
-                                          ),
-                                          Row(
+                                          )),
+                                          FadeAnimation(0.9, Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment
                                                     .spaceBetween,
@@ -747,11 +750,11 @@ class _ShiftPageState extends State<ShiftPage> {
                                                 ],
                                               ),
                                             ],
-                                          ),
+                                          )),
                                         ],
                                       ),
                                     ),
-                                    GestureDetector(
+                                    FadeAnimation(0.7, GestureDetector(
                                       onTap: () async {
                                         await _pickImage(ImageSource.camera);
                                       },
@@ -817,7 +820,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    )),
                                   ],
                                 ),
                                 SizedBox(
@@ -828,7 +831,7 @@ class _ShiftPageState extends State<ShiftPage> {
                           ),
                         ),
                       ),
-                      Container(
+                      FadeAnimation(1, Container(
                         constraints: BoxConstraints(
                           minHeight: 23 * SizeConfig.blockSizeVertical,
                         ),
@@ -877,7 +880,7 @@ class _ShiftPageState extends State<ShiftPage> {
                                   ),
                                 ],
                               ),
-                      ),
+                      )),
                     ],
                   ),
                 ),
