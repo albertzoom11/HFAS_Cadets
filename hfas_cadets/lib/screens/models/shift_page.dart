@@ -47,18 +47,18 @@ class _ShiftPageState extends State<ShiftPage> {
           return AlertDialog(
             title: Text(
               'Delete Shift',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: Text(
               'Delete ${shift.title}?',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.black),
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
                 child: Text(
                   'Cancel',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -68,7 +68,7 @@ class _ShiftPageState extends State<ShiftPage> {
                 elevation: 5,
                 child: Text(
                   'Delete',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () async {
                   Navigator.pushNamed(context, '/loading');
@@ -98,7 +98,7 @@ class _ShiftPageState extends State<ShiftPage> {
           return AlertDialog(
             title: Text(
               'Add Task',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: TextField(
               controller: customController,
@@ -112,7 +112,7 @@ class _ShiftPageState extends State<ShiftPage> {
                 elevation: 5,
                 child: Text(
                   'Submit',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context, customController.text.toString());
@@ -132,7 +132,7 @@ class _ShiftPageState extends State<ShiftPage> {
           return AlertDialog(
             title: Text(
               'Change Title',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: TextField(
               controller: customController,
@@ -146,7 +146,7 @@ class _ShiftPageState extends State<ShiftPage> {
                 elevation: 5,
                 child: Text(
                   'Submit',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context, customController.text.toString());
@@ -182,18 +182,18 @@ class _ShiftPageState extends State<ShiftPage> {
           return AlertDialog(
             title: Text(
               'Error',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: Text(
               msg,
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.black),
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
                 child: Text(
                   'OK',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context);

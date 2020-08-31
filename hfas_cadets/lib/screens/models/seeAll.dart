@@ -27,18 +27,18 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
           return AlertDialog(
             title: Text(
               'Delete Month',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: Text(
               'Delete $monthName shifts?',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.black),
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
                 child: Text(
                   'Cancel',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -48,7 +48,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                 elevation: 5,
                 child: Text(
                   'Delete',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () async {
                   Navigator.pushNamed(context, '/loading');

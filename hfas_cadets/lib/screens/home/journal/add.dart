@@ -92,7 +92,7 @@ class _AddState extends State<Add> {
           return AlertDialog(
             title: Text(
               'Add Task',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: TextField(
               controller: customController,
@@ -106,7 +106,7 @@ class _AddState extends State<Add> {
                 elevation: 5,
                 child: Text(
                   'Submit',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context, customController.text.toString());
@@ -124,18 +124,18 @@ class _AddState extends State<Add> {
           return AlertDialog(
             title: Text(
               'Error',
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.blue[900]),
             ),
             content: Text(
               msg,
-              style: TextStyle(color: Colors.indigo[900]),
+              style: TextStyle(color: Colors.black),
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5,
                 child: Text(
                   'OK',
-                  style: TextStyle(color: Colors.indigo[900]),
+                  style: TextStyle(color: Colors.blueAccent),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
