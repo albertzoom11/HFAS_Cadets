@@ -128,14 +128,14 @@ class MonthCarousel extends StatelessWidget {
                                   Text(
                                     shift.date.day.toString(),
                                     style: TextStyle(
-                                        color: color,
+                                        color: currentMonth == monthIndex + 1 ? color : Colors.black,
                                         fontSize: 5 * SizeConfig.blockSizeVertical,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     globals.weekdays[shift.date.weekday - 1],
                                     style: TextStyle(
-                                        color: color,
+                                        color: currentMonth == monthIndex + 1 ? color : Colors.black,
                                         fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                         fontWeight: FontWeight.bold),
                                   ),
