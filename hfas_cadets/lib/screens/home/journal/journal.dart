@@ -107,17 +107,17 @@ class _JournalState extends State<Journal> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(top: 17 * SizeConfig.blockSizeVertical),
+                    padding: EdgeInsets.only(top: 17 * SizeConfig.blockSizeVertical),
                     child: Container(
                       width: 100 * SizeConfig.blockSizeHorizontal,
+                      constraints: BoxConstraints(
+                        minHeight: 72.8 * SizeConfig.blockSizeVertical,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(
-                              7 * SizeConfig.blockSizeHorizontal),
-                          topLeft: Radius.circular(
-                              7 * SizeConfig.blockSizeHorizontal),
+                          topRight: Radius.circular(7 * SizeConfig.blockSizeHorizontal),
+                          topLeft: Radius.circular(7 * SizeConfig.blockSizeHorizontal),
                         ),
                       ),
                       child: Padding(
@@ -126,23 +126,22 @@ class _JournalState extends State<Journal> {
                         child: FadeAnimation(0.5, Column(
                           children: <Widget>[
                             if (globals.monthCarousels.length == 0)
-                              SizedBox(height: 29 * SizeConfig.blockSizeVertical,),
-                            if (globals.monthCarousels.length == 0)
-                              Text(
-                                'No Shifts Yet',
-                                style: TextStyle(
-                                  color: Colors.indigo[900],
-                                  fontSize: 3 * SizeConfig.blockSizeVertical,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Column(
+                                children: [
+                                  SizedBox(height: 30 * SizeConfig.blockSizeVertical,),
+                                  Text(
+                                    'No Shifts Yet',
+                                    style: TextStyle(
+                                      color: Colors.indigo[900],
+                                      fontSize: 3 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            if (globals.monthCarousels.length == 0)
-                              SizedBox(height: 31.8 * SizeConfig.blockSizeVertical,),
                             if (globals.monthCarousels.length != 0)
                               for (Widget month in globals.monthCarousels)
                                 month,
-                            if (globals.monthCarousels.length == 1)
-                              SizedBox(height: 21.8 * SizeConfig.blockSizeVertical,),
                             SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                           ],
                         )),
