@@ -16,7 +16,6 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   DatabaseService _database = DatabaseService();
-  String _year = DateTime.now().year.toString();
   bool loading = false;
 
   @override
@@ -33,8 +32,8 @@ class _MainMenuState extends State<MainMenu> {
         loading = true;
       });
       globals.user = await _database.getUser(_uid);
-      globals.monthCarousels = await _database.monthCarousels(_year);
-      globals.profileMonths = await _database.monthStats(_year);
+      globals.monthCarousels = await _database.monthCarousels(globals.displayYear.toString());
+      globals.profileMonths = await _database.monthStats(globals.displayYear.toString());
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);
     }
   }

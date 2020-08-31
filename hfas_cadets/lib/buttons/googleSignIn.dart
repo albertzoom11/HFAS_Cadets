@@ -9,7 +9,6 @@ import 'package:hfascadets/shared/globals.dart' as globals;
 
 final AuthService _auth = AuthService();
 final DatabaseService _database = DatabaseService();
-String _year = DateTime.now().year.toString();
 
 Widget googleSignInButton(BuildContext context) {
   return OutlineButton(
@@ -21,8 +20,8 @@ Widget googleSignInButton(BuildContext context) {
       } else {
         Navigator.pushNamed(context, '/loading');
         globals.user = _auth.currentUser;
-        globals.monthCarousels = await _database.monthCarousels(_year);
-        globals.profileMonths = await _database.monthStats(_year);
+        globals.monthCarousels = await _database.monthCarousels(globals.displayYear.toString());
+        globals.profileMonths = await _database.monthStats(globals.displayYear.toString());
         var prefs = await SharedPreferences.getInstance();
         prefs.setString('uid', globals.user.uid);
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false, arguments: 0);

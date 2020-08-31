@@ -19,7 +19,6 @@ class _SignInState extends State<SignIn> {
   final DatabaseService _database = DatabaseService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  String _year = DateTime.now().year.toString();
 
   // text field state
   String email = '';
@@ -188,8 +187,8 @@ class _SignInState extends State<SignIn> {
                                   });
                                 } else if (result.isEmailVerified) {
                                   globals.user = _auth.currentUser;
-                                  globals.monthCarousels = await _database.monthCarousels(_year);
-                                  globals.profileMonths = await _database.monthStats(_year);
+                                  globals.monthCarousels = await _database.monthCarousels(globals.displayYear.toString());
+                                  globals.profileMonths = await _database.monthStats(globals.displayYear.toString());
                                   var prefs = await SharedPreferences.getInstance();
                                   prefs.setString('uid', globals.user.uid);
                                   Navigator.pushNamedAndRemoveUntil(

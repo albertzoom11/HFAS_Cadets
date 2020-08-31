@@ -11,7 +11,6 @@ class MonthSeeAll extends StatefulWidget {
 }
 
 class _MonthSeeAllState extends State<MonthSeeAll> {
-  final String _year = DateTime.now().year.toString();
   final Conversions _conversions = Conversions();
   final DatabaseService _database = DatabaseService();
 
@@ -166,7 +165,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                             width: 3 * SizeConfig.blockSizeHorizontal,
                           ),
                           Text(
-                            _year,
+                            shifts[0].date.year.toString(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 3 * SizeConfig.blockSizeVertical,

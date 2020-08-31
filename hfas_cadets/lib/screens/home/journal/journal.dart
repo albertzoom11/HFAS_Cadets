@@ -13,7 +13,6 @@ class Journal extends StatefulWidget {
 
 class _JournalState extends State<Journal> {
   DatabaseService _database = DatabaseService();
-  int _year = DateTime.now().year;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,9 @@ class _JournalState extends State<Journal> {
         body: SafeArea(
           child: CustomRefreshIndicator(
             onRefresh: () async {
-              List<Widget> dbCarousel = await _database.monthCarousels(_year.toString());
+              List<Widget> dbCarousel = await _database.monthCarousels(globals.displayYear.toString());
               User dbUser = await _database.getUser(globals.user.uid);
-              dynamic value = await _database.monthStats(_year.toString());
+              dynamic value = await _database.monthStats(globals.displayYear.toString());
               setState(() {
                 globals.user = dbUser;
                 globals.profileMonths = value;
