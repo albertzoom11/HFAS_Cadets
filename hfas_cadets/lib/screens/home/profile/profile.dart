@@ -278,25 +278,18 @@ class _ProfileState extends State<Profile> {
                                   );
                                 },
                               ),
-                              DropdownButton(
-                                value: globals.displayYear.toString(),
-                                icon: Icon(Icons.arrow_drop_down, color: Colors.white,),
-                                style: TextStyle(color: Colors.white, fontSize: 2.8 * SizeConfig.blockSizeVertical, fontWeight: FontWeight.w600),
-                                underline: Container(
-                                  color: Colors.transparent,
-                                ),
-                                dropdownColor: Colors.blue[900],
-                                onChanged: (newYear) {
-                                  setState(() {
-                                    globals.displayYear = int.parse(newYear);
-                                  });
-                                },
-                                items: globals.years.map((value) {
-                                  return DropdownMenuItem(
-                                    value: value,
-                                    child: Center(child: Text(value)),
-                                  );
-                                }).toList(),
+                              Row(
+                                children: [
+                                  Text(
+                                    globals.displayYear.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 2.7 * SizeConfig.blockSizeVertical,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Icon(Icons.arrow_drop_down, color: Colors.white, size: 3  * SizeConfig.blockSizeVertical,),
+                                ],
                               ),
                             ],
                           )),
