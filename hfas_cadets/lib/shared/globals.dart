@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/user.dart';
 
 User user;
+List<String> years = ['2020', '2019'];
 List<Widget> profileMonths = [];
 int pointsRequired = 15;
 List<Widget> monthCarousels = [];

@@ -246,19 +246,20 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: 3 * SizeConfig.blockSizeVertical,
                           ),
-                          FadeAnimation(
-                              .5,
-                              GestureDetector(
-                                child: Container(
-                                  width: 90 * SizeConfig.blockSizeHorizontal,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(6 * SizeConfig.blockSizeHorizontal),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FadeAnimation(
+                                  .5,
+                                  GestureDetector(
+                                    child: Container(
+                                      width: 60 * SizeConfig.blockSizeHorizontal,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.white),
+                                        borderRadius: BorderRadius.circular(6 * SizeConfig.blockSizeHorizontal),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Padding(
                                         padding: EdgeInsets.all(1 * SizeConfig.blockSizeVertical),
                                         child: Text(
                                           'EDIT PROFILE',
@@ -269,16 +270,36 @@ class _ProfileState extends State<Profile> {
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/editProfile',
+                                      );
+                                    },
+                                  )),
+                              DropdownButton(
+                                value: globals.displayYear.toString(),
+                                icon: Icon(Icons.arrow_drop_down, color: Colors.white,),
+                                style: TextStyle(color: Colors.white, fontSize: 2.8 * SizeConfig.blockSizeVertical, fontWeight: FontWeight.w600),
+                                underline: Container(
+                                  color: Colors.transparent,
                                 ),
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/editProfile',
-                                  );
+                                dropdownColor: Colors.blue[900],
+                                onChanged: (newYear) {
+                                  setState(() {
+                                    globals.displayYear = int.parse(newYear);
+                                  });
                                 },
-                              )),
+                                items: globals.years.map((value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Center(child: Text(value)),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
