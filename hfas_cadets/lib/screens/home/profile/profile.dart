@@ -246,38 +246,38 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: 3 * SizeConfig.blockSizeVertical,
                           ),
-                          Row(
+                          FadeAnimation(.5, Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              FadeAnimation(
-                                  .5,
-                                  GestureDetector(
-                                    child: Container(
-                                      width: 60 * SizeConfig.blockSizeHorizontal,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.white),
-                                        borderRadius: BorderRadius.circular(6 * SizeConfig.blockSizeHorizontal),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(1 * SizeConfig.blockSizeVertical),
-                                        child: Text(
-                                          'EDIT PROFILE',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                1.8 * SizeConfig.blockSizeVertical,
-                                          ),
-                                        ),
+                              GestureDetector(
+                                child: Container(
+                                  width: 60 * SizeConfig.blockSizeHorizontal,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(
+                                        6 * SizeConfig.blockSizeHorizontal),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                        1 * SizeConfig.blockSizeVertical),
+                                    child: Text(
+                                      'EDIT PROFILE',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            1.8 * SizeConfig.blockSizeVertical,
                                       ),
                                     ),
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/editProfile',
-                                      );
-                                    },
-                                  )),
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/editProfile',
+                                  );
+                                },
+                              ),
                               DropdownButton(
                                 value: globals.displayYear.toString(),
                                 icon: Icon(Icons.arrow_drop_down, color: Colors.white,),
@@ -299,7 +299,7 @@ class _ProfileState extends State<Profile> {
                                 }).toList(),
                               ),
                             ],
-                          ),
+                          )),
                         ],
                       ),
                     ),
