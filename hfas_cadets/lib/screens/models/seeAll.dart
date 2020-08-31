@@ -106,30 +106,56 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
               SafeArea(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: 4 * SizeConfig.blockSizeHorizontal,
-                      vertical: 1.5 * SizeConfig.blockSizeVertical),
+                      horizontal: 6 * SizeConfig.blockSizeHorizontal,
+                      vertical: 3 * SizeConfig.blockSizeVertical),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                        iconSize: 5 * SizeConfig.blockSizeVertical,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                      Stack(
+                        children: <Widget>[
+                          Positioned(
+                            left: 1.0,
+                            top: 1.0,
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black54,
+                              size: 5 * SizeConfig.blockSizeVertical,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                              size: 5 * SizeConfig.blockSizeVertical,
+                            ),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                        iconSize: 5 * SizeConfig.blockSizeVertical,
-                        onPressed: () {
-                          createDeleteDialog(context, shifts);
-                        },
+                      Stack(
+                        children: <Widget>[
+                          Positioned(
+                            left: 1.0,
+                            top: 1.0,
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.black54,
+                              size: 5 * SizeConfig.blockSizeVertical,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              createDeleteDialog(context, shifts);
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                              size: 5 * SizeConfig.blockSizeVertical,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -144,22 +170,42 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                     Text(
                       globals.months[shifts[0].date.month - 1],
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 5 * SizeConfig.blockSizeVertical,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 5 * SizeConfig.blockSizeVertical,
+                        fontWeight: FontWeight.bold,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(0, 0.1),
+                            blurRadius: 0.5 * SizeConfig.blockSizeHorizontal,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 2 * SizeConfig.blockSizeVertical,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          left: 3 * SizeConfig.blockSizeHorizontal),
+                      padding: EdgeInsets.only(left: 3 * SizeConfig.blockSizeHorizontal),
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.calendar_today,
-                            color: Colors.white,
-                            size: 4 * SizeConfig.blockSizeVertical,
+                          Stack(
+                            children: <Widget>[
+                              Positioned(
+                                left: 1.0,
+                                top: 1.0,
+                                child: Icon(
+                                  Icons.calendar_today,
+                                  color: Colors.black54,
+                                  size: 4 * SizeConfig.blockSizeVertical,
+                                ),
+                              ),
+                              Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                                size: 4 * SizeConfig.blockSizeVertical,
+                              ),
+                            ],
                           ),
                           SizedBox(
                             width: 3 * SizeConfig.blockSizeHorizontal,
@@ -167,9 +213,16 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                           Text(
                             shifts[0].date.year.toString(),
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.blockSizeVertical,
-                                fontWeight: FontWeight.bold
+                              color: Colors.white,
+                              fontSize: 3 * SizeConfig.blockSizeVertical,
+                              fontWeight: FontWeight.bold,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(0, 0.1),
+                                  blurRadius: 0.5 * SizeConfig.blockSizeHorizontal,
+                                  color: Colors.black,
+                                ),
+                              ],
                             ),
                           ),
                         ],
