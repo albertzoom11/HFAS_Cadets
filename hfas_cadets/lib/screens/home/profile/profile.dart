@@ -287,6 +287,9 @@ class _ProfileState extends State<Profile> {
                     padding: EdgeInsets.only(top: 37 * SizeConfig.blockSizeVertical),
                     child: Container(
                       width: 100 * SizeConfig.blockSizeHorizontal,
+                      constraints: BoxConstraints(
+                        minHeight: 53 * SizeConfig.blockSizeVertical,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -304,25 +307,23 @@ class _ProfileState extends State<Profile> {
                             Column(
                               children: <Widget>[
                                 if (globals.profileMonths.length == 0)
-                                  SizedBox(height: 20 * SizeConfig.blockSizeVertical,),
-                                if (globals.profileMonths.length == 0)
-                                  Text(
-                                    'No Shifts Yet',
-                                    style: TextStyle(
-                                      color: Colors.indigo[900],
-                                      fontSize: 3 * SizeConfig.blockSizeVertical,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 21 * SizeConfig.blockSizeVertical,),
+                                      Text(
+                                        'No Shifts Yet',
+                                        style: TextStyle(
+                                          color: Colors.indigo[900],
+                                          fontSize: 3 * SizeConfig.blockSizeVertical,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                if (globals.profileMonths.length == 0)
-                                  SizedBox(height: 25.8 * SizeConfig.blockSizeVertical,),
                                 if (globals.profileMonths.length != 0)
                                   for (Widget month in globals.profileMonths)
                                     Column(children: <Widget>[month, SizedBox(height: 4 * SizeConfig.blockSizeVertical),],),
-                                  if (globals.profileMonths.length == 1)
-                                    SizedBox(height: 19.8 * SizeConfig.blockSizeVertical,),
-                                if (globals.profileMonths.length != 0)
-                                  SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
+                                SizedBox(height: 3 * SizeConfig.blockSizeVertical,),
                               ],
                             )),
                       ),
