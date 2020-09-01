@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
           child: CustomRefreshIndicator(
             onRefresh: () async {
               User dbUser = await _database.getUser(globals.user.uid);
-              List<String> dbYears = _database.getYears();
+              List<String> dbYears = await _database.getYears();
               dynamic value = await _database.monthStats(globals.displayYear.toString());
               List<Widget> dbCarousel = await _database.monthCarousels(globals.displayYear.toString());
               setState(() {

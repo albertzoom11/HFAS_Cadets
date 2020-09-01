@@ -58,26 +58,30 @@ class DatabaseService {
     return isEmpty;
   }
 
-  List<String> getYears() {
+  Future getYears() async {
     List<String> frontYears = [];
     List<String> backYears = [];
     int currentYear = DateTime.now().year;
-    userCollection.document(globals.user.uid).collection('years').snapshots().listen((snapshot) {
-      snapshot.documents.forEach((doc) {
-        if (int.parse(doc.documentID) > currentYear) {
-          frontYears.add(doc.documentID);
-        } else if (int.parse(doc.documentID) < currentYear) {
-          backYears.add(doc.documentID);
-        }
-      });
-    });
     List<String> years = [currentYear.toString()];
+
+    QuerySnapshot querySnapshot = await userCollection.document(globals.user.uid).collection('years').getDocuments();
+
+    for (int i = 0; i < querySnapshot.documents.length; i++) {
+      var doc = querySnapshot.documents[i];
+      if (int.parse(doc.documentID) > currentYear) {
+        frontYears.add(doc.documentID);
+      } else if (int.parse(doc.documentID) < currentYear) {
+        backYears.add(doc.documentID);
+      }
+    }
+
     if (frontYears.length > 0) {
       years = frontYears + years;
     }
     if (backYears.length > 0) {
       years += backYears;
     }
+
     print(years);
     return years;
   }
