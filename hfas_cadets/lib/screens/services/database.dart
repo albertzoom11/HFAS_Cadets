@@ -197,7 +197,9 @@ class DatabaseService {
           .document(shift.date.toString())
           .setData(shift.toJson());
       await addToMonthTotals(shift.date.year.toString(), globals.months[shift.date.month - 1], shift.hoursPassed, shift.numCalls, shift.numTasks);
-      return await addToYearTotals(shift.date.year.toString(), shift.hoursPassed, shift.numCalls, shift.numTasks);
+
+      bool newMonth = await monthIsEmpty(shift.date.year.toString(), globals.months[shift.date.month - 1]);
+      return await addToYearTotals(shift.date.year.toString(), newMonth, shift.hoursPassed, shift.numCalls, shift.numTasks);
     } catch (e) {
       print(e.toString());
       return null;
@@ -217,7 +219,7 @@ class DatabaseService {
     }
   }
 
-  Future addToYearTotals(String year, num hours, int calls, int tasks) async {
+  Future addToYearTotals(String year, bool newMonth, num hours, int calls, int tasks) async {
     num points = hours + calls + tasks;
 
     try {
@@ -233,6 +235,7 @@ class DatabaseService {
           'calls': calls,
           'tasks': tasks,
           'shifts': 1,
+          'months': 1,
         });
         return 'created';
       }
@@ -246,6 +249,7 @@ class DatabaseService {
         'calls': FieldValue.increment(calls),
         'tasks': FieldValue.increment(tasks),
         'shifts': FieldValue.increment(1),
+        'months': newMonth ? FieldValue.increment(1) : FieldValue.increment(0),
       });
       return 'added';
     } catch (e) {
@@ -310,6 +314,28 @@ class DatabaseService {
         calls = doc.data['calls'];
         tasks = doc.data['tasks'];
       });
+
+      bool lastYearShift = false;
+      await userCollection.document(globals.user.uid).collection('years').document(year).get().then((doc) {
+        if (doc.data['months'] == 1) {
+          lastYearShift = true;
+        }
+      });
+      if (lastYearShift) {
+        await userCollection.document(globals.user.uid).collection('years').document(year).delete();
+        globals.years.remove(year);
+        globals.displayYear = DateTime.now().year;
+      } else {
+        await userCollection.document(globals.user.uid).collection('years').document(year).updateData({
+          'shifts': FieldValue.increment(-1),
+          'points': FieldValue.increment(-1 * (hours + calls + tasks)),
+          'hours': FieldValue.increment(-1 * hours),
+          'calls': FieldValue.increment(-1 * calls),
+          'tasks': FieldValue.increment(-1 * tasks),
+          'months': FieldValue.increment(-1),
+        });
+      }
+
       await userCollection.document(globals.user.uid).collection('years').document(year).collection('months').document(month).delete();
       await addOrSubtractUserTotals(-1 * hours, -1 * calls, -1 * tasks);
       return 'deleted month';
@@ -374,9 +400,21 @@ class DatabaseService {
       });
       if (lastYearShift) {
         await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).delete();
+        globals.years.remove(shift.date.year.toString());
+        globals.displayYear = DateTime.now().year;
+      } else if (lastMonthShift) {
+        await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).updateData({
+          'shifts': FieldValue.increment(-1),
+          'months': FieldValue.increment(-1),
+          'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
+          'hours': FieldValue.increment(-1 * shift.hoursPassed),
+          'calls': FieldValue.increment(-1 * shift.numCalls),
+          'tasks': FieldValue.increment(-1 * shift.numTasks),
+        });
       } else {
         await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).updateData({
           'shifts': FieldValue.increment(-1),
+          'months': FieldValue.increment(-1),
           'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
           'hours': FieldValue.increment(-1 * shift.hoursPassed),
           'calls': FieldValue.increment(-1 * shift.numCalls),
