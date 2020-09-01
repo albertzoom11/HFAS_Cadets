@@ -26,7 +26,7 @@ class DatabaseService {
       User user = User.fromData(userData.data);
       return user;
     } catch (e) {
-      print('AAAAAAAAAAAAAAAAAA ${e.message}');
+      print(e.message);
       return null;
     }
   }
