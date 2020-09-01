@@ -108,7 +108,10 @@ class _SettingsState extends State<Settings> {
                           color: Colors.indigo[900],
                         ),
                         FlatButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await _auth.signOutGoogle();
+                            Navigator.pushNamedAndRemoveUntil(context, '/mainMenu', (route) => false);
+                          },
                           child: Container(
                             height: 9 * SizeConfig.blockSizeVertical,
                             alignment: Alignment.center,

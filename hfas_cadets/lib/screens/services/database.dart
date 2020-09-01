@@ -26,7 +26,8 @@ class DatabaseService {
       User user = User.fromData(userData.data);
       return user;
     } catch (e) {
-      return e.message;
+      print('AAAAAAAAAAAAAAAAAA ${e.message}');
+      return null;
     }
   }
 
@@ -57,21 +58,23 @@ class DatabaseService {
     return isEmpty;
   }
 
-//  List<String> getYears() {
-//    List<String> years = [];
-//    userCollection.document(globals.user.uid).collection('years').snapshots().listen((snapshot) {
-//      snapshot.documents.forEach((doc) {
-//        years.add(doc.documentID);
-//      });
-//    });
-//    return years;
-//  }
+  List<String> getYears() {
+    List<String> years = [];
+    userCollection.document(globals.user.uid).collection('years').snapshots().listen((snapshot) {
+      snapshot.documents.forEach((doc) {
+        years.add(doc.documentID);
+      });
+    });
+    return years;
+  }
 
   Future<bool> monthIsEmpty(String year, String month) async {
     bool isEmpty;
     await userCollection
         .document(globals.user.uid)
-        .collection(year)
+        .collection('years')
+        .document(year)
+        .collection('months')
         .document(month)
         .get()
         .then((data) {
@@ -85,7 +88,9 @@ class DatabaseService {
     for (int i = globals.months.length - 1; i >= 0; i--) {
       await userCollection
           .document(globals.user.uid)
-          .collection(year)
+          .collection('years')
+          .document(year)
+          .collection('months')
           .document(globals.months[i])
           .get()
           .then((data) {
@@ -109,14 +114,18 @@ class DatabaseService {
     for (int i = globals.months.length - 1; i >= 0; i--) {
       await userCollection
           .document(globals.user.uid)
-          .collection(year)
+          .collection('years')
+          .document(year)
+          .collection('months')
           .document(globals.months[i])
           .get()
           .then((data) {
             if (data.exists) {
                userCollection
                   .document(globals.user.uid)
-                  .collection(year)
+                   .collection('years')
+                   .document(year)
+                   .collection('months')
                   .document(globals.months[i])
                   .collection('shifts')
                   .orderBy('date', descending: true)
@@ -145,7 +154,9 @@ class DatabaseService {
     try {
       await userCollection
           .document(globals.user.uid)
-          .collection(shift.date.year.toString())
+          .collection('years')
+          .document(shift.date.year.toString())
+          .collection('months')
           .document(globals.months[shift.date.month - 1])
           .collection('shifts')
           .document(shift.date.toString())
@@ -179,7 +190,9 @@ class DatabaseService {
       if (isEmpty) {
         await userCollection
             .document(globals.user.uid)
-            .collection(year)
+            .collection('years')
+            .document(year)
+            .collection('months')
             .document(month)
             .setData({
           'points': points,
@@ -192,7 +205,9 @@ class DatabaseService {
       }
       await userCollection
           .document(globals.user.uid)
-          .collection(year)
+          .collection('years')
+          .document(year)
+          .collection('months')
           .document(month)
           .updateData({
         'points': FieldValue.increment(points),
@@ -213,17 +228,17 @@ class DatabaseService {
     int calls = 0;
     int tasks = 0;
     try {
-      await userCollection.document(globals.user.uid).collection(year).document(month).collection('shifts').getDocuments().then((snapshot) {
+      await userCollection.document(globals.user.uid).collection('years').document(year).collection('months').document(month).collection('shifts').getDocuments().then((snapshot) {
         for (DocumentSnapshot ds in snapshot.documents){
           ds.reference.delete();
         }
       });
-      await userCollection.document(globals.user.uid).collection(year).document(month).get().then((doc) {
+      await userCollection.document(globals.user.uid).collection('years').document(year).collection('months').document(month).get().then((doc) {
         hours = doc.data['hours'];
         calls = doc.data['calls'];
         tasks = doc.data['tasks'];
       });
-      await userCollection.document(globals.user.uid).collection(year).document(month).delete();
+      await userCollection.document(globals.user.uid).collection('years').document(year).collection('months').document(month).delete();
       await addOrSubtractUserTotals(-1 * hours, -1 * calls, -1 * tasks);
       return 'deleted month';
     } catch (e) {
@@ -255,21 +270,21 @@ class DatabaseService {
   }
 
   Future deleteShiftFromDatabase(Shift shift) async {
-    await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
+    await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
     await addOrSubtractUserTotals(-1 * shift.hoursPassed, -1 * shift.numCalls, -1 * shift.numTasks);
     print('deleted shift from firestore');
 
     try {
       bool lastShift = false;
-      await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).get().then((doc) {
+      await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).get().then((doc) {
         if (doc.data['shifts'] == 1) {
           lastShift = true;
         }
       });
       if (lastShift) {
-        await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).delete();
+        await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).delete();
       } else {
-        await userCollection.document(globals.user.uid).collection(shift.date.year.toString()).document(globals.months[shift.date.month - 1]).updateData({
+        await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).updateData({
           'shifts': FieldValue.increment(-1),
           'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
           'hours': FieldValue.increment(-1 * shift.hoursPassed),
@@ -286,7 +301,7 @@ class DatabaseService {
 
   Future getShiftData(DateTime dateTime) async {
     Shift newShift;
-    await userCollection.document(globals.user.uid).collection(dateTime.year.toString()).document(globals.months[dateTime.month - 1]).collection('shifts').document(dateTime.toString()).get().then((doc) {
+    await userCollection.document(globals.user.uid).collection('years').document(dateTime.year.toString()).collection('months').document(globals.months[dateTime.month - 1]).collection('shifts').document(dateTime.toString()).get().then((doc) {
       newShift = Shift.fromData(doc.data);
     });
     return newShift;
