@@ -303,7 +303,8 @@ class _ProfileState extends State<Profile> {
                                               child: Text(
                                                 'Select Year',
                                                 style: TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.indigo[900],
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                             ),
@@ -325,17 +326,37 @@ class _ProfileState extends State<Profile> {
                                                     },
                                                     child: ListTile(
                                                       title: Padding(
-                                                        padding: EdgeInsets.symmetric(vertical: 1 * SizeConfig.blockSizeVertical, horizontal: 2 * SizeConfig.blockSizeHorizontal),
+                                                        padding: EdgeInsets.symmetric(vertical: 0.5 * SizeConfig.blockSizeVertical, horizontal: 2 * SizeConfig.blockSizeHorizontal),
                                                         child: Center(
-                                                          child: Text(
-                                                            globals.years[index],
-                                                            style: TextStyle(
-                                                              color: globals.years[index] == DateTime.now().year.toString() ? Colors.blue[900] : Colors.black,
-                                                              fontSize: 2.5 * SizeConfig.blockSizeVertical,
-//                                                              fontWeight: globals.years[index] == DateTime.now().year.toString() ? FontWeight.bold : FontWeight.w400,
+                                                          child: globals.years[index] == DateTime.now().year.toString()
+                                                                  ? Container(
+                                                                      decoration: BoxDecoration(
+                                                                        border: Border.all(color: Colors.blue[900]),
+                                                                        borderRadius: BorderRadius.circular(6 * SizeConfig.blockSizeHorizontal),
+                                                                      ),
+                                                                      child: Padding(
+                                                                        padding: EdgeInsets.symmetric(vertical: 0.5 * SizeConfig.blockSizeVertical, horizontal: 3 * SizeConfig.blockSizeHorizontal),
+                                                                        child: Text(
+                                                                          globals.years[index],
+                                                                          style: TextStyle(
+                                                                            color: globals.years[index] == globals.displayYear.toString() ? Colors.blue[900] : Colors.black,
+                                                                            fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                                                            fontWeight: FontWeight.w500,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : Padding(
+                                                                      padding: EdgeInsets.symmetric(vertical: 0.5 * SizeConfig.blockSizeVertical, horizontal: 3 * SizeConfig.blockSizeHorizontal),
+                                                                      child: Text(globals.years[index],
+                                                                        style: TextStyle(
+                                                                          color: globals.years[index] == globals.displayYear.toString() ? Colors.blue[900] : Colors.black,
+                                                                          fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                                                          fontWeight: FontWeight.w500,
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                             ),
-                                                          ),
-                                                        ),
                                                       ),
                                                     ),
                                                   );
