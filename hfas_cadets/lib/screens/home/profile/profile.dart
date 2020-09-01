@@ -1,5 +1,4 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
@@ -278,17 +277,68 @@ class _ProfileState extends State<Profile> {
                                   );
                                 },
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    globals.displayYear.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Center(
+                                            child: Text(
+                                              'Select Year',
+                                              style: TextStyle(
+                                                color: Colors.blue[900],
+                                              ),
+                                            ),
+                                          ),
+                                          content: Container(
+                                            constraints: BoxConstraints(
+                                              maxHeight: 40 * SizeConfig.blockSizeVertical,
+                                            ),
+                                            width: 50 * SizeConfig.blockSizeHorizontal,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: globals.years.length,
+                                              itemBuilder: (BuildContext context, int index) {
+                                                return FlatButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      globals.displayYear = int.parse(globals.years[index]);
+                                                      Navigator.pop(context);
+                                                    });
+                                                  },
+                                                  child: ListTile(
+                                                    title: Padding(
+                                                        padding: EdgeInsets.symmetric(vertical: 1 * SizeConfig.blockSizeVertical, horizontal: 2 * SizeConfig.blockSizeHorizontal),
+                                                        child: Center(
+                                                          child: Text(
+                                                            globals.years[index],
+                                                            style: TextStyle(
+                                                              fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      globals.displayYear.toString(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 2.5 * SizeConfig.blockSizeVertical,
+                                      ),
                                     ),
-                                  ),
-                                  Icon(Icons.arrow_drop_down, color: Colors.white, size: 3  * SizeConfig.blockSizeVertical,),
-                                ],
+                                    Icon(Icons.arrow_drop_down, color: Colors.white, size: 3  * SizeConfig.blockSizeVertical,),
+                                  ],
+                                ),
                               ),
                             ],
                           )),
