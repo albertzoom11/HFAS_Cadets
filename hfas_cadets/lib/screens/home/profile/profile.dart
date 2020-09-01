@@ -318,11 +318,21 @@ class _ProfileState extends State<Profile> {
                                                 itemCount: globals.years.length,
                                                 itemBuilder: (BuildContext context, int index) {
                                                   return FlatButton(
-                                                    onPressed: () {
+                                                    onPressed: () async {
                                                       setState(() {
+                                                        globals.yearLoading = true;
                                                         globals.displayYear = int.parse(globals.years[index]);
                                                         Navigator.pop(context);
                                                       });
+                                                      dynamic value = await _database.monthStats(globals.displayYear.toString());
+                                                      List<Widget> dbCarousel = await _database.monthCarousels(globals.displayYear.toString());
+                                                      if (value != null) {
+                                                        setState(() {
+                                                          globals.monthCarousels = dbCarousel;
+                                                          globals.profileMonths = value;
+                                                          globals.yearLoading = false;
+                                                        });
+                                                      }
                                                     },
                                                     child: ListTile(
                                                       title: Padding(
