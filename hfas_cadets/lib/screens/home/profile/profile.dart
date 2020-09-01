@@ -284,8 +284,7 @@ class _ProfileState extends State<Profile> {
                                     globals.displayYear.toString(),
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 2.7 * SizeConfig.blockSizeVertical,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: 2.5 * SizeConfig.blockSizeVertical,
                                     ),
                                   ),
                                   Icon(Icons.arrow_drop_down, color: Colors.white, size: 3  * SizeConfig.blockSizeVertical,),
