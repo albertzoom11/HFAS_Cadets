@@ -57,6 +57,16 @@ class DatabaseService {
     return isEmpty;
   }
 
+//  List<String> getYears() {
+//    List<String> years = [];
+//    userCollection.document(globals.user.uid).collection('years').snapshots().listen((snapshot) {
+//      snapshot.documents.forEach((doc) {
+//        years.add(doc.documentID);
+//      });
+//    });
+//    return years;
+//  }
+
   Future<bool> monthIsEmpty(String year, String month) async {
     bool isEmpty;
     await userCollection
