@@ -285,7 +285,7 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 2.7 * SizeConfig.blockSizeVertical,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   Icon(Icons.arrow_drop_down, color: Colors.white, size: 3  * SizeConfig.blockSizeVertical,),
