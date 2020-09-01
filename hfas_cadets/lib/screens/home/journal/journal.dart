@@ -31,9 +31,9 @@ class _JournalState extends State<Journal> {
         body: SafeArea(
           child: CustomRefreshIndicator(
             onRefresh: () async {
-              List<Widget> dbCarousel = await _database.monthCarousels(globals.displayYear.toString());
               User dbUser = await _database.getUser(globals.user.uid);
               dynamic value = await _database.monthStats(globals.displayYear.toString());
+              List<Widget> dbCarousel = await _database.monthCarousels(globals.displayYear.toString());
               setState(() {
                 globals.user = dbUser;
                 globals.profileMonths = value;
