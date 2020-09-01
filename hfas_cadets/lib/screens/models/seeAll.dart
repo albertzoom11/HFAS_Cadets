@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/shift.dart';
-import 'package:hfascadets/screens/models/shift_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
@@ -242,7 +241,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
 
                 return GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/shiftPage', arguments: ShiftArguments(shift: shift, editMode: false));
+                    Navigator.pushNamed(context, '/shiftPage', arguments: shift);
                   },
                   child: Stack(
                     children: [

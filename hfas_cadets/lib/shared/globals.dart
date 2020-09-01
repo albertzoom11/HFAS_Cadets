@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hfascadets/screens/models/user.dart';
 
 User user;
-List<String> years = ['2020', '2019'];
+List<String> years = [];
 bool yearLoading = false;
 List<Widget> profileMonths = [];
 int pointsRequired = 15;

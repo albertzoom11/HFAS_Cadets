@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/screens/models/shift.dart';
-import 'package:hfascadets/screens/models/shift_arguments.dart';
 import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/task_display.dart';
 import 'package:hfascadets/screens/models/user.dart';
@@ -254,11 +252,10 @@ class _ShiftPageState extends State<ShiftPage> {
 
   @override
   Widget build(BuildContext context) {
-    ShiftArguments shiftArgs = ModalRoute.of(context).settings.arguments;
+    Shift argShift = ModalRoute.of(context).settings.arguments;
     if (firstTime) {
       setState(() {
-        editMode = shiftArgs.editMode;
-        _shift = shiftArgs.shift;
+        _shift = argShift;
         _title = _shift.title;
         _imageUrl = _shift.imageUrl;
         _date = _shift.date;
