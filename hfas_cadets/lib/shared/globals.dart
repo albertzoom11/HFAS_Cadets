@@ -5,6 +5,7 @@ import 'package:hfascadets/screens/models/user.dart';
 
 User user;
 List<String> years = ['2020', '2019'];
+bool yearLoading = false;
 List<Widget> profileMonths = [];
 int pointsRequired = 15;
 List<Widget> monthCarousels = [];

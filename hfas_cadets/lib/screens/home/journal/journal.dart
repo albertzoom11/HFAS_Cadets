@@ -5,6 +5,7 @@ import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:hfascadets/shared/loading.dart';
 
 class Journal extends StatefulWidget {
   @override
@@ -123,7 +124,7 @@ class _JournalState extends State<Journal> {
                       child: Padding(
                         padding: EdgeInsets.only(
                             top: 5 * SizeConfig.blockSizeVertical),
-                        child: FadeAnimation(0.5, Column(
+                        child: globals.yearLoading ? FadeAnimation(0.5, Loading()) : FadeAnimation(0.5, Column(
                           children: <Widget>[
                             if (globals.monthCarousels.length == 0)
                               Column(

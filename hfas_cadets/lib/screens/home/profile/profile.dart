@@ -6,6 +6,7 @@ import 'package:hfascadets/screens/models/user.dart';
 import 'package:hfascadets/screens/services/conversions.dart';
 import 'package:hfascadets/screens/services/database.dart';
 import 'package:hfascadets/shared/globals.dart' as globals;
+import 'package:hfascadets/shared/loading.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -381,7 +382,7 @@ class _ProfileState extends State<Profile> {
                             left: 6 * SizeConfig.blockSizeHorizontal,
                             right: 6 * SizeConfig.blockSizeHorizontal,
                             top: 3 * SizeConfig.blockSizeVertical),
-                        child: FadeAnimation(
+                        child: globals.yearLoading ? FadeAnimation(0.6, Loading()) : FadeAnimation(
                             .6,
                             Column(
                               children: <Widget>[
