@@ -252,21 +252,17 @@ class _AddState extends State<Add> {
                                                 listOfTasks: _tasks,
                                             ));
                                         List<Widget> dbCarousels = await _database.monthCarousels(globals.displayYear.toString());
-                                        dynamic value = await _database
-                                            .monthStats(globals.displayYear.toString());
-                                        if (globals.years.contains(_dateTime.year.toString())) {
-                                          setState(() {
-                                            globals.profileMonths = value;
-                                            globals.monthCarousels = dbCarousels;
-                                          });
-                                        } else {
+                                        dynamic value = await _database.monthStats(globals.displayYear.toString());
+                                        if (!globals.years.contains(_dateTime.year.toString())) {
                                           List<String> dbYears = await _database.getYears();
                                           setState(() {
-                                            globals.profileMonths = value;
-                                            globals.monthCarousels = dbCarousels;
                                             globals.years = dbYears;
                                           });
                                         }
+                                        setState(() {
+                                          globals.profileMonths = value;
+                                          globals.monthCarousels = dbCarousels;
+                                        });
                                         if (result == null) {
                                           setState(() {
                                             loading = false;

@@ -129,6 +129,7 @@ class DatabaseService {
           .get()
           .then((data) {
         if (data.exists) {
+          print(data.data['points']);
           output.add(MonthStat(
             month: globals.months[i],
             points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
@@ -342,20 +343,39 @@ class DatabaseService {
 
   Future deleteShiftFromDatabase(Shift shift) async {
     await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
+    print(shift.hoursPassed);
     await addOrSubtractUserTotals(-1 * shift.hoursPassed, -1 * shift.numCalls, -1 * shift.numTasks);
     print('deleted shift from firestore');
 
     try {
-      bool lastShift = false;
+      bool lastMonthShift = false;
       await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).get().then((doc) {
         if (doc.data['shifts'] == 1) {
-          lastShift = true;
+          lastMonthShift = true;
         }
       });
-      if (lastShift) {
+      if (lastMonthShift) {
         await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).delete();
       } else {
         await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).updateData({
+          'shifts': FieldValue.increment(-1),
+          'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
+          'hours': FieldValue.increment(-1 * shift.hoursPassed),
+          'calls': FieldValue.increment(-1 * shift.numCalls),
+          'tasks': FieldValue.increment(-1 * shift.numTasks),
+        });
+      }
+
+      bool lastYearShift = false;
+      await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).get().then((doc) {
+        if (doc.data['shifts'] == 1) {
+          lastYearShift = true;
+        }
+      });
+      if (lastYearShift) {
+        await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).delete();
+      } else {
+        await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).updateData({
           'shifts': FieldValue.increment(-1),
           'points': FieldValue.increment(-1 * (shift.hoursPassed + shift.numCalls + shift.numTasks)),
           'hours': FieldValue.increment(-1 * shift.hoursPassed),

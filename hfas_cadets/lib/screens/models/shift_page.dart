@@ -362,9 +362,15 @@ class _ShiftPageState extends State<ShiftPage> {
                                               );
                                               await _database.editShift(_shift, _newShift);
                                               await _database.addOrSubtractUserTotals(_newShift.hoursPassed, _newShift.numCalls, _newShift.numTasks);
-                                              List<Widget> dbCarousel = await _database.monthCarousels(_shift.date.year.toString());
+                                              if (!globals.years.contains(_date.year.toString())) {
+                                                List<String> dbYears = await _database.getYears();
+                                                setState(() {
+                                                  globals.years = dbYears;
+                                                });
+                                              }
+                                              List<Widget> dbCarousel = await _database.monthCarousels(globals.displayYear.toString());
                                               User dbUser = await _database.getUser(globals.user.uid);
-                                              dynamic value = await _database.monthStats(_newShift.date.year.toString());
+                                              dynamic value = await _database.monthStats(globals.displayYear.toString());
                                               setState(() {
                                                 _shift = _newShift;
                                                 globals.user = dbUser;
