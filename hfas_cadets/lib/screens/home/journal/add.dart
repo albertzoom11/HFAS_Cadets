@@ -33,7 +33,6 @@ class _AddState extends State<Add> {
   int _numCalls = 0;
   String _title = '';
   bool loading = false;
-  int _year = DateTime.now().year;
   File _imageFile;
   String _imageURL;
 
@@ -252,13 +251,22 @@ class _AddState extends State<Add> {
                                                 numTasks: _numTasks,
                                                 listOfTasks: _tasks,
                                             ));
-                                        List<Widget> dbCarousels = await _database.monthCarousels(_year.toString());
+                                        List<Widget> dbCarousels = await _database.monthCarousels(globals.displayYear.toString());
                                         dynamic value = await _database
-                                            .monthStats(_year.toString());
-                                        setState(() {
-                                          globals.profileMonths = value;
-                                          globals.monthCarousels = dbCarousels;
-                                        });
+                                            .monthStats(globals.displayYear.toString());
+                                        if (globals.years.contains(_dateTime.year.toString())) {
+                                          setState(() {
+                                            globals.profileMonths = value;
+                                            globals.monthCarousels = dbCarousels;
+                                          });
+                                        } else {
+                                          List<String> dbYears = await _database.getYears();
+                                          setState(() {
+                                            globals.profileMonths = value;
+                                            globals.monthCarousels = dbCarousels;
+                                            globals.years = dbYears;
+                                          });
+                                        }
                                         if (result == null) {
                                           setState(() {
                                             loading = false;

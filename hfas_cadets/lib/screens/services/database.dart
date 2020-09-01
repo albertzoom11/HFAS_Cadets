@@ -76,14 +76,30 @@ class DatabaseService {
     }
 
     if (frontYears.length > 0) {
-      years = frontYears + years;
+      years += frontYears;
     }
     if (backYears.length > 0) {
-      years += backYears;
+      years = backYears + years;
+    }
+    if (years.length > 1) {
+      years = years.reversed.toList();
     }
 
     print(years);
     return years;
+  }
+
+  Future<bool> yearIsEmpty(String year) async {
+    bool isEmpty;
+    await userCollection
+        .document(globals.user.uid)
+        .collection('years')
+        .document(year)
+        .get()
+        .then((data) {
+      isEmpty = data.exists ? false : true;
+    });
+    return isEmpty;
   }
 
   Future<bool> monthIsEmpty(String year, String month) async {
@@ -179,8 +195,8 @@ class DatabaseService {
           .collection('shifts')
           .document(shift.date.toString())
           .setData(shift.toJson());
-      return await addToMonthTotals(shift.date.year.toString(),
-          globals.months[shift.date.month - 1], shift.hoursPassed, shift.numCalls, shift.numTasks);
+      await addToMonthTotals(shift.date.year.toString(), globals.months[shift.date.month - 1], shift.hoursPassed, shift.numCalls, shift.numTasks);
+      return await addToYearTotals(shift.date.year.toString(), shift.hoursPassed, shift.numCalls, shift.numTasks);
     } catch (e) {
       print(e.toString());
       return null;
@@ -197,6 +213,43 @@ class DatabaseService {
       globals.user.updateUserTotals(hoursPassed, numOfCalls, numOfTasks);
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future addToYearTotals(String year, num hours, int calls, int tasks) async {
+    num points = hours + calls + tasks;
+
+    try {
+      bool isEmpty = await yearIsEmpty(year);
+      if (isEmpty) {
+        await userCollection
+            .document(globals.user.uid)
+            .collection('years')
+            .document(year)
+            .setData({
+          'points': points,
+          'hours': hours,
+          'calls': calls,
+          'tasks': tasks,
+          'shifts': 1,
+        });
+        return 'created';
+      }
+      await userCollection
+          .document(globals.user.uid)
+          .collection('years')
+          .document(year)
+          .updateData({
+        'points': FieldValue.increment(points),
+        'hours': FieldValue.increment(hours),
+        'calls': FieldValue.increment(calls),
+        'tasks': FieldValue.increment(tasks),
+        'shifts': FieldValue.increment(1),
+      });
+      return 'added';
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 
