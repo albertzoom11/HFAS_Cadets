@@ -73,10 +73,9 @@ class _ShiftPageState extends State<ShiftPage> {
                 onPressed: () async {
                   Navigator.pushNamed(context, '/loading');
                   dynamic result = await _database.deleteShift(shift);
-                  globals.monthCarousels = await _database
-                      .monthCarousels(shift.date.year.toString());
-                  globals.profileMonths =
-                      await _database.monthStats(shift.date.year.toString());
+                  globals.years = await _database.getYears();
+                  globals.monthCarousels = await _database.monthCarousels(shift.date.year.toString());
+                  globals.profileMonths = await _database.monthStats(shift.date.year.toString());
                   if (result != null) {
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/home', (route) => false,
