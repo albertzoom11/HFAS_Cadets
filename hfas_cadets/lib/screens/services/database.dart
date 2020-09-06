@@ -85,7 +85,6 @@ class DatabaseService {
       years = years.reversed.toList();
     }
 
-    print(years);
     return years;
   }
 
@@ -129,7 +128,6 @@ class DatabaseService {
           .get()
           .then((data) {
         if (data.exists) {
-          print(data.data['points']);
           output.add(MonthStat(
             month: globals.months[i],
             points: data['points'] % 1 == 0 ? data['points'].toInt() : data['points'],
@@ -369,7 +367,6 @@ class DatabaseService {
 
   Future deleteShiftFromDatabase(Shift shift) async {
     await userCollection.document(globals.user.uid).collection('years').document(shift.date.year.toString()).collection('months').document(globals.months[shift.date.month - 1]).collection('shifts').document(shift.date.toString()).delete();
-    print(shift.hoursPassed);
     await addOrSubtractUserTotals(-1 * shift.hoursPassed, -1 * shift.numCalls, -1 * shift.numTasks);
     print('deleted shift from firestore');
 
