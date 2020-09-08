@@ -187,6 +187,7 @@ class _SignInState extends State<SignIn> {
                                   });
                                 } else if (result.isEmailVerified) {
                                   globals.user = _auth.currentUser;
+                                  globals.years = await _database.getYears();
                                   globals.monthCarousels = await _database.monthCarousels(globals.displayYear.toString());
                                   globals.profileMonths = await _database.monthStats(globals.displayYear.toString());
                                   var prefs = await SharedPreferences.getInstance();

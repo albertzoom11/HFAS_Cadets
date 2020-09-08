@@ -109,8 +109,14 @@ class _SettingsState extends State<Settings> {
                         ),
                         FlatButton(
                           onPressed: () async {
-                            await _auth.signOutGoogle();
-                            Navigator.pushNamedAndRemoveUntil(context, '/mainMenu', (route) => false);
+                            dynamic result = await _auth.signOutGoogle();
+                            if (result == null) {
+                              print('sign out failed');
+                            } else {
+                              var prefs = await SharedPreferences.getInstance();
+                              prefs.clear();
+                              Navigator.pushNamedAndRemoveUntil(context, '/mainMenu', (route) => false);
+                            }
                           },
                           child: Container(
                             height: 9 * SizeConfig.blockSizeVertical,
