@@ -84,7 +84,7 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
           Stack(
             children: <Widget>[
               Container(
-                height: 60 * SizeConfig.blockSizeHorizontal,
+                height: 80 * SizeConfig.blockSizeHorizontal,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius:
@@ -249,9 +249,9 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                       Container(
                         margin: EdgeInsets.only(
                             left: 8 * SizeConfig.blockSizeHorizontal,
-                            top: 1 * SizeConfig.blockSizeVertical,
+                            top: 0 * SizeConfig.blockSizeVertical,
                             right: 4 * SizeConfig.blockSizeHorizontal,
-                            bottom: 1 * SizeConfig.blockSizeVertical),
+                            bottom: 4 * SizeConfig.blockSizeVertical),
                         height: 24 * SizeConfig.blockSizeVertical,
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -406,8 +406,8 @@ class _MonthSeeAllState extends State<MonthSeeAll> {
                       ),
                       Positioned(
                         left: 4 * SizeConfig.blockSizeHorizontal,
-                        top: 1 * SizeConfig.blockSizeVertical,
-                        bottom: 1 * SizeConfig.blockSizeVertical,
+                        top: 0 * SizeConfig.blockSizeVertical,
+                        bottom: 4 * SizeConfig.blockSizeVertical,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeHorizontal),
                           child: Image(
