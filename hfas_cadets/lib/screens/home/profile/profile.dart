@@ -120,7 +120,7 @@ class _ProfileState extends State<Profile> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Container(
-                                            width: 47 * SizeConfig.blockSizeHorizontal,
+                                            width: 45 * SizeConfig.blockSizeHorizontal,
                                             child: Text(
                                               globals.user.name,
                                               style: TextStyle(

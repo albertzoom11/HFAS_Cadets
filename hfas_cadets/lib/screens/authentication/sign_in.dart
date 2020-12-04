@@ -79,7 +79,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ],
                 ),
-                SizedBox(width: 120,),
+                SizedBox(width: 21 * SizeConfig.blockSizeHorizontal,),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 20.0, 0),
                   child: FadeAnimation(.7, Image(

@@ -31,24 +31,27 @@ Widget googleSignInButton(BuildContext context) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5 * SizeConfig.blockSizeVertical)),
     highlightElevation: 0,
     borderSide: BorderSide(color: Colors.grey),
-    child: Padding(
-      padding: EdgeInsets.fromLTRB(0, 1 * SizeConfig.blockSizeVertical, 0, 1 * SizeConfig.blockSizeVertical),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image(image: AssetImage("assets/images/google_logo.png"), height: 4.15 * SizeConfig.blockSizeVertical),
-          Padding(
-            padding: EdgeInsets.only(left: 2.3 * SizeConfig.blockSizeHorizontal),
-            child: Text(
-              'Sign in with Google',
-              style: TextStyle(
-                fontSize: 2.3 * SizeConfig.blockSizeHorizontal,
-                color: Colors.grey,
+    child: Container(
+      height: 6 * SizeConfig.blockSizeVertical,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0, 1 * SizeConfig.blockSizeVertical, 0, 1 * SizeConfig.blockSizeVertical),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(image: AssetImage("assets/images/google_logo.png"), height: 3 * SizeConfig.blockSizeVertical),
+            Padding(
+              padding: EdgeInsets.only(left: 2.3 * SizeConfig.blockSizeHorizontal),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 2.3 * SizeConfig.blockSizeHorizontal,
+                  color: Colors.grey,
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     ),
   );

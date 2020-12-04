@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hfascadets/screens/models/size_config.dart';
 import 'package:hfascadets/screens/services/auth.dart';
 import 'package:hfascadets/animation/fadeAnimation.dart';
 import 'package:hfascadets/buttons/googleSignIn.dart';
@@ -77,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-                SizedBox(width: 80,),
+                SizedBox(width: 13 * SizeConfig.blockSizeHorizontal,),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 20.0, 0),
                   child: FadeAnimation(.9, Image(
